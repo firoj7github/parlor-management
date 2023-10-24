@@ -1,0 +1,130 @@
+.banner-section {
+  position: relative;
+  padding-top: 370px;
+  padding-bottom: 370px;
+}
+@media only screen and (max-width: 1400px) {
+  .banner-section {
+    padding-top: 150px;
+    padding-bottom: 100px;
+  }
+}
+.banner-section .banner-content {
+  position: relative;
+  z-index: 10;
+}
+.banner-section .banner-content .title {
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-transform: capitalize;
+  position: relative;
+  color: #fff;
+}
+.banner-section .banner-content .title span {
+  color: $base--color;
+}
+.banner-section .banner-content .sub-title {
+  color: #fff;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.banner-slider {
+  position: relative;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.banner-slider .slider-prev, .banner-slider .slider-next {
+  position: absolute;
+  top: 40%;
+  left: 0;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  width: 20px;
+  height: 70px;
+  line-height: 70px;
+  color: $white;
+  border-radius: 0 50px 50px 0;
+  font-size: 18px;
+  z-index: 2;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  background-color: $base--color;
+  @media only screen and (max-width: 575px) {
+    display: none;
+  }
+}
+
+.banner-slider .slider-next {
+  left: auto;
+  right: 0px;
+  margin-left: 0;
+  border-radius: 50px 0 0 50px;
+}
+
+.banner-flotting-section {
+  margin-top: -50px;
+}
+.banner-flotting-section.home {
+  margin-top: 0;
+}
+.banner-flotting-section.home .banner-flotting-item {
+  border: 1px solid #eee;
+}
+
+.banner-flotting-item {
+  position: relative;
+  z-index: 2;
+  background-color: #132335;
+  padding: 30px;
+  border-radius: 15px;
+}
+.banner-flotting-item .banner-flotting-item-form {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: -5px;
+}
+.banner-flotting-item .banner-flotting-item-form .form-group {
+  position: relative;
+  flex: 0 0 24%;
+  margin: 5px;
+}
+@media only screen and (max-width: 1199px) {
+  .banner-flotting-item .banner-flotting-item-form .form-group {
+   flex: 0 0 32%;
+  }
+}
+@media only screen and (max-width: 991px) {
+  .banner-flotting-item .banner-flotting-item-form .form-group {
+    flex: 0 0 48%;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .banner-flotting-item .banner-flotting-item-form .form-group {
+     flex: 0 0 100%;
+  }
+}
+.banner-flotting-item .banner-flotting-item-form .form-group.single {
+     flex: 0 0 74%;
+}
+.banner-flotting-item .banner-flotting-item-form .form-group.btn-search {
+       flex: 0 0 24%;
+}
+.banner-flotting-item .banner-flotting-item-form .form-group .search-btn {
+  padding: 12px 25px;
+}
+.banner-flotting-item .banner-flotting-item-form .form-group input {
+  caret-color: $base--color;
+}
+.banner-flotting-item .banner-flotting-item-form .dr-name i {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  font-size: 12px;
+}
+.banner-flotting-item .banner-flotting-item-form .dr-name input {
+  padding-left: 40px;
+}

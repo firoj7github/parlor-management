@@ -1,0 +1,234 @@
+.blog-section{
+  .blog-area{
+    background-color: $section--bg;
+    padding: 20px;
+    border-radius: 10px;
+    &:hover{
+      .content-title{
+        color: $base--color;
+      }
+    }
+    .blog-img{
+      width: 100%;
+      height: 300px;
+      img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+    }
+    .blog-content{
+      padding-top: 15px;
+    }
+    .content-title{
+      transition: all 0.6s;
+    }
+    .blog-btn{
+      padding-top: 20px;
+    }
+  }
+}
+
+.blog-details-section .blog-item{
+  background-color: $section--bg;
+  border-radius: 10px;
+  .blog-content{
+    padding: 20px;
+  }
+}
+.blog-details-section .blog-item .blog-thumb {
+  height: 500px;
+  width: 100%;
+  img{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px 10px 0px 0px;
+    object-fit: cover;
+  }
+}
+
+.blog-list {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+.blog-list li {
+  position: relative;
+  font-weight: 400;
+  padding-left: 35px;
+  padding-bottom: 15px;
+}
+.blog-list li::before {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  content: "\f00c";
+  font-family: "Line Awesome Free";
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  background-color: $base--color;
+  border-radius: 50%;
+  font-size: 14px;
+  color: #ffffff;
+  text-align: center;
+  font-weight: 900;
+}
+
+.blog-tag-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-top: 1px dashed $border--base;
+  padding-top: 20px;
+  margin-top: 30px;
+}
+.blog-tag-wrapper span {
+  font-weight: 600;
+  margin-right: 10px;
+}
+.blog-tag-wrapper .blog-footer-tag li {
+  display: inline-block;
+  background: $base--color;
+  padding: 3px 10px;
+  color: $white;
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: 5px;
+}
+.blog-tag-wrapper .blog-footer-tag li + li {
+  margin-left: 10px;
+}
+
+.blog-comment-area {
+  margin-top: 30px;
+}
+.blog-comment-area .title {
+  margin-bottom: 0 !important;
+}
+
+.blog-sidebar {
+  position: sticky;
+  top: 0;
+}
+
+.widget-box {
+  background-color: $section--bg;
+  padding: 30px;
+  border-radius: 5px;
+}
+@media only screen and (max-width: 991px) {
+  .widget-box {
+    padding: 20px;
+  }
+}
+.widget-box .widget-title {
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 2;
+}
+.widget-box .widget-title::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: -30px;
+  width: 3px;
+  height: 20px;
+  background-color: $base--color;
+}
+@media only screen and (max-width: 991px) {
+  .widget-box .widget-title::before {
+    left: -20px;
+  }
+}
+
+.category-widget-box .category-list {
+  margin-bottom: -15px;
+}
+.category-widget-box .category-list li {
+  padding: 7px 0;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #ffffff;
+  font-weight: 500;
+}
+.category-widget-box .category-list li a {
+  display: block;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+.category-widget-box .category-list li a:hover {
+  color: $base--color;
+}
+.category-widget-box .category-list li span {
+  float: right;
+}
+
+.popular-widget-box {
+  margin-bottom: -20px;
+}
+
+.single-popular-item {
+  margin-bottom: 30px;
+}
+.single-popular-item .popular-item-thumb {
+  width: 70px;
+  height: 70px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.single-popular-item .popular-item-thumb a {
+  display: block;
+  height: 100%;
+}
+.single-popular-item .popular-item-thumb img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.single-popular-item .popular-item-content {
+  width: calc(100% - 90px);
+  padding-left: 20px;
+}
+.single-popular-item .popular-item-content .title {
+  margin-bottom: 0;
+}
+.single-popular-item .popular-item-content .title a {
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+.single-popular-item .popular-item-content .title a:hover {
+  color: $base--color;
+}
+.single-popular-item .popular-item-content span {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.tag-widget-box .tag-list {
+  margin: -5px;
+}
+.tag-widget-box .tag-list li {
+  display: inline-block;
+  border: 1px solid $border--base;
+  color: #ffffff;
+  font-size: 14px;
+  border-radius: 5px;
+  font-weight: 500;
+  padding: 3px 15px;
+  margin: 5px;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+.tag-widget-box .tag-list li:hover {
+  border: 1px solid $border--base;
+  color: $base--color;
+}

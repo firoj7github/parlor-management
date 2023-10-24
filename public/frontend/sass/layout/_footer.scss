@@ -1,0 +1,137 @@
+/*--------------------------------------------------------------
+# Footer-block
+--------------------------------------------------------------*/
+.footer-section{
+  clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%);
+  background-color: #132334;
+  padding-top: 100px;
+  padding-bottom: 30px;
+  @media only screen and (max-width: 1640px) {
+    clip-path: polygon(10% 0%, 100% 0%, 85% 100%, 0% 100%);
+  }
+  @media only screen and (max-width: 768px) {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  }
+  @media only screen and (max-width: 1490px) {
+    .responcive-area{
+      margin-left: 100px;
+    }
+  }
+  @media only screen and (max-width: 1175px) {
+    .responcive-area{
+      margin-left: 80px;
+    }
+  }
+  @media only screen and (max-width: 768px) {
+    .responcive-area{
+      margin-left: 0px;
+    }
+  }
+  @media only screen and (max-width: 991px) {
+    .responcive-area-2{
+      margin-right: 80px;
+    }
+  }
+  @media only screen and (max-width: 768px) {
+    .responcive-area-2{
+      margin-right: 0px;
+    }
+  }
+  .footer-widget{
+    padding: 30px;
+    @media only screen and (max-width: 1290px) {
+      padding: 0px;
+    }
+    .footer-text{
+      img{
+        width: 180px;
+        padding-bottom: 20px;
+      }
+    }
+  }
+}
+.footer-widget .title {
+  border-bottom: 2px dashed $base--color;
+  display: inline-block;
+  margin-bottom: 30px;
+}
+.footer-section .footer-social-icon span {
+  color: #ffffff;
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  font-family: "Poppins", sans-serif;
+  margin-bottom: 20px;
+}
+
+.footer-section .footer-social-icon a {
+  color: #ffffff;
+  font-size: 16px;
+  margin: 10px 8px 8px 0px;
+}
+
+.footer-section .footer-social-icon i {
+  height: 40px;
+  width: 40px;
+  text-align: center;
+  line-height: 38px;
+  border-radius: 50%;
+}
+
+.footer-section .facebook-bg {
+  background-color: #3b5998;
+}
+
+.footer-section .twitter-bg {
+  background-color: #00acee;
+}
+
+.footer-section .instagram-bg {
+  background-color: #d62976;
+}
+
+.footer-section .linkedin-bg {
+  background-color: #0072b1;
+}
+
+
+.bg_img {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat !important;
+}
+
+.bg-fixed {
+  background-attachment: fixed;
+}
+
+.bg-overlay-base {
+  position: relative;
+  z-index: 2;
+}
+
+.bg-overlay-base:after {
+  content: "";
+  position: absolute;
+  background-color: #000000;
+  opacity: 0.6;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+}
+.footer-widget{
+  li{
+    a{
+      transition: all 0.6s;
+      border-bottom: 1px dashed $border--base;
+      margin-bottom: 10px;
+      &:hover{
+        color: $base--color;
+      }
+    }
+  }
+}
