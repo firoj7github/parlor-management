@@ -3,28 +3,28 @@
 namespace App\Http\Controllers\Admin;
 
 use Exception;
-use App\Models\Admin\Area;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Helpers\Response;
+use App\Models\Admin\ServiceType;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
-class AreaController extends Controller
+class ServiceTypeController extends Controller
 {
     /**
-     * Method for show the setup area page
-     * return view
+     * Method for view service type page
+     * @return view
      */
     public function index(){
-        $page_title     = "Setup Area";
-        $areas          = Area::orderBYDESC('id')->paginate(10);
+        $page_title     = "Service Type";
+        $service_types  = ServiceType::orderBYDESC('id')->paginate(15);
 
-        return view('admin.sections.setup-area.index',compact(
+        return view('admin.sections.service-type.index',compact(
             'page_title',
-            'areas'
+            'service_types'
         ));
     }
     /**
@@ -33,25 +33,26 @@ class AreaController extends Controller
      * @param \Illuminate\Http\Request $request
      */
     public function store(Request $request){
-        $validator     = Validator::make($request->all(),[
-            'name'     => 'required|string',
+        $validator      = Validator::make($request->all(),[
+            'name'      => 'required|string',
+            'price'     => 'required',
         ]);
 
-        if($validator->fails()) return back()->withErrors($validator)->withInput()->with("modal","add-area");
+        if($validator->fails()) return back()->withErrors($validator)->withInput()->with("modal","add-service-type");
 
         $validated     = $validator->validate();
         $validated['slug']   = Str::slug($request->name);
-        if(Area::where('name',$validated['name'])->exists()){
+        if(ServiceType::where('name',$validated['name'])->exists()){
             throw ValidationException::withMessages([
-                'name'   => 'Area already exists',
+                'name'   => 'Service Type already exists',
             ]);
         }
         try{
-            Area::create($validated);
+            ServiceType::create($validated);
         }catch(Exception $e){
             return back()->with(['error'  => ['Something went wrong! Please try again.']]);
         }
-        return back()->with(['success' => ['Area Added Successfully']]);
+        return back()->with(['success' => ['Service Type Added Successfully']]);
     }
     /**
      * Method for update Remittance bank 
@@ -61,12 +62,14 @@ class AreaController extends Controller
     public function update(Request $request){
 
         $validator = Validator::make($request->all(),[
-            'target'        => 'required|numeric|exists:areas,id',
-            'edit_name'     => 'required|string|max:80|'
+            'target'        => 'required|numeric|exists:service_types,id',
+            'edit_name'     => 'required|string|max:80|',
+            'edit_price'    => 'required'
+
         ]);
 
         if($validator->fails()) {
-            return back()->withErrors($validator)->withInput()->with("modal","edit-area");
+            return back()->withErrors($validator)->withInput()->with("modal","edit-service-type");
         }
 
         $validated = $validator->validate();
@@ -76,20 +79,20 @@ class AreaController extends Controller
         $validated = Arr::except($validated,['target']);
         $validated['slug']   = $slug;
 
-        if(Area::where('name',$validated['name'])->exists()){
+        if(ServiceType::where('name',$validated['name'])->exists()){
             throw ValidationException::withMessages([
-                'name'    => 'Area already exists',
+                'name'    => 'Service Type already exists',
             ]);
         }
-        $area = Area::find($request->target);
+        $service_type = ServiceType::find($request->target);
         
         try{
-            $area->update($validated);
+            $service_type->update($validated);
         }catch(Exception $e) {
             return back()->with(['error' => ['Something went wrong! Please try again']]);
         }
 
-        return back()->with(['success' => ['Area updated successfully!']]);
+        return back()->with(['success' => ['Service Type updated successfully!']]);
 
     }
     /**
@@ -101,14 +104,14 @@ class AreaController extends Controller
         $request->validate([
             'target'    => 'required|numeric|',
         ]);
-           $area = Area::find($request->target);
+           $service_type = ServiceType::find($request->target);
     
         try {
-            $area->delete();
+            $service_type->delete();
         } catch (Exception $e) {
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
-        return back()->with(['success' => ['Area Deleted Successfully!']]);
+        return back()->with(['success' => ['Service Type Deleted Successfully!']]);
     }
     /**
      * Method for status update for remittance bank
@@ -129,10 +132,10 @@ class AreaController extends Controller
         $validated = $validator->validate();
 
 
-        $area = Area::find($validated['data_target']);
+        $service_type = ServiceType::find($validated['data_target']);
 
         try{
-            $area->update([
+            $service_type->update([
                 'status'        => ($validated['status']) ? false : true,
             ]);
         }catch(Exception $e) {
@@ -140,7 +143,7 @@ class AreaController extends Controller
             return Response::error($errors,null,500);
         }
 
-        $success = ['success' => ['Area status updated successfully!']];
+        $success = ['success' => ['Service Type status updated successfully!']];
         return Response::success($success);
     }
 }

@@ -26,27 +26,32 @@
 
                 @include('admin.components.side-nav.link',[
                     'route'     => 'admin.dashboard',
-                    'title'     => "Dashboard",
+                    'title'     => __("Dashboard"),
                     'icon'      => "menu-icon las la-rocket",
                 ])
                 
                 {{-- Section Default --}}
                 @include('admin.components.side-nav.link-group',[
-                    'group_title'       => "Default",
+                    'group_title'       => __("Default"),
                     'group_links'       => [
                         [
-                            'title'     => "Setup Currency",
+                            'title'     => __("Setup Currency"),
                             'route'     => "admin.currency.index",
                             'icon'      => "menu-icon las la-coins",
                         ],
                         [
-                            'title'     => "Setup Area",
+                            'title'     => __("Setup Area"),
                             'route'     => "admin.area.index",
                             'icon'      => "menu-icon las la-coins",
                         ],
                         [
-                            'title'     => "Parlour List",
+                            'title'     => __("Parlour List"),
                             'route'     => "admin.parlour.list.index",
+                            'icon'      => "menu-icon las la-coins",
+                        ],
+                        [
+                            'title'     => __("Service Type"),
+                            'route'     => "admin.service.type.index",
                             'icon'      => "menu-icon las la-coins",
                         ]
                     ]
@@ -54,57 +59,57 @@
 
                 {{-- Interface Panel --}}
                 @include('admin.components.side-nav.link-group',[
-                    'group_title'       => "Interface Panel",
+                    'group_title'       => __("Interface Panel"),
                     'group_links'       => [
                         'dropdown'      => [
                             [
-                                'title'     => "User Care",
+                                'title'     => __("User Care"),
                                 'icon'      => "menu-icon las la-user-edit",
                                 'links'     => [
                                     [
-                                        'title'     => "Active Users",
+                                        'title'     => __("Active Users"),
                                         'route'     => "admin.users.active",
                                     ],
                                     [
-                                        'title'     => "Email Unverified",
+                                        'title'     => __("Email Unverified"),
                                         'route'     => "admin.users.email.unverified",
                                     ],
                                     [
-                                        'title'     => "KYC Unverified",
+                                        'title'     => __("KYC Unverified"),
                                         'route'     => "admin.users.kyc.unverified", 
                                     ],
                                     [
-                                        'title'     => "All Users",
+                                        'title'     => __("All Users"),
                                         'route'     => "admin.users.index",
                                     ],
                                     [
-                                        'title'     => "Email To Users",
+                                        'title'     => __("Email To Users"),
                                         'route'     => "admin.users.email.users",
                                     ],
                                     [
-                                        'title'     => "Banned Users",
+                                        'title'     => __("Banned Users"),
                                         'route'     => "admin.users.banned",
                                     ]
                                 ],
                             ],
                             [
-                                'title'             => "Admin Care",
+                                'title'             => __("Admin Care"),
                                 'icon'              => "menu-icon las la-user-shield",
                                 'links'     => [
                                     [
-                                        'title'     => "All Admin",
+                                        'title'     => __("All Admin"),
                                         'route'     => "admin.admins.index",
                                     ],
                                     [
-                                        'title'     => "Admin Role",
+                                        'title'     => __("Admin Role"),
                                         'route'     => "admin.admins.role.index",
                                     ],
                                     [
-                                        'title'     => "Role Permission",
+                                        'title'     => __("Role Permission"),
                                         'route'     => "admin.admins.role.permission.index", 
                                     ],
                                     [
-                                        'title'     => "Email To Admin",
+                                        'title'     => __("Email To Admin"),
                                         'route'     => "admin.admins.email.admins",
                                     ]
                                 ],
@@ -116,41 +121,41 @@
 
                 {{-- Section Settings --}}
                 @include('admin.components.side-nav.link-group',[
-                    'group_title'       => "Settings",
+                    'group_title'       => __("Settings"),
                     'group_links'       => [
                         'dropdown'      => [
                             [
-                                'title'     => "Web Settings",
+                                'title'     => __("Web Settings"),
                                 'icon'      => "menu-icon lab la-safari",
                                 'links'     => [
                                     [
-                                        'title'     => "Basic Settings",
+                                        'title'     => __("Basic Settings"),
                                         'route'     => "admin.web.settings.basic.settings",
                                     ],
                                     [
-                                        'title'     => "Image Assets",
+                                        'title'     => __("Image Assets"),
                                         'route'     => "admin.web.settings.image.assets",
                                     ],
                                     [
-                                        'title'     => "Setup SEO",
+                                        'title'     => __("Setup SEO"),
                                         'route'     => "admin.web.settings.setup.seo", 
                                     ]
                                 ],
                             ],
                             [
-                                'title'             => "App Settings",
+                                'title'             => __("App Settings"),
                                 'icon'              => "menu-icon las la-mobile",
                                 'links'     => [
                                     [
-                                        'title'     => "Splash Screen",
+                                        'title'     => __("Splash Screen"),
                                         'route'     => "admin.app.settings.splash.screen",
                                     ],
                                     [
-                                        'title'     => "Onboard Screen",
+                                        'title'     => __("Onboard Screen"),
                                         'route'     => "admin.app.settings.onboard.screens",
                                     ],
                                     [
-                                        'title'     => "App URLs",
+                                        'title'     => __("App URLs"),
                                         'route'     => "admin.app.settings.urls", 
                                     ],
                                 ],
@@ -161,27 +166,23 @@
                 
                 @include('admin.components.side-nav.link',[
                     'route'     => 'admin.languages.index',
-                    'title'     => "Languages",
+                    'title'     => __("Languages"),
                     'icon'      => "menu-icon las la-language",
                 ])
 
                 {{-- Verification Center --}}
                 @include('admin.components.side-nav.link-group',[
-                    'group_title'       => "Verification Center",
+                    'group_title'       => __("Verification Center"),
                     'group_links'       => [
                         'dropdown'      => [
                             [
-                                'title'     => "Setup Email",
+                                'title'     => __("Setup Email"),
                                 'icon'      => "menu-icon las la-envelope-open-text",
                                 'links'     => [
                                     [
-                                        'title'     => "Email Method",
+                                        'title'     => __("Email Method"),
                                         'route'     => "admin.setup.email.config",
                                     ],
-                                    // [
-                                    //     'title'     => "Default Template",
-                                    //     'route'     => "admin.setup.email.template.default",
-                                    // ]
                                 ],
                             ]
                         ],
@@ -191,7 +192,7 @@
 
                 @include('admin.components.side-nav.link',[
                     'route'     => 'admin.setup.kyc.index',
-                    'title'     => "Setup KYC",
+                    'title'     => __("Setup KYC"),
                     'icon'      => "menu-icon las la-clipboard-list",
                 ])
 

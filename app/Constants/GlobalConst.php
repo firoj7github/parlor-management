@@ -16,4 +16,8 @@ class GlobalConst {
     const DEFAULT = 0;
     const UNVERIFIED = 0;
     const UNKNOWN          = "UNKNOWN";
+
+    const MALE          = "Male";
+    const FEMALE        = "Female";
+    const OTHERS         = "Others";
 }

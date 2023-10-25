@@ -21,6 +21,7 @@ use Database\Seeders\Admin\BasicSettingsSeeder;
 use Database\Seeders\Admin\BlogSeeder;
 use Database\Seeders\Admin\ParlourListSeeder;
 use Database\Seeders\Admin\PaymentGatewaySeeder;
+use Database\Seeders\Admin\ServiceTypeSeeder;
 use Database\Seeders\Admin\TransactionSettingSeeder;
 use Database\Seeders\Admin\WeekSeeder;
 
@@ -52,7 +53,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             SetupPageSeeder::class,
             WeekSeeder::class,
-
+            ServiceTypeSeeder::class,
+            
             PaymentGatewaySeeder::class,
             BlogSeeder::class,
             ParlourListSeeder::class

@@ -22,7 +22,7 @@
                     </div>
                     <div class="about-details">
                         <div class="salon-title">
-                            <h3 class="title"><i class="las la-user-alt"></i>{{ $parlour?->name ?? '' }}</h3>
+                            <h3 class="title"><i class="las la-user-alt"></i>{{ @$parlour?->name ?? '' }}</h3>
                         </div>
                         <div class="details-area">
                             <div class="details-item">
@@ -30,7 +30,7 @@
                                     <p>{{ __("Manager") }} :</p>
                                 </div>
                                  <div class="details">
-                                     <p>{{ $parlour?->manager_name ?? '' }}</p>
+                                     <p>{{ @$parlour?->manager_name ?? '' }}</p>
                                  </div>
                             </div> 
                             <div class="details-item">
@@ -38,7 +38,7 @@
                                     <p>{{ __("Address") }} :</p>
                                 </div>
                                  <div class="details">
-                                     <p>{{ $parlour?->address ?? '' }}</p>
+                                     <p>{{ @$parlour?->address ?? '' }}</p>
                                  </div>
                             </div> 
                             <div class="details-item">
@@ -46,7 +46,7 @@
                                     <p>{{ __("Experience") }} :</p>
                                 </div>
                                  <div class="details">
-                                     <p>{{ $parlour?->experience ?? '' }}</p>
+                                     <p>{{ @$parlour?->experience ?? '' }}</p>
                                  </div>
                             </div>
                             <div class="details-item">
@@ -54,7 +54,7 @@
                                     <p>{{ __("Specialty") }} :</p>
                                 </div>
                                  <div class="details">
-                                     <p>{{ $parlour?->speciality ?? '' }}</p>
+                                     <p>{{ @$parlour?->speciality ?? '' }}</p>
                                  </div>
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                                     <p>{{ __("Contact") }} :</p>
                                 </div>
                                  <div class="details">
-                                     <p>{{ $parlour?->contact ?? '' }}</p>
+                                     <p>{{ @$parlour?->contact ?? '' }}</p>
                                  </div>
                             </div>
                             <div class="details-item">
@@ -75,7 +75,7 @@
                                     <p>{{ __("Off Day") }} :</p>
                                 </div>
                                  <div class="details">
-                                     <p>{{ $parlour?->off_days ?? '' }}</p>
+                                     <p>{{ @$parlour?->off_days ?? '' }}</p>
                                  </div>
                             </div>
                         </div>
@@ -84,13 +84,13 @@
                         </div>
                         <div class="shedule-area">
                             <div class="shedule-option pt-10">
-                                @foreach ($parlour->schedules as $item)
+                                @foreach (@$parlour->schedules as $item)
                                     <div class="shedule-item">
                                         @php
-                                            $from_time = $item->from_time ?? '';
+                                            $from_time = @$item->from_time ?? '';
                                             $parsed_from_time = \Carbon\Carbon::createFromFormat('H:i', $from_time)->format('h A');
 
-                                            $to_time   = $item->to_time ?? '';
+                                            $to_time   = @$item->to_time ?? '';
                                             $parsed_to_time = \Carbon\Carbon::createFromFormat('H:i', $to_time)->format('h A');
                                         @endphp
                                         <div class="shedule-inner">
@@ -111,31 +111,31 @@
             <div class="col-lg-6">
                 <div class="appointment-area">
                     <form class="booking-form" action="appointment.preview.html">
-                        <h3 class="title"><i class="fas fa-info-circle text--base mb-20"></i> Appointment Form</h3>
+                        <h3 class="title"><i class="fas fa-info-circle text--base mb-20"></i> {{ __("Appointment Form") }}</h3>
                         <div class="row justify-content-center mb-20-none">
                             <div class="col-lg-6 col-md-6 form-group">
-                                <label> Name <span>*</span></label>
-                                <input type="text" name="text" class="form--control" placeholder="Enter Name...">
+                                <label> {{ __("Name") }} <span>*</span></label>
+                                <input type="text" name="name" class="form--control" placeholder="{{ __("Enter Name") }}...">
                             </div>
                             <div class="col-lg-6 col-md-6 form-group">
-                                <label>Mobile <small class="text--warning">(optional)</small></label>
-                                <input type="number" name="number" class="form--control" placeholder="Mobile...">
+                                <label>{{ __("Mobile") }} <small class="text--warning">({{ __("optional") }})</small></label>
+                                <input type="number" name="mobile" class="form--control" placeholder="{{ __("Mobile") }}...">
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 form-group">
-                                <label>Email <span>*</span></label>
-                                <input type="email" name="email" class="form--control" placeholder="Email...">
+                                <label>{{ __("Email") }} <span>*</span></label>
+                                <input type="email" name="email" class="form--control" placeholder="{{ __("Email") }}...">
                             </div>
                             <div class="col-lg-6 col-md-6 form-group">
-                                <label>Gender <span class="text--base">*</span></label>
-                                    <select class="nice-select">
-                                        <option value="1">Select</option>
-                                        <option value="2">Male</option>
-                                        <option value="3">Female</option>
-                                        <option value="4">Other</option>
+                                <label>{{ __("Gender") }} <span class="text--base">*</span></label>
+                                    <select class="nice-select" name="gender">
+                                        <option selected disabled>{{ __("Select") }}</option>
+                                        <option value="{{ global_const()::MALE }}">{{ global_const()::MALE }}</option>
+                                        <option value="{{ global_const()::FEMALE }}">{{ global_const()::FEMALE }}</option>
+                                        <option value="{{ global_const()::OTHERS }}">{{ global_const()::OTHERS }}</option>
                                     </select>
                             </div>
                             <div class="col-lg-12 col-md-12 form-group">
-                                <label>Type <span class="text--base">*</span></label>
+                                <label>{{ __("Type") }} <span class="text--base">*</span></label>
                                 <select name="keywords[]" class="form--control select2-auto-tokenize"  multiple="multiple" required>
                                     <option value="1">Short Haircut </option>
                                     <option value="2">Long Haircut</option>
@@ -148,11 +148,11 @@
                                 </select>
                             </div>
                             <div class="col-xl-12 col-lg-12 form-group">
-                                <label>Your Message <small class="text--warning">(optional)</small></label>
-                                <textarea class="form--control" placeholder="Write Here..."></textarea>
+                                <label>{{ __("Your Message") }} <small class="text--warning">({{ __("optional") }})</small></label>
+                                <textarea class="form--control" placeholder="{{ __("Write Here") }}..."></textarea>
                             </div>
                             <div class="col-lg-12 form-group">
-                                <button type="submit" class="btn--base small w-100">Proceed <i class="fas fa-chevron-circle-right ms-1"></i></button>
+                                <button type="submit" class="btn--base small w-100">{{ __("Proceed") }} <i class="fas fa-chevron-circle-right ms-1"></i></button>
                             </div>
                         </div>
                     </form>

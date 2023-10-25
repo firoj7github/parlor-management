@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\PaymentGatewaysController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PushNotificationController;
 use App\Http\Controllers\Admin\ServerInfoController;
+use App\Http\Controllers\Admin\ServiceTypeController;
 use App\Http\Controllers\Admin\SetupEmailController;
 use App\Http\Controllers\Admin\SetupKycController;
 use App\Http\Controllers\Admin\SetupPagesController;
@@ -85,6 +86,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('delete','delete')->name('delete');
     });
 
+    //Service Type
+    Route::controller(ServiceTypeController::class)->prefix('service-type')->name('service.type.')->group(function(){
+        Route::get('/','index')->name('index');
+        Route::post('store','store')->name('store');
+        Route::put('update','update')->name('update');
+        Route::delete('delete','delete')->name('delete');
+        Route::put('status/update','statusUpdate')->name('status.update');
+    });
     // User Care Section
     Route::controller(UserCareController::class)->prefix('users')->name('users.')->group(function () {
         Route::get('index', 'index')->name('index');
