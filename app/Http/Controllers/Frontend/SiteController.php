@@ -112,11 +112,13 @@ class SiteController extends Controller
         }
         $areaString     = $request->area;
         $nameString     = $request->name;
+        
         return view('frontend.pages.find-parlour',compact(
             'page_title',
             'page_title',
             'areas',
             'areaString',
+            'nameString',
             'parlour_lists',
             'footer',
             'usefull_links',
