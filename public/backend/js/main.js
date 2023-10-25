@@ -887,69 +887,11 @@ var storedHtmlMarkup = {
   </div>
   <div class="card-body">
     <div class="row align-items-center">
-        <div class="col-xl-2 col-lg-2 form-group">
+        <div class="col-xl-4 col-lg-4 form-group">
             <label>Gateway Image</label>
             <input type="file" class="file-holder image" name="" accept="image/*">
         </div>
-        <div class="col-xl-3 col-lg-3 mb-10">
-            <div class="custom-inner-card">
-                <div class="card-inner-header">
-                    <h5 class="title">Amount Limit*</h5>
-                </div>
-                <div class="card-inner-body">
-                    <div class="row">
-                        <div class="col-xxl-12 col-xl-6 col-lg-6 form-group">
-                            <div class="form-group">
-                                <label>Minimum</label>
-                                <div class="input-group">
-                                    <input type="text" class="form--control min-limit number-input" value="0" name="">
-                                    <span class="input-group-text currency"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xxl-12 col-xl-6 col-lg-6 form-group">
-                            <div class="form-group">
-                                <label>Maximum</label>
-                                <div class="input-group">
-                                    <input type="text" class="form--control max-limit number-input" value="0" name="">
-                                    <span class="input-group-text currency"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-lg-3 mb-10">
-            <div class="custom-inner-card">
-                <div class="card-inner-header">
-                    <h5 class="title">Charge*</h5>
-                </div>
-                <div class="card-inner-body">
-                    <div class="row">
-                        <div class="col-xxl-12 col-xl-6 col-lg-6 form-group">
-                            <div class="form-group">
-                                <label>Fixed*</label>
-                                <div class="input-group">
-                                    <input type="text" class="form--control fixed-charge number-input" value="0" name="">
-                                    <span class="input-group-text currency"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xxl-12 col-xl-6 col-lg-6 form-group">
-                            <div class="form-group">
-                                <label>Percent*</label>
-                                <div class="input-group">
-                                    <input type="text" class="form--control percent-charge number-input" value="0" name="">
-                                    <span class="input-group-text">%</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-4 col-lg-4 mb-10">
+        <div class="col-xl-8 col-lg-8 mb-10">
             <div class="custom-inner-card">
                 <div class="card-inner-header">
                     <h5 class="title">Rate*</h5>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Frontend\AppointmentBookingController;
 use App\Http\Controllers\Frontend\SiteController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,8 +30,12 @@ Route::controller(SiteController::class)->name('frontend.')->group(function(){
     Route::get('search/parlour','searchParlour')->name('parlour.search');
 
     //parlour booking
-    Route::controller(SiteController::class)->name('parlour.booking.')->group(function(){
-        Route::get('parlour-booking/{slug}','parlourBooking')->name('index');
+    Route::controller(AppointmentBookingController::class)->name('make.appointment.')->group(function(){
+        Route::get('make-appointment/{slug}','makeAppointment')->name('index');
+        Route::post('store','store')->name('store');
+        Route::get('preview/{slug}','preview')->name('preview');
     });
+
+    //
 });
 

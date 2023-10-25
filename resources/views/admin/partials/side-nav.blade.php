@@ -301,36 +301,30 @@
                 ])
 
                 @if (admin_permission_by_name("admin.payment.gateway.view"))
-                    <li class="sidebar-menu-header">Payment Methods</li>
+                    <li class="sidebar-menu-header">{{ __("Payment Methods") }}</li>
                     @php
                         $payment_add_money_childs  = [
-                            setRoute('admin.payment.gateway.view',['add-money','automatic']),
-                            setRoute('admin.payment.gateway.view',['add-money','manual']),
+                            setRoute('admin.payment.gateway.view',['payment-method','automatic']),
+                            setRoute('admin.payment.gateway.view',['payment-method','manual']),
                         ]
                     @endphp
                     <li class="sidebar-menu-item sidebar-dropdown @if (in_array($current_url,$payment_add_money_childs)) active @endif">
                         <a href="javascript:void(0)">
                             <i class="menu-icon las la-funnel-dollar"></i>
-                            <span class="menu-title">Add Money</span>
+                            <span class="menu-title">{{ __("Payment Method") }}</span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li class="sidebar-menu-item">
-                                <a href="{{ setRoute('admin.payment.gateway.view',['add-money','automatic']) }}" class="nav-link @if ($current_url == setRoute('admin.payment.gateway.view',['add-money','automatic'])) active @endif">
+                                <a href="{{ setRoute('admin.payment.gateway.view',['payment-method','automatic']) }}" class="nav-link @if ($current_url == setRoute('admin.payment.gateway.view',['payment-method','automatic'])) active @endif">
                                     <i class="menu-icon las la-ellipsis-h"></i>
                                     <span class="menu-title">Automatic</span>
                                 </a>
-                                <a href="{{ setRoute('admin.payment.gateway.view',['add-money','manual']) }}" class="nav-link @if ($current_url == setRoute('admin.payment.gateway.view',['add-money','manual'])) active @endif">
+                                <a href="{{ setRoute('admin.payment.gateway.view',['payment-method','manual']) }}" class="nav-link @if ($current_url == setRoute('admin.payment.gateway.view',['payment-method','manual'])) active @endif">
                                     <i class="menu-icon las la-ellipsis-h"></i>
                                     <span class="menu-title">Manual</span>
                                 </a>
                             </li>
                         </ul>
-                    </li>
-                    <li class="sidebar-menu-item @if ($current_url == setRoute('admin.payment.gateway.view',['money-out','manual'])) active @endif">
-                        <a href="{{ setRoute('admin.payment.gateway.view',['money-out','manual']) }}">
-                            <i class="menu-icon las la-print"></i>
-                            <span class="menu-title">Money Out</span>
-                        </a>
                     </li>
                 @endif
 

@@ -6,19 +6,15 @@ class PaymentGatewayConst {
 
     const AUTOMATIC = "AUTOMATIC";
     const MANUAL    = "MANUAL";
-    const ADDMONEY  = "Add Money";
-    const MONEYOUT  = "Money Out";
+    const PAYMENTMETHOD  = "Payment Method";
     const ACTIVE    =  true;
 
     const ENV_SANDBOX       = "SANDBOX";
     const ENV_PRODUCTION    = "PRODUCTION";
 
-    public static function add_money_slug() {
-        return Str::slug(self::ADDMONEY);
+    public static function payment_method_slug() {
+        return Str::slug(self::PAYMENTMETHOD);
     }
 
 
-    public static function money_out_slug() {
-        return Str::slug(self::MONEYOUT);
-    }
 }

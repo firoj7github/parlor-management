@@ -18,66 +18,19 @@ class PaymentGatewaySeeder extends Seeder
     public function run()
     {
 
-        // -----------------
-        // PAYPAL (Automatic - Add Money) START
-        //------------------
-
-        $data =   array('slug' => 'add-money','code' => '105','type' => 'AUTOMATIC','name' => 'Paypal','title' => 'Paypal Gateway','alias' => 'paypal','image' => NULL,'credentials' => '[{"label":"Client ID","placeholder":"Enter Client ID","name":"client-id","value":null},{"label":"Secret ID","placeholder":"Enter Secret ID","name":"secret-id","value":null}]','supported_currencies' => '["USD","GBP","PHP","NZD","MYR","EUR","CNY","CAD","AUD"]','crypto' => '0','desc' => NULL,'input_fields' => NULL,'env' => 'SANDBOX','status' => '1','last_edit_by' => '1','created_at' => '2023-05-29 11:09:41','updated_at' => '2023-05-29 11:10:05');
-        
-        $gateway_id = PaymentGateway::insertGetId($data);
-
-        $gateway_currency = array(
-            array('payment_gateway_id' => $gateway_id,'name' => 'Paypal CAD','alias' => 'add-money-paypal-cad-automatic','currency_code' => 'CAD','currency_symbol' => '$','image' => NULL,'min_limit' => '1.00000000','max_limit' => '5000.00000000','percent_charge' => '2.00000000','fixed_charge' => '0.00000000','rate' => '1.36000000','created_at' => '2023-05-29 11:15:57','updated_at' => '2023-05-29 11:16:02'),
-            array('payment_gateway_id' => $gateway_id,'name' => 'Paypal MYR','alias' => 'add-money-paypal-myr-automatic','currency_code' => 'MYR','currency_symbol' => 'RM','image' => NULL,'min_limit' => '1.00000000','max_limit' => '5000.00000000','percent_charge' => '2.00000000','fixed_charge' => '0.00000000','rate' => '4.61000000','created_at' => '2023-05-29 11:15:57','updated_at' => '2023-05-29 11:16:02'),
-            array('payment_gateway_id' => $gateway_id,'name' => 'Paypal GBP','alias' => 'add-money-paypal-gbp-automatic','currency_code' => 'GBP','currency_symbol' => '£','image' => NULL,'min_limit' => '1.00000000','max_limit' => '5000.00000000','percent_charge' => '2.00000000','fixed_charge' => '0.00000000','rate' => '0.81000000','created_at' => '2023-05-29 11:15:57','updated_at' => '2023-05-29 11:16:02'),
-            array('payment_gateway_id' => $gateway_id,'name' => 'Paypal USD','alias' => 'add-money-paypal-usd-automatic','currency_code' => 'USD','currency_symbol' => '$','image' => NULL,'min_limit' => '1.00000000','max_limit' => '5000.00000000','percent_charge' => '2.00000000','fixed_charge' => '0.00000000','rate' => '1.00000000','created_at' => '2023-05-29 11:15:57','updated_at' => '2023-05-29 11:16:02')
+        $payment_gateways = array(
+            array('slug' => 'payment-method','code' => '105','type' => 'AUTOMATIC','name' => 'Paypal','title' => 'Paypal Gateway','alias' => 'paypal','image' => NULL,'credentials' => '[{"label":"Client ID","placeholder":"Enter Client ID","name":"client-id","value":"AbMgZu03hDEAs8aMK96dj52nCFfEEFd2nSffXsdf8NIBbOiogClRVFbsFqxqPjQHeb221XXCrZR2GXyZ"},{"label":"Secret ID","placeholder":"Enter Secret ID","name":"secret-id","value":"EHjAeQn76vtKvJBUipJ54BFqUrcuP4bB01xgbAGAn7q-p5WgtGzj6FFeEzXuTNEVaPtCcP4qKSwQu0sb"}]','supported_currencies' => '["USD"]','crypto' => '0','desc' => NULL,'input_fields' => NULL,'env' => 'SANDBOX','status' => '1','last_edit_by' => '1','created_at' => '2023-10-25 08:58:17','updated_at' => '2023-10-25 09:17:23'),
+            array('slug' => 'payment-method','code' => '110','type' => 'AUTOMATIC','name' => 'Flutterwave','title' => 'Flutterwave Gateway','alias' => 'flutterwave','image' => NULL,'credentials' => '[{"label":"Encryption key","placeholder":"Enter Encryption key","name":"encryption-key","value":"FLWSECK_TEST27bee2235efd"},{"label":"Secret key","placeholder":"Enter Secret key","name":"secret-key","value":"FLWSECK_TEST-da35e3dbd28be1e7dc5d5f3519e2ebef-X"},{"label":"Public key","placeholder":"Enter Public key","name":"public-key","value":"FLWPUBK_TEST-e0bc02a00395b938a4a2bed65e1bc94f-X"}]','supported_currencies' => '["NGN"]','crypto' => '0','desc' => NULL,'input_fields' => NULL,'env' => NULL,'status' => '1','last_edit_by' => '1','created_at' => '2023-10-25 09:24:56','updated_at' => '2023-10-25 09:24:56'),
+            array('slug' => 'payment-method','code' => '115','type' => 'AUTOMATIC','name' => 'Stripe','title' => 'Stripe Gateway','alias' => 'stripe','image' => NULL,'credentials' => '[{"label":"Publishable key","placeholder":"Enter Publishable key","name":"publishable-key","value":"pk_test_51NECrlJXLo7QTdMco2E4YxHSeoBnDvKmmi0CZl3hxjGgH1JwgcLVUF3ZR0yFraoRgT7hf0LtOReFADhShAZqTNuB003PnBSlGP"},{"label":"Secret Id","placeholder":"Enter Secret Id","name":"secret-id","value":"sk_test_51NECrlJXLo7QTdMc2x7K5LaDuiS0MGNYHkO9dzzV0Y9XuWNZsXjECFsusjZEnqtxMIjCh3qtogc5sHHwL2oQ083900aFy1k7DE"}]','supported_currencies' => '["AUD"]','crypto' => '0','desc' => NULL,'input_fields' => NULL,'env' => NULL,'status' => '1','last_edit_by' => '1','created_at' => '2023-10-25 09:26:23','updated_at' => '2023-10-25 09:26:23')
         );
-        
-        PaymentGatewayCurrency::insert($gateway_currency);
+        PaymentGateway::insert($payment_gateways);
 
-        // -----------------
-        // PAYPAL (Automatic - Add Money) END
-        //------------------
-
-
-        // -----------------
-        // AD PAY (Manual - Add Money) START
-        //------------------
-
-        $data =     array('slug' => 'add-money','code' => '110','type' => 'MANUAL','name' => 'AD PAY','title' => 'AD PAY Gateway','alias' => 'ad-pay','image' => NULL,'credentials' => NULL,'supported_currencies' => '["USD"]','crypto' => '0','desc' => '<h4><strong>Please follow the instructions bellow:</strong></h4><p><strong>Fill up all field with correct information.</strong></p>','input_fields' => '[{"type":"file","label":"Screenshoot","name":"screenshoot","required":true,"validation":{"max":"10","mimes":["jpg","png","webp","svg"],"min":0,"options":[],"required":true}},{"type":"text","label":"Transaction ID","name":"transaction_id","required":true,"validation":{"max":"60","mimes":[],"min":"0","options":[],"required":true}},{"type":"text","label":"Full Name","name":"full_name","required":true,"validation":{"max":"30","mimes":[],"min":"0","options":[],"required":true}}]','env' => NULL,'status' => '1','last_edit_by' => '1','created_at' => NULL,'updated_at' => NULL);
-        
-        $gateway_id = PaymentGateway::insertGetId($data);
-
-
-        $gateway_currency = array(
-            array('payment_gateway_id' => $gateway_id,'name' => 'AD PAY USD','alias' => 'add-money-ad-pay-usd-manual','currency_code' => 'USD','currency_symbol' => '$','image' => NULL,'min_limit' => '1.00000000','max_limit' => '5000.00000000','percent_charge' => '2.00000000','fixed_charge' => '0.00000000','rate' => '1.00000000','created_at' => '2023-05-29 11:22:38','updated_at' => '2023-05-29 11:22:38'),
+        $payment_gateway_currencies = array(
+            array('payment_gateway_id' => '1','name' => 'Paypal USD','alias' => 'payment-method-paypal-usd-automatic','currency_code' => 'USD','currency_symbol' => '$','image' => NULL,'min_limit' => '0.00000000','max_limit' => '0.00000000','percent_charge' => '0.00000000','fixed_charge' => '0.00000000','rate' => '1.00000000','created_at' => '2023-10-25 09:17:23','updated_at' => '2023-10-25 09:28:41'),
+            array('payment_gateway_id' => '2','name' => 'Flutterwave NGN','alias' => 'payment-method-flutterwave-ngn-automatic','currency_code' => 'NGN','currency_symbol' => '₦','image' => NULL,'min_limit' => '0.00000000','max_limit' => '0.00000000','percent_charge' => '0.00000000','fixed_charge' => '0.00000000','rate' => '766.00000000','created_at' => '2023-10-25 09:27:33','updated_at' => '2023-10-25 09:27:33'),
+            array('payment_gateway_id' => '3','name' => 'Stripe AUD','alias' => 'payment-method-stripe-aud-automatic','currency_code' => 'AUD','currency_symbol' => 'A$','image' => NULL,'min_limit' => '0.00000000','max_limit' => '0.00000000','percent_charge' => '0.00000000','fixed_charge' => '0.00000000','rate' => '1.53000000','created_at' => '2023-10-25 09:28:02','updated_at' => '2023-10-25 09:28:02'),           
         );
-
-        PaymentGatewayCurrency::insert($gateway_currency);
-
-        // -----------------
-        // AD PAY (Manual - Add Money) END
-        //------------------
-
-
-        // -----------------
-        // AD PAY (withdraw) (Manual - Money Out) START
-        //------------------
-
-        $data =  array('slug' => 'money-out','code' => '115','type' => 'MANUAL','name' => 'AD PAY (withdraw)','title' => 'AD PAY (withdraw) Gateway','alias' => 'ad-pay-withdraw','image' => NULL,'credentials' => NULL,'supported_currencies' => '["USD"]','crypto' => '0','desc' => '<h4><strong>Please follow the instructions bellow:</strong></h4><p><strong>Fill up all field with correct information.</strong></p>','input_fields' => '[{"type":"file","label":"Screenshoot","name":"screenshoot","required":true,"validation":{"max":"10","mimes":["jpg","png","webp","svg"],"min":0,"options":[],"required":true}},{"type":"text","label":"Bank Name","name":"bank_name","required":true,"validation":{"max":"60","mimes":[],"min":"0","options":[],"required":true}},{"type":"text","label":"A\\/C No","name":"a_c_no","required":true,"validation":{"max":"60","mimes":[],"min":"0","options":[],"required":true}}]','env' => NULL,'status' => '1','last_edit_by' => '1','created_at' => NULL,'updated_at' => NULL);
-        
-        $gateway_id = PaymentGateway::insertGetId($data);
-
-        $gateway_currency = array(
-            array('payment_gateway_id' => $gateway_id,'name' => 'AD PAY (withdraw) USD','alias' => 'money-out-ad-pay-withdraw-usd-manual','currency_code' => 'USD','currency_symbol' => '$','image' => NULL,'min_limit' => '1.00000000','max_limit' => '5000.00000000','percent_charge' => '2.00000000','fixed_charge' => '0.00000000','rate' => '1.00000000','created_at' => '2023-05-29 12:11:20','updated_at' => '2023-05-29 12:11:20'),
-        );
-
-        PaymentGatewayCurrency::insert($gateway_currency);
-
-        // -----------------
-        // AD PAY (withdraw) (Manual - Money Out) END
-        //------------------
-
+        PaymentGatewayCurrency::insert($payment_gateway_currencies);
 
 
     }

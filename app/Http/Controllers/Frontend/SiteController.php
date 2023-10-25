@@ -13,6 +13,7 @@ use App\Models\Admin\Area;
 use App\Models\Admin\Blog;
 use App\Models\Admin\BlogCategory;
 use App\Models\Admin\ParlourList;
+use App\Models\Admin\ServiceType;
 use App\Models\Admin\UsefullLink;
 use Illuminate\Support\Facades\Validator;
 
@@ -124,28 +125,6 @@ class SiteController extends Controller
             'usefull_links',
             'contact'
         ));     
-    }
-    /**
-     * Method for show parlour booking page
-     * @param $slug
-     * @param \Illuminate\Http\Request $request
-     */
-    public function parlourBooking(Request $request,$slug){
-        $page_title         = "| Parlour Booking";
-        $parlour            = ParlourList::with(['schedules'])->where('slug',$slug)->first();
-        $footer_slug        = Str::slug(SiteSectionConst::FOOTER_SECTION);
-        $footer             = SiteSections::getData($footer_slug)->first();
-        $usefull_links      = UsefullLink::where('status',true)->get();
-        $contact_slug       = Str::slug(SiteSectionConst::CONTACT_SECTION);
-        $contact            = SiteSections::getData($contact_slug)->first();
-
-        return view('frontend.pages.parlour-booking.index',compact(
-            'page_title',
-            'parlour',
-            'footer',
-            'usefull_links',
-            'contact'
-        ));
     }
     /**
      * Method for view the about page
