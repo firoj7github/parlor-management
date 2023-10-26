@@ -143,29 +143,66 @@
                             <input type="hidden" name="price" class="form--control" id="price">
                             @if ($validated_user)
                                 <div class="col-lg-6 col-md-6 form-group">
-                                    <label> {{ __("Name") }} <span>*</span></label>
-                                    <input type="text" name="name" class="form--control" value="{{ $validated_user->fullName }}" placeholder="{{ __("Enter Name") }}...">
+                                    @include('admin.components.form.input',[
+                                        'label'        => __("Name").'<span class="text--base">*</span>',
+                                        'name'         => 'name',
+                                        'value'        => $validated_user->fullName,
+                                        'attribute'    => "readonly",
+                                        'placeholder'  => __("Enter Name").'...',
+                                    ])
                                 </div>
-                                <div class="col-lg-6 col-md-6 form-group">
-                                    <label>{{ __("Mobile") }} <small class="text--warning">({{ __("optional") }})</small></label>
-                                    <input type="number" name="mobile" class="form--control" value="{{ $validated_user->full_mobile }}" placeholder="{{ __("Mobile") }}...">
-                                </div>
+                                @if ($validated_user->full_mobile)
+                                    @include('admin.components.form.input',[
+                                        'label'        => __("Mobile").'<span class="text--warning">'.'('.__("Optional").')'.'</span>',
+                                        'name'         => 'mobile',
+                                        'value'        => $validated_user->full_mobile,
+                                        'attribute'    => "readonly",
+                                        'placeholder'  => __("Mobile").'...',
+                                    ])
+                                @else
+                                    <div class="col-lg-6 col-md-6 form-group">
+                                        @include('admin.components.form.input',[
+                                            'label'        => __("Mobile").'<span class="text--warning">'.'('.__("Optional").')'.'</span>',
+                                            'name'         => 'mobile',
+                                            'value'        => old('mobile'),
+                                            'placeholder'  => __("Mobile").'...',
+                                        ])
+                                    </div>
+                                @endif
+                                
                                 <div class="col-xl-6 col-lg-6 col-md-6 form-group">
-                                    <label>{{ __("Email") }} <span>*</span></label>
-                                    <input type="email" name="email" class="form--control" value="{{ $validated_user->email }}" placeholder="{{ __("Email") }}...">
+                                    @include('admin.components.form.input',[
+                                        'label'        => __("Email").'<span class="text--base">*</span>',
+                                        'name'         => 'email',
+                                        'value'        => $validated_user->email,
+                                        'attribute'    => 'readonly',
+                                        'placeholder'  => __("Email").'...'
+                                    ])
                                 </div>
                             @else
                                 <div class="col-lg-6 col-md-6 form-group">
-                                    <label> {{ __("Name") }} <span>*</span></label>
-                                    <input type="text" name="name" class="form--control" placeholder="{{ __("Enter Name") }}...">
+                                    @include('admin.components.form.input',[
+                                        'label'        => __("Name").'<span class="text--base">*</span>',
+                                        'name'         => 'name',
+                                        'value'        => old('name'),
+                                        'placeholder'  => __("Enter Name").'...',
+                                    ])
                                 </div>
                                 <div class="col-lg-6 col-md-6 form-group">
-                                    <label>{{ __("Mobile") }} <small class="text--warning">({{ __("optional") }})</small></label>
-                                    <input type="number" name="mobile" class="form--control" placeholder="{{ __("Mobile") }}...">
+                                    @include('admin.components.form.input',[
+                                        'label'        => __("Mobile").'<span class="text--warning">'.'('.__("Optional").')'.'</span>',
+                                        'name'         => 'mobile',
+                                        'value'        => old('mobile'),
+                                        'placeholder'  => __("Mobile").'...',
+                                    ])
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 form-group">
-                                    <label>{{ __("Email") }} <span>*</span></label>
-                                    <input type="email" name="email" class="form--control" placeholder="{{ __("Email") }}...">
+                                    @include('admin.components.form.input',[
+                                        'label'        => __("Email").'<span class="text--base">*</span>',
+                                        'name'         => 'email',
+                                        'value'        => old('email'),
+                                        'placeholder'  => __("Email").'...'
+                                    ])
                                 </div>
                             @endif
                             <div class="col-lg-6 col-md-6 form-group">

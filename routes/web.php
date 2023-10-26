@@ -34,8 +34,8 @@ Route::controller(SiteController::class)->name('frontend.')->group(function(){
         Route::get('make-appointment/{slug}','makeAppointment')->name('index');
         Route::post('store','store')->name('store');
         Route::get('preview/{slug}','preview')->name('preview');
+        Route::get('confirm/{slug}','confirm')->name('confirm');
     });
 
-    //
 });
 

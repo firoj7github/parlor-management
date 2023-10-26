@@ -16,6 +16,7 @@ use App\Constants\PaymentGatewayConst;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Admin\ParlourListHasSchedule;
 use App\Models\Admin\PaymentGatewayCurrency;
+use App\Http\Helpers\PaymentGateway as PaymentGatewayHelper;
 
 class AppointmentBookingController extends Controller
 {
@@ -134,7 +135,20 @@ class AppointmentBookingController extends Controller
             'footer',
             'usefull_links',
             'contact'
-        ));
-        
+        )); 
+    }
+    /**
+     * Method for confirm the booking
+     * @param $slug
+     * @param \Illuminate\Http\Request $request
+     */
+    public function confirm(Request $request,$slug){
+        $data       = ParlourBooking::with(['payment_gateway'])->where('slug',$slug)->first();
+        try{
+            $instance = PaymentGatewayHelper::init($data)->gateway()->render();
+        }catch(Exception $e){
+            return back()->with(['error' => [$e->getMessage()]]);
+        }
+        return $instance;
     }
 }

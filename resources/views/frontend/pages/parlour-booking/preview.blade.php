@@ -29,7 +29,6 @@
                                 <li>{{ __("Name") }}:<span>{{ $booking->name ?? '' }}</span></li>
                                 <li>{{ __("Mobile") }}:<span>{{ $booking->mobile ?? '' }}</span></li>
                                 <li>{{ __("Email") }}:<span>{{ $booking->email ?? '' }}</span></li>
-                                
                                 <li>{{ __("Type") }}:<span>{{ implode(', ', $booking->type) }}</span></li>
                                 <li>{{ __("Gender") }}:<span>{{ $booking->gender ?? '' }}</span></li>
                                 <li>{{ __("Payment Gateway") }}: <span>{{ $booking->payment_gateway->name }}</span></li>
@@ -39,7 +38,11 @@
                             </ul>
                         </div>
                         <div class="btn-area mt-20">
-                            <button type="submit" class="btn--base w-100">{{ __("Confirm Appointment") }} <i class="fas fa-check-circle ms-1"></i></button>
+                            @if ($booking->status == true)
+                                <button disabled class="btn--base w-100">{{ __("Already Confirmed") }}</button>
+                            @else
+                            <a class="btn--base w-100" href="{{ setRoute('frontend.make.appointment.confirm',$booking->slug) }}">{{ __("Confirm Appointment") }} <i class="fas fa-check-circle ms-1"></i></a>
+                            @endif
                         </div>
                     </div>
                 </div>
