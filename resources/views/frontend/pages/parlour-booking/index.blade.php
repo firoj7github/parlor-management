@@ -61,7 +61,7 @@
                                             <div class="service-inner">
                                                 <input type="checkbox" name="service[]" value="{{ $item->name }}" class="hide-input service" id="service_{{ $item->id }}" data-item="{{ json_encode($item) }}">
                                                 <label for="service_{{ $item->id }}" class="package--amount">
-                                                    <p>{{ $item->name }}<span>{{ get_amount($item->price) }} {{ get_default_currency_symbol() }}</span></p>
+                                                    <p>{{ $item->name }} <span>{{ get_amount($item->price) }} {{ get_default_currency_symbol() }}</span></p>
                                                 </label>
                                             </div>
                                         </div>
