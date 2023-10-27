@@ -36,9 +36,9 @@ class BasicSettingsSeeder extends Seeder
                 "host" => "appdevs.net",
                 "port" => "465", 
                 "encryption" => "ssl",
-                "username" => "noreply@appdevs.net",
+                "username" => "system@appdevs.net",
                 "password" => "QP2fsLk?80Ac",
-                "from" => "noreply@appdevs.net", 
+                "from" => "system@appdevs.net", 
                 "app_name" => "eSalon",
             ],
             'push_notification_config'  => [

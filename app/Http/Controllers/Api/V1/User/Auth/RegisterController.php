@@ -51,14 +51,16 @@ class RegisterController extends Controller
         $agree_policy = $this->basic_settings->agree_policy == 1 ? 'required|in:on' : 'nullable';
 
         $validator = Validator::make($request->all(), [
-            'first_name' => 'required|string|max:50',
-            'last_name'  => 'required|string|max:50',
-            'email'     => 'required|email|max:160|unique:users',
-            'password'  => $passowrd_rule,
-            'policy'     => $agree_policy,
+            'first_name'    => 'required|string|max:50',
+            'last_name'     => 'required|string|max:50',
+            'email'         => 'required|email|max:160|unique:users',
+            'country'       => 'required|string',
+            'password'      => $passowrd_rule,
+            'policy'        => $agree_policy,
         ]);
 
         if($validator->fails()){
+
             $error =  ['error'=>$validator->errors()->all()];
             return Response::validation($error);
         }
@@ -77,7 +79,9 @@ class RegisterController extends Controller
         $validated['status']         = 1;
         $validated['password']       = Hash::make($validated['password']);
         $validated['username']       = make_username($validated['first_name'],$validated['last_name']);
-
+        $validated['address']           = [
+            'country'                   => $validated['country'],
+        ];
         $user = User::create($validated);
 
         $token = $user->createToken('Laravel Password Grant Client')->accessToken;
@@ -98,7 +102,7 @@ class RegisterController extends Controller
                 DB::commit();
             }catch(Exception $e) {
                 DB::rollBack();
-                $error = ['Something went worng! Please try again'];
+                $error = ['Something went worng! Please try again.'];
                 return Response::error($error);
             }
         }

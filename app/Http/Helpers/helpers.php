@@ -1406,3 +1406,9 @@ function get_auth_guard() {
         return "";
     }
 }
+
+function get_files_public_path($slug)
+{
+    $files_path = files_path($slug)->path ?? "";
+    return "public/" . $files_path;
+}

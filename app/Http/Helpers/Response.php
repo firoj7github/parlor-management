@@ -38,4 +38,9 @@ class Response {
 
         return response()->json($responseData,$status);
     }
+
+    public static function validation($message = 'Invalid Submission', $data = null)
+    {
+        return response()->json(['message' => $message, 'data' => $data], 422);
+    }
 }

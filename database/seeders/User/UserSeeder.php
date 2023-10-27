@@ -23,6 +23,7 @@ class UserSeeder extends Seeder
                 'email'             => "user@appdevs.net",
                 'username'          => "testuser",
                 'status'            => true,
+                'address'           => '{"country":"Bangladesh"}',
                 'password'          => Hash::make("appdevs"),
                 'email_verified'    => true,
                 'sms_verified'      => true,
