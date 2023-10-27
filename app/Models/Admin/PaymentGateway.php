@@ -59,5 +59,19 @@ class PaymentGateway extends Model
             $q->where("status", PaymentGatewayConst::ACTIVE);
         });
     }
+    public function isManual() {
+        if($this->type == PaymentGatewayConst::MANUAL) {
+            return true;
+        }
+        return false;
+    }
+
+    public function isAutomatic() {
+        if($this->type == PaymentGatewayConst::AUTOMATIC) {
+            return true;
+        }
+        return false;
+    }
+
     
 }

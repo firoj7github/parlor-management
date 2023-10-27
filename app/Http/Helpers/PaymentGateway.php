@@ -93,12 +93,12 @@ class PaymentGateway {
 
     public function amount() {
         $currency = $this->output['currency'] ?? null;
-        dd($currency);
         if(!$currency) throw new Exception("Gateway currency not found");
         return $this->chargeCalculate($currency);
     }
 
     public function chargeCalculate($currency,$receiver_currency = null) {
+        
         $temporary_data         = TemporaryData::where('identifier',$this->request_data['identifier'])->first();
         $amount                 = ($temporary_data->data->payable_amount / $temporary_data->data->sender_base_rate) * $temporary_data->data->currency->rate;
         $fees                   = $temporary_data->data->fees;
