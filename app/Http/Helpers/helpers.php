@@ -727,6 +727,14 @@ function get_default_currency_code($default_currency = null)
     }
     return "";
 }
+function get_default_currency_symbol($default_currency = null)
+{
+    if($default_currency == null) $default_currency = CurrencyProvider::default();
+    if ($default_currency != false) {
+        return $default_currency->symbol;
+    }
+    return "";
+}
 function get_default_currency_rate($default_currency = null)
 {
     if($default_currency == null) $default_currency = CurrencyProvider::default();
@@ -1411,4 +1419,11 @@ function get_files_public_path($slug)
 {
     $files_path = files_path($slug)->path ?? "";
     return "public/" . $files_path;
+}
+
+function files_asset_path_basename($slug) {
+    return "public/" . files_path($slug)->path;
+}
+function get_only_numeric_data($string) {
+    return preg_replace("/[^0-9]/","",$string);
 }

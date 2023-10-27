@@ -34,9 +34,9 @@ class SocialAuthentication extends Controller
                 }
             }
         }catch(Exception $e) {
-            return redirect()->route('user.login')->with(['error' => ["Something went wrong! Please try again"]]);
+            return redirect()->route('index')->with(['error' => ["Something went wrong! Please try again"]]);
         }
-        return redirect()->route('user.login')->with(['error' => ["Something went wrong! Please try again"]]);
+        return redirect()->route('index')->with(['error' => ["Something went wrong! Please try again"]]);
     }
 
     public function handleInhouseUser($user) {
@@ -61,7 +61,7 @@ class SocialAuthentication extends Controller
             $validated['kyc_verified']      = ($basic_settings->kyc_verification == true) ? false : true;
             $user = User::create($user_info);
         }catch(Exception $e) {
-            return redirect()->route('user.login')->with(['error' => ["Something went wrong! Please try again"]]);
+            return redirect()->route('index')->with(['error' => ["Something went wrong! Please try again"]]);
         }
 
         Auth::guard("web")->login($user);
@@ -87,9 +87,9 @@ class SocialAuthentication extends Controller
                 }
             }
         }catch(Exception $e) {
-            return redirect()->route('user.login')->with(['error' => ["Something went wrong! Please try again"]]);
+            return redirect()->route('index')->with(['error' => ["Something went wrong! Please try again"]]);
         }
-        return redirect()->route('user.login')->with(['error' => ["Something went wrong! Please try again"]]);
+        return redirect()->route('index')->with(['error' => ["Something went wrong! Please try again"]]);
     }
 
     public function handleNewUserFromFacebook($user) {
@@ -109,7 +109,7 @@ class SocialAuthentication extends Controller
             $validated['kyc_verified']      = ($basic_settings->kyc_verification == true) ? false : true;
             $user = User::create($user_info);
         }catch(Exception $e) {
-            return redirect()->route('user.login')->with(['error' => ["Something went wrong! Please try again"]]);
+            return redirect()->route('index')->with(['error' => ["Something went wrong! Please try again"]]);
         }
 
         Auth::guard("web")->login($user);

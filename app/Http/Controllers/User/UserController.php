@@ -105,7 +105,7 @@ class UserController extends Controller
                 }
                 return redirect()->route('user.dashboard');
             } else {
-                return redirect()->route('user.login')
+                return redirect()->route('index')
                     ->with(['error' =>  ['Email-Address And Password Are Wrong.']]);
             }
         }
@@ -174,9 +174,9 @@ class UserController extends Controller
                 $user->save();
                 if (isset($this->basic_settings) && $this->basic_settings->email_verification == 1) {
                     Mail::to($data['email'])->send(new UserRegister($data['first_name'], base64_encode($data['email'])));
-                    return redirect()->route('user.login')->with(['success' => ['Please check your email to activate your account.']]);
+                    return redirect()->route('index')->with(['success' => ['Please check your email to activate your account.']]);
                 } else {
-                    return redirect()->route('user.login')->with(['success' => ['Registration successfull.']]);
+                    return redirect()->route('index')->with(['success' => ['Registration successfull.']]);
                 }
             } catch (Exception $e) {
                 info($e);
@@ -199,7 +199,7 @@ class UserController extends Controller
             $userDetails = User::where('email', $email)->first();
             if ($userDetails->status == 1) {
                 Session::put('error');
-                return redirect()->route('user.login')->with(['error' => 'Your email account is already activated! Please login']);
+                return redirect()->route('index')->with(['error' => 'Your email account is already activated! Please login']);
             } else {
                 User::where('email', $email)->update(['status' => 1, 'email_verified' => 1, 'email_verified_at' => Carbon::now()]);
                 try {
@@ -208,7 +208,7 @@ class UserController extends Controller
                     info($ex);
                 }
                 // Session::put('success');
-                return redirect()->route('user.login')->with(['success' => ['Your email account is activated! You can login now and update your necessary information to upload product']]);
+                return redirect()->route('index')->with(['success' => ['Your email account is activated! You can login now and update your necessary information to upload product']]);
             }
         } else {
             abort(404);
@@ -231,7 +231,7 @@ class UserController extends Controller
                 Mail::to($data['email'])->send(new UserForgotPasswordCode($userCheck->username, $pwdCode));
                 return redirect('user/enter/pwd/reset/code')->with(['success' => ['Please check email inbox/spam']]);
             } else {
-                return redirect()->route('user.login')->with(['error' => ['Email not found']]);
+                return redirect()->route('index')->with(['error' => ['Email not found']]);
             }
         }
     }

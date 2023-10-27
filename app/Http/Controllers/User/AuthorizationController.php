@@ -60,7 +60,7 @@ class AuthorizationController extends Controller
 
         if($auth_column->created_at->addSeconds($otp_exp_sec) < now()) {
             $this->authLogout($request);
-            return redirect()->route('user.login')->with(['error' => ['Session expired. Please try again']]);
+            return redirect()->route('index')->with(['error' => ['Session expired. Please try again']]);
         }
 
         try{

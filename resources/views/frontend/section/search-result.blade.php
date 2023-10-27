@@ -14,7 +14,7 @@
                             <p>{{ $item->experience ?? '' }}</p>
                             <p>{{ $item->address ?? '' }}</p>
                             <div class="booking-btn">
-                                <a href="{{ setRoute('frontend.make.appointment.index',$item->slug) }}" class="btn--base">{{ __("Book Now") }}</a>
+                                <a href="{{ setRoute('frontend.get.service.index',$item->slug) }}" class="btn--base">{{ __("Get Service") }}</a>
                             </div>
                         </div>
                     </div>

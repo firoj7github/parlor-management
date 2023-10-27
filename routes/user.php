@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Frontend\ParlourBookingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\ProfileController;
@@ -25,5 +26,4 @@ Route::prefix("user")->name("user.")->group(function(){
         Route::get('conversation/{encrypt_id}','conversation')->name('conversation');
         Route::post('message/send','messageSend')->name('message.send');
     });
-
 });

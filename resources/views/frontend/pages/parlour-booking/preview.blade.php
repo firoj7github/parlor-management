@@ -14,35 +14,60 @@
             <div class="col-xl-8 col-lg-8 col-md-12 mb-30">
                 <div class="booking-area">
                     <div class="content pt-0">
-                        <h3 class="title"><i class="fas fa-info-circle text--base mb-20"></i> {{ __("Appointment Preview") }}</h3>
+                        <h3 class="title"><i class="fas fa-info-circle text--base mb-20"></i>{{ __("Appointment Preview") }}</h3>
                         <div class="list-wrapper">
-                            <ul class="list">
-                                @php
-                                    $from_time = $booking->schedule->from_time ?? '';
-                                    $parsed_from_time = \Carbon\Carbon::createFromFormat('H:i', $from_time)->format('h A');
-
-                                    $to_time   = $booking->schedule->to_time ?? '';
-                                    $parsed_to_time = \Carbon\Carbon::createFromFormat('H:i', $to_time)->format('h A');
-                                @endphp
-                                <li>{{ __("Parlour Name") }}:<span>{{ $booking->parlour->name ?? '' }}</span></li>
-                                <li>{{ __("Schedule") }}:<span>{{ $booking->schedule->week->day ?? '' }} ({{ $parsed_from_time ?? '' }} - {{ $parsed_to_time ?? '' }})</span></li>
-                                <li>{{ __("Name") }}:<span>{{ $booking->name ?? '' }}</span></li>
-                                <li>{{ __("Mobile") }}:<span>{{ $booking->mobile ?? '' }}</span></li>
-                                <li>{{ __("Email") }}:<span>{{ $booking->email ?? '' }}</span></li>
-                                <li>{{ __("Type") }}:<span>{{ implode(', ', $booking->type) }}</span></li>
-                                <li>{{ __("Gender") }}:<span>{{ $booking->gender ?? '' }}</span></li>
-                                <li>{{ __("Payment Gateway") }}: <span>{{ $booking->payment_gateway->name }}</span></li>
-                                <li>{{ __("Exchange Rate") }}: <span>{{ get_amount(get_default_currency_rate()) }} {{ get_default_currency_code() }} = {{ get_amount($booking->payment_gateway->rate) }} {{ $booking->payment_gateway->currency_code ?? '' }}</span></li>
-                                <li>{{ __("Price") }}: <span>{{ $booking->price }} {{ get_default_currency_code() }}</span></li>
-                                <li>{{ __("Total Price") }}: <span>{{ floatVal($booking->price) * get_amount($booking->payment_gateway->rate)  }} {{ $booking->payment_gateway->currency_code }}</span></li>
-                            </ul>
+                            <div class="preview-area">
+                                <div class="preview-item">
+                                   <p>{{ __("Parlour Name") }} :</p>
+                                </div>
+                                <div class="preview-details">
+                                    <p>{{ @$booking->parlour->name ?? '' }}</p>
+                                </div>
+                            </div>
+                            <div class="preview-area">
+                                <div class="preview-item">
+                                   <p>{{ __("Service Type") }} :</p>
+                                </div>
+                                <div class="preview-details">
+                                    <p>{{ implode(', ',@$booking->service) }}</p>
+                                </div>
+                            </div>
+                            <div class="preview-area">
+                                <div class="preview-item">
+                                   <p>{{ __("Schedule") }} :</p>
+                                </div>
+                                <div class="preview-details">
+                                    <p>{{ @$booking->schedule->week->day ?? '' }}</p>
+                                </div>
+                            </div>
+                            <div class="preview-area">
+                                <div class="preview-item">
+                                   <p>{{ __("Total Amount") }} :</p>
+                                </div>
+                                <div class="preview-details">
+                                    <p>{{ get_amount(@$booking->price, get_default_currency_symbol()) ?? '' }}</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="btn-area mt-20">
-                            @if ($booking->status == true)
-                                <button disabled class="btn--base w-100">{{ __("Already Confirmed") }}</button>
-                            @else
-                            <a class="btn--base w-100" href="{{ setRoute('frontend.make.appointment.confirm',$booking->slug) }}">{{ __("Confirm Appointment") }} <i class="fas fa-check-circle ms-1"></i></a>
-                            @endif
+                        <div class="payment-type pt-4">
+                            <div class="form-group">
+                                <h5 class="title">{{ __("Select Payment Method") }}<span>*</span></h5>
+                                <div class="radio-wrapper pt-2" id="pg-view">
+                                    <div class="radio-item">
+                                        <input type="radio" id="level" checked name="radio-group">
+                                        <label for="level">{{ __("Cash-Payment") }}</label>
+                                    </div>
+                                    @foreach ($payment_gateway as $item)
+                                        <div class="radio-item">
+                                            <input type="radio" id="level_{{ $item->id }}" name="radio-group">
+                                            <label for="level_{{ $item->id }}">{{ $item->name }}</label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-area mt-30">
+                            <button type="submit" class="btn--base w-100">{{ __("Confirm Appointment") }} <i class="fas fa-check-circle ms-1"></i></button>
                         </div>
                     </div>
                 </div>

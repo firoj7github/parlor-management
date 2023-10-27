@@ -71,13 +71,10 @@ class ProfileController extends Controller
             'firstname'     => "required|string|max:60",
             'lastname'      => "required|string|max:60",
             'country'       => "required|string|max:50",
-            'mobile_code'   => "required|string|max:20",
-            'mobile'        => "required|string|max:20",
-            'gender'        => "nullable|string|max:20",
-            'date_of_birth' => "nullable|string|date",
+            'mobile'        => "nullable|string|max:20",
             'state'         => "nullable|alpha_num|max:50",
             'city'          => "nullable|alpha_num|max:50",
-            'zip'      => "nullable|numeric",
+            'zip'           => "nullable|numeric",
             'address'       => "nullable|string|max:250",
             'image'         => "nullable|image|mimes:jpg,png,svg,webp|max:10240",
         ]);
@@ -85,10 +82,8 @@ class ProfileController extends Controller
         if($validator->fails()) return Response::error($validator->errors()->all(),[]);
 
         $validated = $validator->validate();
-        $validated['mobile']        = get_only_numeric_data($validated['mobile']);
-        $validated['mobile_code']   = get_only_numeric_data($validated['mobile_code']);
-        $complete_phone             = $validated['mobile_code'] . $validated['mobile'];
-        $validated['full_mobile']   = $complete_phone;
+        $validated['mobile']        = $validated['mobile'];
+        $validated['full_mobile']   = $validated['mobile'];
 
         $user = auth()->guard(get_auth_guard())->user();
 
@@ -101,12 +96,12 @@ class ProfileController extends Controller
         if(is_numeric($validated['state'])){
             return Response::error(['The State must only contain letters.'],[],400);
         }
-        $validated['address']       = [
-            'country'       =>$validated['country'],
-            'state'         => $validated['state'] ?? "", 
-            'city'          => $validated['city'] ?? "", 
-            'zip'   => $validated['zip'] ?? "", 
-            'address'       => $validated['address'] ?? "",
+        $validated['address']   = [
+            'country'           => $validated['country'],
+            'state'             => $validated['state'] ?? "", 
+            'city'              => $validated['city'] ?? "", 
+            'zip'               => $validated['zip'] ?? "", 
+            'address'           => $validated['address'] ?? "",
         ];
 
         if($request->hasFile("image")) {
@@ -169,62 +164,6 @@ class ProfileController extends Controller
         return Response::success(['Logout success!'],[],200);
     }
 
-    //user history
-
-    public function history(){
-        $booking    = DoctorAppointment::with(['doctors','schedules','user'])->where('user_id',auth()->user()->id)->get()->map(function($data){
-            $originalDate = $data->created_at;
-            $formattedDate = Carbon::parse($originalDate);
-            
-            $date  = $formattedDate->format('d');    
-            $month = $formattedDate->format('F');  
-            $year  = $formattedDate->format('Y');  
-            return [
-                'id'              => $data->id,
-                'doctor_name'     => $data->doctors->name,
-                'patient_name'    => $data->name,
-                'patient_mobile'  => $data->phone,
-                'patient_email'   => $data->email,
-                'type'            => $data->type,
-                'fees'            => get_amount($data->doctors->fees).' '.CurrencyProvider::default()->code,
-                'day'             => $data->schedules->week->day,
-                'from_time'       => $data->schedules->from_time,
-                'to_time'         => $data->schedules->to_time,
-                'status'          => $data->status,
-                'date'            => $date,
-                'month'           => $month,
-                'year'            => $year,
-            ]; 
-        });
-        
-        return Response::success(['History data fetch successfully.'],$booking,200);
-    }
-    //user history
-
-    public function homeServiceHistory(){
-        
-        $home_service_booking    = HomeTestService::where('user_id',auth()->user()->id)->get()->map(function($data){
-            $originalDate = $data->created_at;
-            $formattedDate = Carbon::parse($originalDate);
-            
-            $date  = $formattedDate->format('d');    
-            $month = $formattedDate->format('F');  
-            $year  = $formattedDate->format('Y');  
-            return [
-                'id'              => $data->id,
-                'slug'            => $data->slug,
-                'patient_name'    => $data->name,
-                'patient_email'   => $data->email,
-                'patient_mobile'  => $data->phone,
-                'type'            => $data->type,
-                'schedule'        => $data->schedule,
-                'status'          => $data->status,
-                'date'            => $date,
-                'month'           => $month,
-                'year'            => $year,
-            ]; 
-        });
-        return Response::success(['History data fetch successfully.'],$home_service_booking,200);
-    }
+    
 
 }

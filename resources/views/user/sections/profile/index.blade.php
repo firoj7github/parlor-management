@@ -77,7 +77,7 @@
                                 </div>
                                 <div class="col-xl-6 col-lg-6 form-group">
                                     @include('admin.components.form.input',[
-                                        'label'         => __("Phone")."<span>*</span>",
+                                        'label'         => __("Phone"),
                                         'name'          => "phone",
                                         'type'          => "number",
                                         'placeholder'   => __("Enter Number")."...",

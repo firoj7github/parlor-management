@@ -20,15 +20,12 @@ return new class extends Migration
             $table->unsignedBigInteger("user_id")->nullable();
             $table->unsignedBigInteger("payment_gateway_currency_id")->nullable();
             $table->string('slug');
-            $table->string('name');
-            $table->string('mobile')->nullable();
-            $table->string('email');
-            $table->string('price');
-            $table->string('type')->comment('Appointment Type');
-            $table->string('gender');
+            $table->decimal('price',28,8)->default(0);
+            $table->decimal('gateway_payable_price',28,8)->nullable();
+            $table->string('service')->comment('Service Type');
             $table->text('message')->nullable();
             $table->integer('serial_number');
-            $table->boolean("status")->default(false)->comment("Appointment Status");
+            $table->boolean("status")->default(false)->comment("Booking Status");
             $table->timestamps();
 
             $table->foreign("parlour_id")->references("id")->on("parlour_lists")->onDelete("cascade")->onUpdate("cascade");

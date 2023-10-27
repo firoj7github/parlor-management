@@ -18,21 +18,17 @@ use App\Models\Admin\ParlourListHasSchedule;
 use App\Models\Admin\PaymentGatewayCurrency;
 use App\Http\Helpers\PaymentGateway as PaymentGatewayHelper;
 
-class AppointmentBookingController extends Controller
+class ParlourBookingController extends Controller
 {
     /**
      * Method for show parlour booking page
      * @param $slug
      * @param \Illuminate\Http\Request $request
      */
-    public function makeAppointment(Request $request,$slug){
+    public function getService(Request $request,$slug){
         $page_title         = "| Parlour Booking";
         $parlour            = ParlourList::with(['schedules'])->where('slug',$slug)->first();
         $service_types      = ServiceType::where('status',true)->get();
-        $payment_gateway   = PaymentGatewayCurrency::whereHas('gateway', function ($gateway) {
-            $gateway->where('slug', PaymentGatewayConst::payment_method_slug());
-            $gateway->where('status', 1);
-        })->get();
         $validated_user     = auth()->user();
         $footer_slug        = Str::slug(SiteSectionConst::FOOTER_SECTION);
         $footer             = SiteSections::getData($footer_slug)->first();
@@ -45,7 +41,6 @@ class AppointmentBookingController extends Controller
             'page_title',
             'parlour',
             'service_types',
-            'payment_gateway',
             'validated_user',
             'footer',
             'usefull_links',
@@ -57,17 +52,14 @@ class AppointmentBookingController extends Controller
      * @param \Illuminate\Http\Request $request
      */
     public function store(Request $request){
+        $validated_user         = auth()->user();
+        if(!$validated_user) return back()->with(['error' => ['Please Login First.']]);
         $validator              = Validator::make($request->all(),[
             'parlour'           => 'required',
             'schedule'          => 'required',
             'price'             => 'required',
-            'payment_gateway'   => 'required',
-            'name'              => 'required',
-            'mobile'            => 'nullable',
-            'email'             => 'required',
-            'gender'            => 'required',
-            'type'              => "nullable|array",
-            'type.*'            => "nullable|string|max:255",
+            'service'           => "required|array",
+            'service.*'         => "required|string|max:255",
             'message'           => "nullable"
         ]);
         if($validator->fails()){
@@ -76,7 +68,6 @@ class AppointmentBookingController extends Controller
         $validated                  = $validator->validate();
         $validated['slug']          = Str::uuid();
         $slug                       = $validated['parlour'];
-        $payment_gateway            = $validated['payment_gateway'];
         $parlour                    = ParlourList::where('slug',$slug)->first();
         if(!$parlour) return back()->with(['error'=> ['Parlour Not Found!']]);
         if(auth()->check()){
@@ -96,10 +87,7 @@ class AppointmentBookingController extends Controller
             return back()->with(['error' => ['Schedule Not Found!']]);
         }
         $validated['schedule_id'] = $validated['schedule'];
-        $payment_method     = PaymentGatewayCurrency::where('id',$payment_gateway)->first();
-        if(!$payment_method) return back()->with(['error' => ['Payment Gateway Not Found!']]);
         
-        $validated['payment_gateway_currency_id']   = $payment_method->id;
         $alrady_appointed = ParlourBooking::where('parlour_id',$parlour->id)->where('schedule_id',$validated['schedule_id'])->count();
 
         if($alrady_appointed >= $schedule->max_client) {
@@ -113,7 +101,7 @@ class AppointmentBookingController extends Controller
         }catch(Exception $e){
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
-        return redirect()->route('frontend.make.appointment.preview',$booking->slug);
+        return redirect()->route('parlour.booking.preview',$booking->slug);
     }
     /**
      * Method for show the preview page 
@@ -123,6 +111,10 @@ class AppointmentBookingController extends Controller
     public function preview(Request $request,$slug){
         $page_title         = "Appointment Preview";
         $booking            = ParlourBooking::with(['parlour','schedule','payment_gateway'])->where('slug',$slug)->first();
+        $payment_gateway   = PaymentGatewayCurrency::whereHas('gateway', function ($gateway) {
+            $gateway->where('slug', PaymentGatewayConst::payment_method_slug());
+            $gateway->where('status', 1);
+        })->get();
         $footer_slug        = Str::slug(SiteSectionConst::FOOTER_SECTION);
         $footer             = SiteSections::getData($footer_slug)->first();
         $usefull_links      = UsefullLink::where('status',true)->get();
@@ -132,6 +124,7 @@ class AppointmentBookingController extends Controller
         return view('frontend.pages.parlour-booking.preview',compact(
             'page_title',
             'booking',
+            'payment_gateway',
             'footer',
             'usefull_links',
             'contact'

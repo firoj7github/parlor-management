@@ -36,7 +36,6 @@ class WebSettingsController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'base_color'        => 'required|string',
-            'secondary_color'   => 'required|string',
             'site_name'         => 'required|string',
             'site_title'        => 'required|string',
             'otp_exp_seconds'   => 'required|string',
