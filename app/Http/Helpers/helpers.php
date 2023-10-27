@@ -21,6 +21,7 @@ use Intervention\Image\Facades\Image;
 use App\Constants\PaymentGatewayConst;
 use Buglinjo\LaravelWebp\Facades\Webp;
 use App\Models\Admin\AdminNotification;
+use App\Models\UserNotification;
 use App\Providers\Admin\CurrencyProvider;
 use App\Providers\Admin\BasicSettingsProvider;
 
@@ -1426,4 +1427,8 @@ function files_asset_path_basename($slug) {
 }
 function get_only_numeric_data($string) {
     return preg_replace("/[^0-9]/","",$string);
+}
+function get_user_notifications(){
+    $notifications  = UserNotification::auth()->latest()->take(5)->get();
+    return $notifications;
 }

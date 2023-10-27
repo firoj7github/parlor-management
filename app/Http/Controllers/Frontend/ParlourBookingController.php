@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Frontend;
 
 use Exception;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\ParlourBooking;
+use App\Models\UserNotification;
 use App\Models\Admin\ParlourList;
 use App\Models\Admin\ServiceType;
 use App\Models\Admin\UsefullLink;
@@ -136,12 +138,39 @@ class ParlourBookingController extends Controller
      * @param \Illuminate\Http\Request $request
      */
     public function confirm(Request $request,$slug){
-        $data       = ParlourBooking::with(['payment_gateway'])->where('slug',$slug)->first();
-        try{
-            $instance = PaymentGatewayHelper::init($data)->gateway()->render();
-        }catch(Exception $e){
-            return back()->with(['error' => [$e->getMessage()]]);
+
+        $data       = ParlourBooking::with(['payment_gateway','parlour','schedule','user'])->where('slug',$slug)->first();
+        $validator  = Validator::make($request->all(),[
+            'payment_method'    => 'required',
+        ]);
+        $validated  = $validator->validate();
+        $from_time        = $data->schedule->from_time ?? '';
+        $parsed_from_time = Carbon::createFromFormat('H:i', $from_time)->format('h A');
+
+        $to_time          = $data->schedule->to_time ?? '';
+        $parsed_to_time   = Carbon::createFromFormat('H:i', $to_time)->format('h A');
+        if($validated['payment_method'] == global_const()::CASH_PAYMENT){
+            try{
+                $data->update([
+                    'payment_method'    => $validated['payment_method'],
+                    'status'            => true,
+                ]);
+                UserNotification::create([
+                    'user_id'  => auth()->user()->id,
+                    'message'  => "Your Booking (Parlour: ".$data->parlour->name.",
+                    Day: ".$data->schedule->week->day.", Time: ".$parsed_from_time."-".$parsed_to_time.", Serial Number: ".$data->serial_number.") Successfully Booked.", 
+                ]);
+            }catch(Exception $e){
+                return back()->with(['error' => ['Something went wrong! Please try again.']]);
+            }
+            return redirect()->route('find.parlour')->with(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);
+        }else{
+            try{
+                $instance = PaymentGatewayHelper::init($data)->gateway()->render();
+            }catch(Exception $e){
+                return back()->with(['error' => [$e->getMessage()]]);
+            }
+            return $instance;
         }
-        return $instance;
     }
 }

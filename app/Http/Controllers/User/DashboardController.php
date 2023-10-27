@@ -9,12 +9,7 @@ use Illuminate\Support\Facades\Validator;
 
 class DashboardController extends Controller
 {
-    public function index()
-    {
-        $page_title = "Dashboard";
-        return view('user.dashboard',compact("page_title"));
-    }
-
+    
     public function logout(Request $request) {
         Auth::logout();
         $request->session()->invalidate();

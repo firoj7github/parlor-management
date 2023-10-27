@@ -18,4 +18,7 @@ class UserNotification extends Model
         'created_at'    => 'datetime',
         'updated_at'    => 'datetime',
     ];
+    public function scopeAuth($query){
+        $query->where('user_id',auth()->user()->id);
+    }
 }

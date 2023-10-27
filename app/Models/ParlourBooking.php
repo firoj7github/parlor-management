@@ -19,6 +19,7 @@ class ParlourBooking extends Model
         'schedule_id'                   => 'integer',
         'user_id'                       => 'integer',
         'payment_gateway_currency_id'   => 'integer',
+        'payment_method'                => 'string',
         'slug'                          => 'string',
         'price'                         => 'decimal:8',
         'gateway_payable_price'         => 'decimal:8',
@@ -27,6 +28,12 @@ class ParlourBooking extends Model
         'serial_number'                 => 'integer',
         'status'                        => 'boolean',
     ];
+    public function scopeAuth($query){
+        $query->where('user_id',auth()->user()->id);
+    }
+    public function user(){
+        return $this->belongsTo(User::class,'user_id');
+    }
     public function schedule(){
         return $this->belongsTo(ParlourListHasSchedule::class,'schedule_id');
     }

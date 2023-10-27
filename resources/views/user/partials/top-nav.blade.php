@@ -17,45 +17,25 @@
                 </button>
                 <div class="notification-wrapper">
                     <div class="notification-header">
-                        <h5 class="title">Notification</h5>
+                        <h5 class="title">{{ __("Notification") }}</h5>
                     </div>
                     <ul class="notification-list">
-                        <li>
-                            <div class="thumb">
-                                <img src="{{ asset('public/frontend') }}/images/client/client-1.webp" alt="user">
-                            </div>
-                            <div class="content">
-                                <div class="title-area">
-                                    <h5 class="title">Appointment</h5>
-                                    <span class="time">Thu 3.00PM</span>
+                        @forelse (get_user_notifications() ?? [] as $item)
+                            <li>
+                                <div class="thumb">
+                                    <img src="{{ auth()->user()->userImage }}" alt="user">
                                 </div>
-                                <span class="sub-title">Evolve Salon Appointment booking Done. Schedule Wednesday 5th</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="thumb">
-                                <img src="{{ asset('public/frontend') }}/images/client/client-2.webp" alt="user">
-                            </div>
-                            <div class="content">
-                                <div class="title-area">
-                                    <h5 class="title">Appointment</h5>
-                                    <span class="time">Thu 3.00PM</span>
+                                <div class="content">
+                                    <div class="title-area">
+                                        <h5 class="title">{{ __("Booking") }}</h5>
+                                        <span class="time">{{ @$item->created_at->diffForHumans() }}</span>
+                                    </div>
+                                    <span class="sub-title">{{ @$item->message }}</span>
                                 </div>
-                                <span class="sub-title">Evolve Salon Appointment booking Done. Schedule Wednesday 5th</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="thumb">
-                                <img src="{{ asset('public/frontend') }}/images/client/client-3.webp" alt="user">
-                            </div>
-                            <div class="content">
-                                <div class="title-area">
-                                    <h5 class="title">Appointment</h5>
-                                    <span class="time">Thu 3.00PM</span>
-                                </div>
-                                <span class="sub-title">Evolve Salon Appointment booking Done. Schedule Wednesday 5th</span>
-                            </div>
-                        </li>
+                            </li>
+                        @empty
+                            <p>{{ __("No Notification Found!") }}</p>
+                        @endforelse
                     </ul>
                 </div>
             </div>

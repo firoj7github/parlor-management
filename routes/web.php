@@ -38,6 +38,7 @@ Route::controller(SiteController::class)->name('frontend.')->group(function(){
 Route::controller(ParlourBookingController::class)->name('parlour.booking.')->group(function(){
     Route::post('store','store')->name('store');
     Route::get('preview/{slug}','preview')->name('preview');
+    Route::post('confirm/{slug}','confirm')->name('confirm');
 });
 
 
