@@ -70,7 +70,7 @@
                                             <div class="service-inner">
                                                 <input type="checkbox" name="service[]" value="{{ $item->service_name }}" class="hide-input service" id="service_{{ $item->id }}" data-item="{{ json_encode($item) }}">
                                                 <label for="service_{{ $item->id }}" class="package--amount">
-                                                    <p>{{ $item->service_name }} <span>{{ get_amount($item->price) }} {{ get_default_currency_symbol() }}</span></p>
+                                                    <p>{{ $item->service_name }} <span>{{ get_default_currency_symbol() }}{{ get_amount($item->price) }} </span></p>
                                                 </label>
                                             </div>
                                         </div>
@@ -150,7 +150,7 @@
             var totalPrice      = servicePrice.reduce(function (a,b) { 
                 return a + b;
             },0);
-            $('.price').text(totalPrice.toFixed(2) + ' ' + '{{ get_default_currency_symbol() }}')
+            $('.price').text('{{ get_default_currency_symbol() }}' + totalPrice.toFixed(2))
             $('#price').val(totalPrice.toFixed(2));
         });
         $(document).ready(function(){
