@@ -9,8 +9,10 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Helpers\Response;
+use Illuminate\Support\Carbon;
 use App\Models\Admin\ParlourList;
 use App\Http\Controllers\Controller;
+use App\Models\Admin\ParlourHasService;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Admin\ParlourListHasSchedule;
 use Illuminate\Validation\ValidationException;
@@ -37,24 +39,22 @@ class ParlourListController extends Controller
     */
     public function create(){
         $page_title      = "Parlour Create";
-        $weeks           = Week::get();
         $areas           = Area::where('status',true)->get();
+        $todayDate       = Carbon::now()->format('d F, Y');
 
         return view('admin.sections.parlour-list.create',compact(
             'page_title',
             'areas',
-            'weeks',
+            'todayDate'
         ));
     }
-    /**
-     * Method for show all days 
-     * @param string $slug
-     * @param \Illuminate\Http\Request  $request
-     */
     public function getScheduleDays(){
-        $weeks       = Week::get();
 
-        return view('admin.components.parlour-list.schedule-item',compact('weeks'));
+        return view('admin.components.parlour-list.schedule-item');
+    }
+    public function getService(){
+
+        return view('admin.components.parlour-list.service-item');
     }
     /**
      * Method for store parlour list information
@@ -69,10 +69,12 @@ class ParlourListController extends Controller
             'speciality'       => 'nullable',
             'contact'          => 'required',
             'address'          => 'nullable',
-            'price'            => 'required|numeric',
             'off_days'         => 'required|string',
-            'schedule_day'     => 'required|array',
-            'schedule_day.*'   => 'required|string',
+            'number_of_dates'  => 'required|integer',
+            'service_name'     => 'required|array',
+            'service_name.*'   => 'required|string',
+            'price'            => 'required|array',
+            'price.*'          => 'required|string',
             'from_time'        => 'required|array',
             'from_time.*'      => 'required|string',
             'to_time'          => 'required|array',
@@ -97,21 +99,19 @@ class ParlourListController extends Controller
         if($request->hasFile("image")){
             $validated['image'] = $this->imageValidate($request,"image",null);
         }
-
-        $shedule_days   = $validated['schedule_day'];
+        $service_name   = $validated['service_name'];
+        $price          = $validated['price'];
         $from_time      = $validated['from_time'];
         $to_time        = $validated['to_time'];
         $max_client     = $validated['max_client'];
-        $validated      = Arr::except($validated,['schedule_day','from_time','to_time','max_client','area']);
+        $validated      = Arr::except($validated,['service_name','price','from_time','to_time','max_client','area']);
         try{
             $parlour_list = ParlourList::create($validated);
-            // dd($parlour_list);
-            if(count($shedule_days) > 0){
+            if(count($from_time) > 0){
                 $days_shedule = [];
-                foreach($shedule_days as $key => $day_id){
+                foreach($from_time as $key => $day_id){
                     $days_shedule[] = [
                         'parlour_list_id'   => $parlour_list->id,
-                        'week_id'           => $day_id,
                         'from_time'         => $from_time[$key],
                         'to_time'           => $to_time[$key],
                         'max_client'        => $max_client[$key],
@@ -120,7 +120,18 @@ class ParlourListController extends Controller
                 }
                 ParlourListHasSchedule::insert($days_shedule);
             }
-
+            if(count($service_name) > 0){
+                $services = [];
+                foreach($service_name as $key => $day_id){
+                    $services[] = [
+                        'parlour_list_id'   => $parlour_list->id,
+                        'service_name'      => $service_name[$key],
+                        'price'             => $price[$key],
+                        'created_at'        => now(),
+                    ];
+                }
+                ParlourHasService::insert($services);
+            }
         }catch(Exception $e){
             return back()->with(['error' => ["Something went wrong.Please try again."]]);
         }
@@ -135,16 +146,16 @@ class ParlourListController extends Controller
         $page_title             = "Parlour Edit";
         $parlour_list           = ParlourList::where('slug',$slug)->first();
         if(!$parlour_list) return back()->with(['error' =>  ['Parlour List Not Exists!']]);
-        $weeks                  = Week::get();
-        $areas           = Area::where('status',true)->get();
+        $areas                  = Area::where('status',true)->get();
         $parlour_has_schedule   = ParlourListHasSchedule::where('parlour_list_id',$parlour_list->id)->get();
+        $parlour_has_service    = ParlourHasService::where('parlour_list_id',$parlour_list->id)->get();
 
         return view('admin.sections.parlour-list.edit',compact(
             'page_title',
             'parlour_list',
             'areas',
-            'weeks',
-            'parlour_has_schedule'
+            'parlour_has_schedule',
+            'parlour_has_service'
         ));
     }
     /**
@@ -162,10 +173,12 @@ class ParlourListController extends Controller
             'speciality'       => 'nullable',
             'contact'          => 'required',
             'address'          => 'nullable',
-            'price'            => 'required|numeric',
             'off_days'         => 'required|string',
-            'schedule_day'     => 'required|array',
-            'schedule_day.*'   => 'required|string',
+            'number_of_dates'  => 'required|integer',
+            'service_name'     => 'required|array',
+            'service_name.*'   => 'required|string',
+            'price'            => 'required|array',
+            'price.*'          => 'required|string',
             'from_time'        => 'required|array',
             'from_time.*'      => 'required|string',
             'to_time'          => 'required|array',
@@ -188,29 +201,43 @@ class ParlourListController extends Controller
         if($request->hasFile('image')){
             $validated['image']  =  $this->imageValidate($request,"image",null);
         }
-        $schedule_days     = $validated['schedule_day'];
-        $from_time         = $validated['from_time'];
-        $to_time           = $validated['to_time'];
-        $max_client       = $validated['max_client'];
-        $validated         = Arr::except($validated,['schedule_day','from_time','to_time','max_client','area']);
+        $service_name       = $validated['service_name'];
+        $price              = $validated['price'];
+        $from_time          = $validated['from_time'];
+        $to_time            = $validated['to_time'];
+        $max_client         = $validated['max_client'];
+        $validated          = Arr::except($validated,['service_name','price','from_time','to_time','max_client','area']);
         try{
             $parlour_schedule_ids = $parlour_list->schedules->pluck('id');
             ParlourListHasSchedule::whereIn('id',$parlour_schedule_ids)->delete();
+            $parlour_service_ids = $parlour_list->services->pluck('id');
+            ParlourHasService::whereIn('id',$parlour_service_ids)->delete();
 
             $parlour_list->update($validated);
-            if(count($schedule_days) > 0){
-                $days_schedule = [];
-                foreach($schedule_days as $key => $day_id){
-                    $days_schedule[]  = [
+            if(count($from_time) > 0){
+                $time_schedule = [];
+                foreach($from_time as $key => $day_id){
+                    $time_schedule[]  = [
                         'parlour_list_id'   => $parlour_list->id,
-                        'week_id'           => $day_id,
                         'from_time'         => $from_time[$key],
                         'to_time'           => $to_time[$key],
                         'max_client'        => $max_client[$key],
                         'created_at'        => now(),
                     ];
                 }
-                ParlourListHasSchedule::insert($days_schedule);
+                ParlourListHasSchedule::insert($time_schedule);
+            }
+            if(count($service_name) > 0){
+                $services = [];
+                foreach($service_name as $key => $day_id){
+                    $services[]  = [
+                        'parlour_list_id'   => $parlour_list->id,
+                        'service_name'      => $service_name[$key],
+                        'price'             => $price[$key],
+                        'created_at'        => now(),
+                    ];
+                }
+                ParlourHasService::insert($services);
             }
 
         }catch(Exception $e){

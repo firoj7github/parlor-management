@@ -19,6 +19,7 @@ class ParlourBooking extends Model
         'schedule_id'                   => 'integer',
         'user_id'                       => 'integer',
         'payment_gateway_currency_id'   => 'integer',
+        'date'                          => 'string',
         'payment_method'                => 'string',
         'slug'                          => 'string',
         'price'                         => 'decimal:8',

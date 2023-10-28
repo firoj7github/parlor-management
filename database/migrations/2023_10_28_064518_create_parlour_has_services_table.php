@@ -13,13 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('service_types', function (Blueprint $table) {
+        Schema::create('parlour_has_services', function (Blueprint $table) {
             $table->id();
-            $table->string('slug')->unique();
-            $table->string('name')->unique();
-            $table->decimal('price',28,8)->default(0);
-            $table->boolean('status')->default(true);
+            $table->unsignedBigInteger("parlour_list_id");
+            $table->string("service_name");
+            $table->decimal("price",28,8);
             $table->timestamps();
+
+            $table->foreign("parlour_list_id")->references("id")->on("parlour_lists")->onDelete("cascade")->onUpdate("cascade");
         });
     }
 
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('service_types');
+        Schema::dropIfExists('parlour_has_services');
     }
 };

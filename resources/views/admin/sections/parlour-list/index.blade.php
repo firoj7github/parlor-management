@@ -95,13 +95,12 @@
             var oldData     = JSON.parse($(this).parents("tr").attr("data-item"));
             var actionRoute = "{{ setRoute('admin.parlour.list.delete') }}"
             var target      = oldData.id;
-            var message     = `Are you sure to <strong>delete</strong> this doctor?`;
+            var message     = `Are you sure to <strong>delete</strong> this Parlour?`;
 
             openDeleteModal(actionRoute,target,message);
         });
 
         $(document).ready(function(){
-            // Switcher
             switcherAjax("{{ setRoute('admin.parlour.list.status.update') }}");
         })
     </script>

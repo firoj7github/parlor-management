@@ -4,7 +4,16 @@
 @extends('frontend.layouts.master')
 
 @push("css")
-    
+<style>
+    .danger{
+        background-color: #cca87643;
+        border-radius: 10px;
+        
+    }
+    .text--disable{
+        color: #ffffffcf
+    }
+</style>
 @endpush
 
 @section('content') 
@@ -56,12 +65,12 @@
                             </div>
                             <div class="service-select">
                                 <div class="service-option pt-10">
-                                    @foreach ($service_types as $item)
+                                    @foreach (@$parlour->services as $item)
                                         <div class="service-item">
                                             <div class="service-inner">
-                                                <input type="checkbox" name="service[]" value="{{ $item->name }}" class="hide-input service" id="service_{{ $item->id }}" data-item="{{ json_encode($item) }}">
+                                                <input type="checkbox" name="service[]" value="{{ $item->service_name }}" class="hide-input service" id="service_{{ $item->id }}" data-item="{{ json_encode($item) }}">
                                                 <label for="service_{{ $item->id }}" class="package--amount">
-                                                    <p>{{ $item->name }} <span>{{ get_amount($item->price) }} {{ get_default_currency_symbol() }}</span></p>
+                                                    <p>{{ $item->service_name }} <span>{{ get_amount($item->price) }} {{ get_default_currency_symbol() }}</span></p>
                                                 </label>
                                             </div>
                                         </div>
@@ -69,29 +78,43 @@
                                 </div>
                             </div>
                             <div class="shedule-title pt-4">
-                                <h3 class="title"><i class="fas fa-history"> </i>{{ __("Schedule") }}</h3>
+                                <h3 class="title"><i class="fas fa-history"> </i> {{ __("Schedule") }}</h3>
                             </div>
-                            <div class="shedule-area">
-                                <div class="shedule-option pt-10">
-                                    @foreach (@$parlour->schedules as $item)
-                                        <div class="shedule-item">
-                                            @php
-                                                $from_time = @$item->from_time ?? '';
-                                                $parsed_from_time = \Carbon\Carbon::createFromFormat('H:i', $from_time)->format('h A');
-
-                                                $to_time   = @$item->to_time ?? '';
-                                                $parsed_to_time = \Carbon\Carbon::createFromFormat('H:i', $to_time)->format('h A');
-                                            @endphp
-                                            <div class="shedule-inner">
-                                                <input type="radio" name="schedule" class="hide-input" value="{{ $item->id }}" id="shedule_{{ $item->id }}">
-                                                <label for="shedule_{{ $item->id }}" class="package--amount">
-                                                    <strong>{{ $item->week->day ?? '' }}</strong>
-                                                    <sup>{{ $parsed_from_time }} - </sup> 
-                                                    <sup>{{ $parsed_to_time }}</sup>
-                                                </label>
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="date-picker">
+                                        <div class="row">
+                                            <div class="col-xl-12 form-group">
+                                                @php
+                                                    $currentDate = \Carbon\Carbon::now();
+                                                    $todaysDate     = \Carbon\Carbon::now()->format('d F, Y');
+                                                    $schedule_date = $parlour->number_of_dates;
+                                                @endphp
+                                                <input type="hidden" class="todays-date" value="{{ $todaysDate }}">
+                                                <label>{{ __("Select Date") }} <span>*</span></label>
+                                                <select class="form--control nice-select date" name="date">
+                                                    @for ($i = 0; $i < $schedule_date; $i++)
+                                                        <option value="{{ $currentDate->format('d F, Y') }}">{{ $currentDate->format('d F, Y') }}</option>
+                                                        @php
+                                                            $currentDate->addDay();
+                                                        @endphp
+                                                    @endfor
+                                                </select>
                                             </div>
                                         </div>
-                                    @endforeach
+                                    </div>
+                                </div>
+                                @php
+                                    $current_time       = now()->setTimeZone($basic_settings->timezone)->format('H:i');
+                                @endphp
+                                <input type="hidden" class="current_time" value="{{ $current_time }}">
+                                <div class="col-lg-9">
+                                    <div class="shedule-area">
+                                        <label>{{ __("Select Time") }} <span>*</span></label>
+                                        <div class="shedule-option" data-item="{{ json_encode($parlour->schedules) }}">
+                                            
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="appointment-footer pt-5">
@@ -130,5 +153,62 @@
             $('.price').text(totalPrice.toFixed(2) + ' ' + '{{ get_default_currency_symbol() }}')
             $('#price').val(totalPrice.toFixed(2));
         });
+        $(document).ready(function(){
+            var selectedDate    = $('.date').val();
+            var todaysDate      = $('.todays-date').val();      
+            var currentTime     = $('.current_time').val();
+            var data            = JSON.parse($('.shedule-option').attr("data-item"));
+            run(selectedDate,todaysDate,currentTime,data);
+            
+        });
+        $('.date').on('change',function(){
+            var selectedDate    = $(this).val();
+            var todaysDate      = $('.todays-date').val();      
+            var currentTime     = $('.current_time').val();
+
+            var data            = JSON.parse($('.shedule-option').attr("data-item"));
+            $('.shedule-option').html('');
+            
+            run(selectedDate,todaysDate,currentTime,data);
+            
+        });
+        function run(selectedDate,todaysDate,currentTime,data){
+            $.each(data,function(index,item){
+            var fromTime    = item.from_time;
+            var disabled    = currentTime > fromTime ? 'disabled' : '';
+            var disableClassName = disabled === 'disabled' ? 'danger' : '';
+            var textClass   = 'text--disable';
+            var itemData = '';
+
+                if(todaysDate == selectedDate){
+                    itemData    += `
+                    <div class="shedule-item">
+                        <div class="shedule-inner ${disableClassName}">
+                            <input type="radio" name="schedule" class="hide-input" value="${item.id}" id="shedule_${item.id}" ${disabled}>
+                            <label for="shedule_${item.id}" class="package--amount">
+                                <strong class="${textClass}">${item.from_time} - </strong> 
+                                <strong class="${textClass}">${item.to_time}</strong>
+                            </label>
+                        </div>
+                    </div>
+                    `; 
+                    $('.shedule-option').append(itemData);
+                }else{
+                    itemData    += `
+                    <div class="shedule-item">
+                        <div class="shedule-inner">
+                            <input type="radio" name="schedule" class="hide-input" value="${item.id}" id="shedule_${item.id}">
+                            <label for="shedule_${item.id}" class="package--amount">
+                                <strong class="${textClass}">${item.from_time} - </strong> 
+                                <strong class="${textClass}">${item.to_time}</strong>
+                            </label>
+                        </div>
+                    </div>
+                    `; 
+                    $('.shedule-option').append(itemData);
+                }
+            
+            });
+        }
     </script>
 @endpush

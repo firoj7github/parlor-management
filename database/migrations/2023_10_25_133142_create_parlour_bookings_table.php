@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger("schedule_id");
             $table->unsignedBigInteger("user_id")->nullable();
             $table->unsignedBigInteger("payment_gateway_currency_id")->nullable();
+            $table->string('date')->comment("Booking Date");
             $table->string('payment_method')->nullable();
             $table->string('slug');
             $table->decimal('price',28,8)->default(0);

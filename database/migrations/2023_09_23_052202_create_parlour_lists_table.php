@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('speciality')->nullable();
             $table->string('contact');
             $table->string('address')->nullable();
-            $table->decimal('price',28,8)->default(0);
             $table->string('off_days');
+            $table->integer('number_of_dates');
             $table->string('image')->nullable();
             $table->boolean("status")->default(true);
             $table->timestamps();

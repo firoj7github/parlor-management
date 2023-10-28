@@ -20,8 +20,8 @@ class ParlourList extends Model
         'speciality'             => 'string',
         'contact'                => 'string',
         'address'                => 'string',
-        'price'                  => 'decimal:8',
         'off_days'               => 'string',
+        'number_of_dates'        => 'integer',
         'image'                  => 'string',
         'status'                 => 'integer',
         'created_at'             => 'date:Y-m-d',
@@ -30,6 +30,9 @@ class ParlourList extends Model
 
     public function schedules(){
         return $this->hasMany(ParlourListHasSchedule::class,'parlour_list_id');
+    }
+    public function services(){
+        return $this->hasMany(ParlourHasService::class,'parlour_list_id');
     }
     
     public function area(){

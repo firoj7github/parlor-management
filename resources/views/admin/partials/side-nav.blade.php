@@ -48,11 +48,6 @@
                             'title'     => __("Parlour List"),
                             'route'     => "admin.parlour.list.index",
                             'icon'      => "menu-icon las la-coins",
-                        ],
-                        [
-                            'title'     => __("Service Type"),
-                            'route'     => "admin.service.type.index",
-                            'icon'      => "menu-icon las la-coins",
                         ]
                     ]
                 ])

@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('parlour_list_has_schedules', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("parlour_list_id");
-            $table->unsignedBigInteger("week_id");
             $table->string("from_time");
             $table->string("to_time");
             $table->integer("max_client");
@@ -24,7 +23,6 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign("parlour_list_id")->references("id")->on("parlour_lists")->onDelete("cascade")->onUpdate("cascade");
-            $table->foreign("week_id")->references("id")->on("weeks")->onDelete("cascade")->onUpdate("cascade");
         });
     }
 

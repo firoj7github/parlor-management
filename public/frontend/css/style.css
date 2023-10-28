@@ -4373,7 +4373,7 @@ input[type=number] {
 
 .shedule-item {
   padding: 5px;
-  width: 50%;
+  width: 33%;
 }
 
 .shedule-item.action {
@@ -4392,7 +4392,7 @@ input[type=number] {
   border-radius: 10px;
   border: 1px solid #eee;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 13px;
 }
 
 .shedule-item .shedule-inner label strong {
@@ -4463,11 +4463,6 @@ input[type=number] {
   color: #cca876;
 }
 
-@media (max-width: 767px) {
-  .shedule-item {
-    width: 33.3333333333%;
-  }
-}
 @media (max-width: 767px) {
   .shedule-item {
     width: 50%;

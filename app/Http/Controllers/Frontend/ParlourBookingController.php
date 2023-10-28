@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use App\Models\ParlourBooking;
 use App\Models\UserNotification;
 use App\Models\Admin\ParlourList;
-use App\Models\Admin\ServiceType;
 use App\Models\Admin\UsefullLink;
 use App\Models\Admin\SiteSections;
 use App\Constants\SiteSectionConst;
@@ -29,8 +28,7 @@ class ParlourBookingController extends Controller
      */
     public function getService(Request $request,$slug){
         $page_title         = "| Parlour Booking";
-        $parlour            = ParlourList::with(['schedules'])->where('slug',$slug)->first();
-        $service_types      = ServiceType::where('status',true)->get();
+        $parlour            = ParlourList::with(['schedules','services'])->where('slug',$slug)->first();
         $validated_user     = auth()->user();
         $footer_slug        = Str::slug(SiteSectionConst::FOOTER_SECTION);
         $footer             = SiteSections::getData($footer_slug)->first();
@@ -42,7 +40,6 @@ class ParlourBookingController extends Controller
         return view('frontend.pages.parlour-booking.index',compact(
             'page_title',
             'parlour',
-            'service_types',
             'validated_user',
             'footer',
             'usefull_links',
@@ -54,6 +51,7 @@ class ParlourBookingController extends Controller
      * @param \Illuminate\Http\Request $request
      */
     public function store(Request $request){
+        dd($request->all());
         $validated_user         = auth()->user();
         if(!$validated_user) return back()->with(['error' => ['Please Login First.']]);
         $validator              = Validator::make($request->all(),[

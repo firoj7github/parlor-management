@@ -84,7 +84,7 @@
                         'value'             => old("experience",$parlour_list->experience),   
                     ])
                 </div>
-                <div class="col-xl-4 col-lg-4 form-group">
+                <div class="col-xl-6 col-lg-6 form-group">
                     @include('admin.components.form.input',[
                         'label'             => __("Speciality"),
                         'name'              => "speciality",
@@ -92,7 +92,7 @@
                         'value'             => old("speciality",$parlour_list->speciality),   
                     ])
                 </div>
-                <div class="col-xl-4 col-lg-4 form-group">
+                <div class="col-xl-6 col-lg-6 form-group">
                     @include('admin.components.form.input',[
                         'label'             => __("Contact")."*",
                         'name'              => "contact",
@@ -100,25 +100,13 @@
                         'value'             => old("contact",$parlour_list->contact),   
                     ])
                 </div>
-                <div class="col-xl-4 col-lg-4 form-group">
+                <div class="col-xl-6 col-lg-6 form-group">
                     @include('admin.components.form.input',[
                         'label'             => __("Address"),
                         'name'              => "address",
                         'placeholder'       => __("Write Address")."...",
                         'value'             => old("address",$parlour_list->address),   
                     ])
-                </div>
-                <div class="col-xl-6 col-lg-6 mb-4">
-                    <label>{{__("Price")}}*</label>
-                    <div class="input-group">
-                        @include('admin.components.form.input',[
-                        'name'              => "price",
-                        'class'             => "number-input",
-                        'placeholder'       => __("Write Price")."...",
-                        'value'             => old('price',$parlour_list->price),   
-                        ])
-                        <span class="input-group-text">{{ get_default_currency_code($default_currency) }}</span>
-                    </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 form-group">
                     @include('admin.components.form.input',[
@@ -128,6 +116,42 @@
                         'value'             => old("off_days",$parlour_list->off_days),   
                     ])
                 </div>
+                <div class="col-xl-6 col-lg-6 form-group">
+                    @include('admin.components.form.input',[
+                        'label'             => __("Number Of Dates")."*",
+                        'name'              => "number_of_dates",
+                        'placeholder'       => __("Number Of Dates")."...",
+                        'value'             => old("number_of_dates",$parlour_list->number_of_dates),   
+                    ])
+                </div>
+                <div class="col-xl-6 col-lg-6 form-group">
+                    @php
+                        $currentDate = \Carbon\Carbon::now();
+                        $schedule_date = $parlour_list->number_of_dates;
+                    @endphp
+                    <label>{{ __("Selected Days") }}</label>
+                    <select class="form--control select2-basic">
+                        @for ($i = 0; $i < $schedule_date; $i++)
+                            <option>{{ $currentDate->format('d F, Y') }}</option>
+                            @php
+                                $currentDate->addDay();
+                            @endphp
+                        @endfor
+                    </select>
+                </div>
+                <div class="col-xl-12 col-lg-12 form-group">
+                    <div class="custom-inner-card">
+                        <div class="card-inner-header">
+                            <h6 class="title">{{ __("Service") }}</h6>
+                            <button type="button" class="btn--base add-service-btn"><i class="fas fa-plus"></i> {{ __("Add") }}</button>
+                        </div>
+                        <div class="card-inner-body">
+                            <div class="result">
+                                @include('admin.components.parlour-list.service-item',compact('parlour_has_service'))    
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-xl-12 col-lg-12 form-group">
                     <div class="custom-inner-card">
                         <div class="card-inner-header">
@@ -136,7 +160,7 @@
                         </div>
                         <div class="card-inner-body">
                             <div class="results">
-                                @include('admin.components.parlour-list.schedule-item',compact('weeks','parlour_has_schedule'))    
+                                @include('admin.components.parlour-list.schedule-item',compact('parlour_has_schedule'))    
                             </div>
                         </div>
                     </div>
@@ -166,6 +190,15 @@
                     $('.results').find('.row').first().find("select").select2();
                 });
             });
+
+            var getServiceURL = "{{ setRoute('admin.parlour.list.get.service') }}";
+            $('.add-service-btn').click(function(){
+                $.get(getServiceURL,function(data){
+                    $('.result').prepend(data);
+                    $('.result').find('.row').first().find("select").select2();
+                });
+            });
         });
     </script>
 @endpush
+

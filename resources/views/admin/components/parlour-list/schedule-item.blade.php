@@ -1,16 +1,6 @@
 @forelse ($parlour_has_schedule ?? [] as $item)
     <div class="row align-items-end">
-        <div class="col-xl-3 col-lg-3 form-group">
-            <label>{{ __("Day") }}<span>*</span></label>
-            <select class="form--control select2-basic" name="schedule_day[]">
-                <option disabled selected>{{ __("Select Day") }}</option>
-                @foreach ($weeks as $week)
-                    <option value="{{ $week->id }}" {{ $week->id == $item->week_id ? 'selected' : '' }}>{{ $week->day }}</option>
-                @endforeach
-            </select>
-        </div>
-        {{-- @dd($item) --}}
-        <div class="col-xl-3 col-lg-3 form-group">
+        <div class="col-xl-4 col-lg-4 form-group">
             @include('admin.components.form.input',[
                 'label'         => __("From Time")."*",
                 'type'          => 'time',
@@ -18,7 +8,7 @@
                 'value'         => $item->from_time,
             ])
         </div>
-        <div class="col-xl-3 col-lg-3 form-group">
+        <div class="col-xl-4 col-lg-4 form-group">
             @include('admin.components.form.input',[
                 'label'         => __("To Time")."*",
                 'type'          => 'time',
@@ -26,7 +16,7 @@
                 'value'         => $item->to_time,
             ])
         </div>
-        <div class="col-xl-2 col-lg-2 form-group">
+        <div class="col-xl-3 col-lg-3 form-group">
             @include('admin.components.form.input',[
                 'label'             => __("Client")."(".__("Max").")"."*",
                 'name'              => "max_client[]",
@@ -41,38 +31,26 @@
     </div>
 @empty
     <div class="row align-items-end">
-        <div class="col-xl-3 col-lg-3 form-group">
-            <label>{{ __("Day") }}<span>*</span></label>
-            <select class="form--control select2-basic" name="schedule_day[]">
-                <option disabled selected>{{ __("Select Day") }}</option>
-                @foreach ($weeks as $item)
-                    <option value="{{ $item->id }}">{{ $item->day }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col-xl-3 col-lg-3 form-group">
+        <div class="col-xl-4 col-lg-4 form-group">
             @include('admin.components.form.input',[
                 'label'         => __("From Time")."*",
                 'type'          => 'time',
                 'name'          => "from_time[]",
-                
             ])
         </div>
-        <div class="col-xl-3 col-lg-3 form-group">
+        <div class="col-xl-4 col-lg-4 form-group">
             @include('admin.components.form.input',[
                 'label'         => __("To Time")."*",
                 'type'          => 'time',
                 'name'          => "to_time[]",
-                
             ])
         </div>
-        <div class="col-xl-2 col-lg-2 form-group">
+        <div class="col-xl-3 col-lg-3 form-group">
             @include('admin.components.form.input',[
                 'label'             => __("Client")."(".__("Max").")"."*",
                 'name'              => "max_client[]",
                 'class'             => "number-input",
                 'placeholder'       => __("Write Here")."...",
-                 
             ])
         </div>
         <div class="col-xl-1 col-lg-1 form-group">

@@ -79,6 +79,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('index','index')->name('index');
         Route::get('create', 'create')->name('create');
         Route::get('get/days','getScheduleDays')->name('get.days');
+        Route::get('get/service','getService')->name('get.service');
         Route::post('store', 'store')->name('store');
         Route::get('edit/{slug}','edit')->name('edit');
         Route::put('update/{slug}','update')->name('update');
@@ -86,14 +87,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('delete','delete')->name('delete');
     });
 
-    //Service Type
-    Route::controller(ServiceTypeController::class)->prefix('service-type')->name('service.type.')->group(function(){
-        Route::get('/','index')->name('index');
-        Route::post('store','store')->name('store');
-        Route::put('update','update')->name('update');
-        Route::delete('delete','delete')->name('delete');
-        Route::put('status/update','statusUpdate')->name('status.update');
-    });
     // User Care Section
     Route::controller(UserCareController::class)->prefix('users')->name('users.')->group(function () {
         Route::get('index', 'index')->name('index');
