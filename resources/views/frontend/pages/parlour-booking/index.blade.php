@@ -104,7 +104,7 @@
                                     ])
                                 </div>
                                 <div class="col-lg-12 form-group pt-3">
-                                    <button type="submit" class="btn--base small w-100">{{ __("Out") }} ( <span class="price">{{ get_default_currency_symbol()  }} </span> )<i class="fas fa-chevron-circle-right ms-1"></i></button>
+                                    <button type="submit" class="btn--base small w-100">{{ __("Checkout") }} ( <span class="price">{{ get_default_currency_symbol()  }} </span> )<i class="fas fa-chevron-circle-right ms-1"></i></button>
                                 </div>
                             </div>
                         </div>
