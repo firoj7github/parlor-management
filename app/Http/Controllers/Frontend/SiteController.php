@@ -268,6 +268,24 @@ class SiteController extends Controller
         return back()->with(['success' => ['Contact Request successfully send!']]);
     }
     /**
+     * Method for show parlour package page
+     */
+    public function parlourPackage(){
+        $page_title     = "| Parlour Package";
+        $usefull_links               = UsefullLink::where('status',true)->get();
+        $section_slug               = Str::slug(SiteSectionConst::CONTACT_SECTION);
+        $contact                    = SiteSections::getData($section_slug)->first();
+        $footer_section_slug        = Str::slug(SiteSectionConst::FOOTER_SECTION);
+        $footer                     = SiteSections::getData($footer_section_slug)->first();
+
+        return view('frontend.pages.parlour-package',compact(
+            'page_title',
+            'footer',
+            'usefull_links',
+            'contact'
+        ));
+    }
+    /**
      * Method for show useful links 
      */
     public function link($slug){

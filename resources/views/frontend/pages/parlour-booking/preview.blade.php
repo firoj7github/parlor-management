@@ -69,7 +69,7 @@
                                 </div>
                             </div>
                             <div class="btn-area mt-30">
-                                <button type="submit" class="btn--base w-100">{{ __("Confirm Appointment") }} <i class="fas fa-check-circle ms-1"></i></button>
+                                <button type="submit" class="btn--base w-100">{{ __("Confirm Booking") }} <i class="fas fa-check-circle ms-1"></i></button>
                             </div>
                         </div>
                     </div>
