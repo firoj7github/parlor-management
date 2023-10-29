@@ -24,6 +24,7 @@ class ParlourBooking extends Model
         'slug'                          => 'string',
         'total_charge'                  => 'decimal:8',
         'price'                         => 'decimal:8',
+        'payable_price'                 => 'decimal:8',
         'gateway_payable_price'         => 'decimal:8',
         'service'                       => 'object',
         'message'                       => 'string',

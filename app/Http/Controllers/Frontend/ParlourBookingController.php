@@ -88,8 +88,19 @@ class ParlourBookingController extends Controller
         if(!$schedule) {
             return back()->with(['error' => ['Schedule Not Found!']]);
         }
-        $validated['schedule_id'] = $validated['schedule'];
-        
+        $validated['schedule_id']   = $validated['schedule'];
+
+        $price                      = floatval($validated['price']); 
+        $fixed_charge               = floatval($charge_data->fixed_charge);
+        $percent_charge             = floatval($charge_data->percent_charge);
+        $total_percent_charge       = ($percent_charge / 100) * $price;
+        $total_charge               = $fixed_charge + $total_percent_charge;
+        $total_price                = $price + $total_charge;
+        $validated['total_charge']  = $total_charge;
+        $validated['price']         = $price;
+        $validated['payable_price'] = $total_price;
+
+
         $alrady_appointed = ParlourBooking::where('parlour_id',$parlour->id)->where('schedule_id',$validated['schedule_id'])->count();
 
         if($alrady_appointed >= $schedule->max_client) {
@@ -98,6 +109,7 @@ class ParlourBookingController extends Controller
 
         $next_appointment_no = $alrady_appointed + 1;
         $validated['serial_number'] = $next_appointment_no;
+
         try{
             $booking = ParlourBooking::create($validated);
         }catch(Exception $e){
@@ -162,7 +174,7 @@ class ParlourBookingController extends Controller
 
                 return back()->with(['error' => ['Something went wrong! Please try again.']]);
             }
-            return redirect()->route('find.parlour')->with(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);
+            return redirect()->route('user.history.index')->with(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);
         }else{
             $requested_data         = [
                 'data'              => $data,

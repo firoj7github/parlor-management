@@ -44,10 +44,26 @@
                                 </div>
                                 <div class="preview-area">
                                     <div class="preview-item">
-                                    <p>{{ __("Total Amount") }} :</p>
+                                    <p>{{ __("Amount") }} :</p>
                                     </div>
                                     <div class="preview-details">
                                         <p>{{ get_default_currency_symbol() }}{{ get_amount(@$booking->price) ?? '' }}</p>
+                                    </div>
+                                </div>
+                                <div class="preview-area">
+                                    <div class="preview-item">
+                                    <p>{{ __("Fees & Charges") }} :</p>
+                                    </div>
+                                    <div class="preview-details">
+                                        <p>{{ get_default_currency_symbol() }}{{ get_amount(@$booking->total_charge) ?? '' }}</p>
+                                    </div>
+                                </div>
+                                <div class="preview-area">
+                                    <div class="preview-item">
+                                    <p>{{ __("Total Payable Amount") }} :</p>
+                                    </div>
+                                    <div class="preview-details">
+                                        <p>{{ get_default_currency_symbol() }}{{ get_amount(@$booking->payable_price) ?? '' }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -62,7 +78,7 @@
                                         @foreach ($payment_gateway as $item)
                                             <div class="radio-item">
                                                 <input type="radio" id="level_{{ $item->id }}" class="hide-input" name="payment_method" value="{{ $item->id }}">
-                                                <label for="level_{{ $item->id }}"><img src="{{ get_image($item->image ,'payment-gateways') }}" alt="icon">{{ $item->name }}</label>
+                                                <label for="level_{{ $item->id }}"><img src="{{ get_image($item->image ,'payment-gateways') }}" alt="icon">{{ $item->gateway->name }}</label>
                                             </div>
                                         @endforeach
                                     </div>

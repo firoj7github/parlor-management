@@ -7,9 +7,9 @@
     @include('user.components.breadcrumb',['breadcrumbs' => [
         [
             'name'  => __("Profile"),
-            'url'   => setRoute("user.dashboard"),
+            'url'   => setRoute("user.profile.index"),
         ]
-    ], 'active' => __("My Profile")])
+    ], 'active' => __("My History")])
 @endsection
 @section('content')
 <div class="body-wrapper">
@@ -24,8 +24,8 @@
                         <tr>
                             <th>{{ __("Parlour Name") }}</th>
                             <th>{{ __("Service") }}</th>
-                            <th>{{ __("Status") }}</th>
                             <th>{{ __("Schedule") }}</th>
+                            <th>{{ __("Status") }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,6 +33,7 @@
                         <tr>
                             <td>{{ $item->parlour->name ?? '' }}</td>
                             <td>{{ implode(', ',$item->service) }}</td>
+                            <td>{{ $item->date ?? '' }} ({{ $item->schedule->from_time }} - {{ $item->schedule->to_time }})</td>
                             <td>
                                 @if ($item->status == true)
                                     <span class="badge badge--success">{{ __("Booked") }}</span>  
@@ -40,7 +41,6 @@
                                     <span class="badge badge--danger">{{ __("Pending") }}</span>
                                 @endif
                             </td>
-                            <td>{{ $item->schedule->week->day ?? '' }}</td>
                         </tr>
                         @empty
                             <div class="alert alert-primary text-center">
