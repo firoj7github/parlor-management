@@ -174,11 +174,11 @@
         });
         function run(selectedDate,todaysDate,currentTime,data){
             $.each(data,function(index,item){
-            var fromTime    = item.from_time;
-            var disabled    = currentTime > fromTime ? 'disabled' : '';
-            var disableClassName = disabled === 'disabled' ? 'danger' : '';
-            var textClass   = 'text--disable';
-            var itemData = '';
+            var fromTime            = item.from_time;
+            var disabled            = currentTime > fromTime ? 'disabled' : '';
+            var disableClassName    = disabled === 'disabled' ? 'danger' : '';
+            var textClass           = disabled === 'disabled' ? 'text--disable' : '';
+            var itemData            = '';
 
                 if(todaysDate == selectedDate){
                     itemData    += `
@@ -199,8 +199,8 @@
                         <div class="shedule-inner">
                             <input type="radio" name="schedule" class="hide-input" value="${item.id}" id="shedule_${item.id}">
                             <label for="shedule_${item.id}" class="package--amount">
-                                <strong class="${textClass}">${item.from_time} - </strong> 
-                                <strong class="${textClass}">${item.to_time}</strong>
+                                <strong>${item.from_time} - </strong> 
+                                <strong>${item.to_time}</strong>
                             </label>
                         </div>
                     </div>

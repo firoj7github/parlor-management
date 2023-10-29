@@ -39,7 +39,7 @@
                                     <p>{{ __("Schedule") }} :</p>
                                     </div>
                                     <div class="preview-details">
-                                        <p>{{ @$booking->schedule->week->day ?? '' }}</p>
+                                        <p>{{ @$booking->date ?? '' }} ({{ $booking->schedule->from_time }} - {{ $booking->schedule->to_time }})</p>
                                     </div>
                                 </div>
                                 <div class="preview-area">
@@ -47,7 +47,7 @@
                                     <p>{{ __("Total Amount") }} :</p>
                                     </div>
                                     <div class="preview-details">
-                                        <p>{{ get_amount(@$booking->price, get_default_currency_symbol()) ?? '' }}</p>
+                                        <p>{{ get_default_currency_symbol() }}{{ get_amount(@$booking->price) ?? '' }}</p>
                                     </div>
                                 </div>
                             </div>

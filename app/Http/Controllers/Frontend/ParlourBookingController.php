@@ -51,15 +51,15 @@ class ParlourBookingController extends Controller
      * @param \Illuminate\Http\Request $request
      */
     public function store(Request $request){
-        dd($request->all());
         $validated_user         = auth()->user();
         if(!$validated_user) return back()->with(['error' => ['Please Login First.']]);
         $validator              = Validator::make($request->all(),[
             'parlour'           => 'required',
-            'schedule'          => 'required',
             'price'             => 'required',
             'service'           => "required|array",
             'service.*'         => "required|string|max:255",
+            'date'              => "required",
+            'schedule'          => 'required',
             'message'           => "nullable"
         ]);
         if($validator->fails()){
@@ -156,9 +156,10 @@ class ParlourBookingController extends Controller
                 UserNotification::create([
                     'user_id'  => auth()->user()->id,
                     'message'  => "Your Booking (Parlour: ".$data->parlour->name.",
-                    Day: ".$data->schedule->week->day.", Time: ".$parsed_from_time."-".$parsed_to_time.", Serial Number: ".$data->serial_number.") Successfully Booked.", 
+                    Date: ".$data->date.", Time: ".$parsed_from_time."-".$parsed_to_time.", Serial Number: ".$data->serial_number.") Successfully Booked.", 
                 ]);
             }catch(Exception $e){
+
                 return back()->with(['error' => ['Something went wrong! Please try again.']]);
             }
             return redirect()->route('find.parlour')->with(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);

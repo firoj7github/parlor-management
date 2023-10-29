@@ -31,11 +31,14 @@
 <link rel="stylesheet" href="https://cdn.appdevs.net/fileholder/v1.0/css/fileholder-style.css" type="text/css">
 
 @php
-    $color = @$basic_settings->base_color ?? '#723eeb';
+    $base_color = $basic_settings->base_color;
+    $secondary_color = $basic_settings->secondary_color;
 @endphp
-
 <style>
     :root {
-        --primary-color: {{$color}};
+        --primary-color: {{ $base_color }};
+    }
+    :root {
+        --secondary_color: {{ $secondary_color }};
     }
 </style>
