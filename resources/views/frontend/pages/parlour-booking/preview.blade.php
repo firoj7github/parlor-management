@@ -61,7 +61,7 @@
                                         </div>
                                         @foreach ($payment_gateway as $item)
                                             <div class="radio-item">
-                                                <input type="radio" id="level_{{ $item->id }}" name="payment_method">
+                                                <input type="radio" id="level_{{ $item->id }}" name="payment_method" value="{{ $item->id }}">
                                                 <label for="level_{{ $item->id }}">{{ $item->name }}</label>
                                             </div>
                                         @endforeach

@@ -97,8 +97,10 @@
     [ ## reset ]
 */
 :root {
-  --primary-color: #ff0000;
+  --primary-color: #cca876;
+  --secondary-color: rgba(204, 168, 118, 0.4);
 }
+
 
 @import url('https://fonts.googleapis.com/css?family=Anton&display=swap" rel="stylesheet');
 html {
@@ -1417,8 +1419,8 @@ input::-moz-focus-inner {
 }
 .btn--base:focus, .btn--base:hover {
   color: #ffffff;
-  -webkit-box-shadow: 0 10px 20px rgba(204, 168, 118, 0.4);
-          box-shadow: 0 10px 20px rgba(204, 168, 118, 0.4);
+  -webkit-box-shadow: 0 10px 20px var(--secondary-color);
+          box-shadow: 0 10px 20px var(--secondary-color);
 }
 @media only screen and (max-width: 991px) {
   .btn--base {

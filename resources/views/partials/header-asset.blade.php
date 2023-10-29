@@ -39,6 +39,6 @@
         --primary-color: {{ $base_color }};
     }
     :root {
-        --secondary_color: {{ $secondary_color }};
+        --secondary-color: {{ $secondary_color }};
     }
 </style>

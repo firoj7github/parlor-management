@@ -34,7 +34,14 @@
                             <input type="text" autocomplete="off" spellcheck="false" class="color-input" value="{{ old('base_color',$basic_settings->base_color) }}" name="base_color">
                         </div>
                     </div>
-                    <div class="col-xl-3 col-lg-3 form-group">
+                    <div class="col-xl-6 col-lg-6 form-group">
+                        <label>{{ __("Site Secondary Color") }}*</label>
+                        <div class="picker">
+                            <input type="color" value="{{ old('secondary_color',$basic_settings->secondary_color) }}" class="color color-picker">
+                            <input type="text" autocomplete="off" spellcheck="false" class="color-input" value="{{ old('secondary_color',$basic_settings->secondary_color) }}" name="secondary_color">
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-5 form-group">
                         @include('admin.components.form.input',[
                             'label'         => "Site Name*",
                             'type'          => "text",
@@ -44,7 +51,7 @@
                             'value'         => old('site_name',$basic_settings->site_name),
                         ])
                     </div>
-                    <div class="col-xl-3 col-lg-3 form-group">
+                    <div class="col-xl-2 col-lg-2 form-group">
                         @include('admin.components.form.input',[
                             'label'         => "Web Version*",
                             'type'          => "text",
@@ -54,7 +61,7 @@
                             'value'         => old('web_version',$basic_settings->web_version),
                         ])
                     </div>
-                    <div class="col-xl-4 col-lg-4 form-group">
+                    <div class="col-xl-5 col-lg-5 form-group">
                         @include('admin.components.form.input',[
                             'label'         => "Site Title*",
                             'type'          => "text",
@@ -64,17 +71,17 @@
                             'value'         => old('site_title',$basic_settings->site_title),
                         ])
                     </div>
-                    <div class="col-xl-4 col-lg-4 form-group">
+                    <div class="col-xl-6 col-lg-6 form-group">
                         <label>{{ __("OTP Expiration") }}*</label>
                         <div class="input-group">
                             <input type="number" class="form--control" value="{{ old('otp_exp_seconds',$basic_settings->otp_exp_seconds) }}" name="otp_exp_seconds">
                             <span class="input-group-text">{{ __("Seconds") }}</span>
                         </div>
                     </div>
-                    <div class="col-xl-4 col-lg-4 form-group">
+                    <div class="col-xl-6 col-lg-6 form-group">
                         <label>{{ __("Timezone") }}*</label>
                         <select name="timezone" class="form--control select2-auto-tokenize timezone-select" data-old="{{ old('timezone',$basic_settings->timezone) }}">
-                            <option selected disabled>Select Timezone</option>
+                            <option selected disabled>{{ __("Select Timezone") }}</option>
                         </select>
                     </div>
                 </div>

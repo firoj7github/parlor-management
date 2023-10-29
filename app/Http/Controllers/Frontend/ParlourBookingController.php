@@ -142,9 +142,9 @@ class ParlourBookingController extends Controller
             'payment_method'    => 'required',
         ]);
         $validated  = $validator->validate();
-        $from_time        = $data->schedule->from_time ?? '';
+        $from_time  = $data->schedule->from_time ?? '';
 
-        $to_time          = $data->schedule->to_time ?? '';
+        $to_time    = $data->schedule->to_time ?? '';
         if($validated['payment_method'] == global_const()::CASH_PAYMENT){
             try{
                 $data->update([
@@ -162,6 +162,11 @@ class ParlourBookingController extends Controller
             }
             return redirect()->route('find.parlour')->with(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);
         }else{
+            $requested_data         = [
+                'data'              => $data,
+                'payment_method'    => $validated['payment_method']
+            ];
+            dd($requested_data);
             try{
                 $instance = PaymentGatewayHelper::init($data)->gateway()->render();
             }catch(Exception $e){
