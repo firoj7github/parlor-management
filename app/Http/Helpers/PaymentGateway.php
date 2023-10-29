@@ -27,12 +27,11 @@ class PaymentGateway {
     protected $output;
     private $transaction_id;
 
-    public function __construct($request_data)
-    {
+    public function __construct(array $request_data){
         $this->request_data = $request_data;
     }
 
-    public static function init($data) {
+    public static function init(array $data) {
         return new PaymentGateway($data);
     }
 
@@ -40,14 +39,15 @@ class PaymentGateway {
         $request_data = $this->request_data;
         if(empty($request_data)) throw new Exception("Gateway Information is not available. Please provide payment gateway currency alias");
 
-        $gateway_currency   = PaymentGatewayCurrency::where("alias",$request_data->payment_gateway->alias)->first();
+        $gateway_currency   = PaymentGatewayCurrency::where("id",$request_data['payment_method'])->first();
+        
 
         if(!$gateway_currency || !$gateway_currency->gateway) {
             throw ValidationException::withMessages([
                 $this->$request_data->payment_gateway->alias = "Gateway not available",
             ]);
         }
-        
+
         if($gateway_currency->gateway->isAutomatic()) {
             $this->output['gateway']    = $gateway_currency->gateway;
             $this->output['currency']   = $gateway_currency;
@@ -61,7 +61,7 @@ class PaymentGateway {
         }
 
         $this->output['request_data']   = $request_data;
-        
+        dd($this->output['request_data']);
         return $this;
     }
 

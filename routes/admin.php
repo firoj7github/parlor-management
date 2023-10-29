@@ -61,6 +61,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('update', 'update')->name('update');
     });
 
+    // Fees & Charges Section
+    Route::controller(TrxSettingsController::class)->prefix('trx-settings')->name('trx.settings.')->group(function () {
+        Route::get('index', 'index')->name('index');
+        Route::put('charges/update', 'trxChargeUpdate')->name('charges.update');
+    });
+
     //area section
     Route::controller(AreaController::class)->prefix('area')->name('area.')->group(function(){
         Route::get('/','index')->name('index');

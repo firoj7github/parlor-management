@@ -109,7 +109,7 @@ class ParlourBookingController extends Controller
      * @param \Illuminate\Http\Request $request
      */
     public function preview(Request $request,$slug){
-        $page_title         = "Appointment Preview";
+        $page_title         = "| Appointment Preview";
         $booking            = ParlourBooking::with(['parlour','schedule','payment_gateway'])->where('slug',$slug)->first();
         $payment_gateway   = PaymentGatewayCurrency::whereHas('gateway', function ($gateway) {
             $gateway->where('slug', PaymentGatewayConst::payment_method_slug());
@@ -166,9 +166,9 @@ class ParlourBookingController extends Controller
                 'data'              => $data,
                 'payment_method'    => $validated['payment_method']
             ];
-            dd($requested_data);
+            
             try{
-                $instance = PaymentGatewayHelper::init($data)->gateway()->render();
+                $instance = PaymentGatewayHelper::init($requested_data)->gateway()->render();
             }catch(Exception $e){
                 return back()->with(['error' => [$e->getMessage()]]);
             }

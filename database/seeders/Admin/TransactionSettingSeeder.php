@@ -15,16 +15,15 @@ class TransactionSettingSeeder extends Seeder
      */
     public function run()
     {
-        $data = ['transfer' => 'Transfer Money Charges', 'exchange' => 'Exchange Money Charges','add' => 'Add Money Charge','out' => 'Money Out Charges'];
+        $data = ['parlour' => 'Parlour Booking Charges'];
         $create = [];
         foreach($data as $slug => $item) {
             $create[] = [
                 'admin_id'          => 1,
                 'slug'              => $slug,
                 'title'             => $item,
-                'max_limit'         => 50000,
-                'monthly_limit'     => 50000,
-                'daily_limit'       => 5000,
+                'fixed_charge'      => 2,
+                'percent_charge'    => 1,
             ];
         }
         TransactionSetting::insert($create);

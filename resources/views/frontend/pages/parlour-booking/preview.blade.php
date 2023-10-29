@@ -56,7 +56,7 @@
                                     <h5 class="title">{{ __("Select Payment Method") }}<span>*</span></h5>
                                     <div class="radio-wrapper pt-2" id="pg-view">
                                         <div class="radio-item">
-                                            <input type="radio" id="level" value="{{ global_const()::CASH_PAYMENT }}" name="payment_method">
+                                            <input type="radio" id="level" value="{{ global_const()::CASH_PAYMENT }}" checked name="payment_method">
                                             <label for="level">{{ __("Cash-Payment") }}</label>
                                         </div>
                                         @foreach ($payment_gateway as $item)

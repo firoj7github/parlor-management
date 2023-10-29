@@ -29,8 +29,6 @@
                     'title'     => __("Dashboard"),
                     'icon'      => "menu-icon las la-rocket",
                 ])
-                
-                {{-- Section Default --}}
                 @include('admin.components.side-nav.link-group',[
                     'group_title'       => __("Default"),
                     'group_links'       => [
@@ -40,9 +38,19 @@
                             'icon'      => "menu-icon las la-coins",
                         ],
                         [
+                            'title'     => "Fees & Charges",
+                            'route'     => "admin.trx.settings.index",
+                            'icon'      => "menu-icon las la-wallet",
+                        ]
+                    ]
+                ])
+                @include('admin.components.side-nav.link-group',[
+                    'group_title'       => __("ParLour"),
+                    'group_links'       => [
+                        [
                             'title'     => __("Setup Area"),
                             'route'     => "admin.area.index",
-                            'icon'      => "menu-icon las la-coins",
+                            'icon'      => "menu-icon las la-long-arrow-alt-right",
                         ],
                         [
                             'title'     => __("Parlour List"),
@@ -51,8 +59,6 @@
                         ]
                     ]
                 ])
-
-                {{-- Interface Panel --}}
                 @include('admin.components.side-nav.link-group',[
                     'group_title'       => __("Interface Panel"),
                     'group_links'       => [
