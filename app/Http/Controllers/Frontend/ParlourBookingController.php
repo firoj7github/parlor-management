@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Admin\ParlourListHasSchedule;
 use App\Models\Admin\PaymentGatewayCurrency;
 use App\Http\Helpers\PaymentGateway as PaymentGatewayHelper;
+use App\Models\Admin\TransactionSetting;
 
 class ParlourBookingController extends Controller
 {
@@ -53,6 +54,7 @@ class ParlourBookingController extends Controller
     public function store(Request $request){
         $validated_user         = auth()->user();
         if(!$validated_user) return back()->with(['error' => ['Please Login First.']]);
+        $charge_data            = TransactionSetting::where('slug','parlour')->where('status',1)->first();
         $validator              = Validator::make($request->all(),[
             'parlour'           => 'required',
             'price'             => 'required',

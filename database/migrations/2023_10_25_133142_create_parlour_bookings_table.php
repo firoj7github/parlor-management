@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('date')->comment("Booking Date");
             $table->string('payment_method')->nullable();
             $table->string('slug');
+            $table->decimal('total_charge',28,8)->default(0);
             $table->decimal('price',28,8)->default(0);
             $table->decimal('gateway_payable_price',28,8)->nullable();
             $table->string('service')->comment('Service Type');

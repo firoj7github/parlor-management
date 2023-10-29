@@ -6682,3 +6682,80 @@ input[type=number] {
 .payment-type .payment-select .list {
   height: auto;
 }
+.booking-area .radio-item {
+  padding: 5px;
+  width: 31%;
+}
+.booking-area .radio-item img {
+  width: 30px;
+  height: 30px;
+}
+.booking-area .radio-item.action {
+  width: 31%;
+}
+.booking-area .radio-item label {
+  overflow: hidden;
+  display: block;
+  margin: 0;
+  padding: 8px 15px;
+  position: relative;
+  background: transparent;
+  color: #fff;
+  text-align: center;
+  border-radius: 10px;
+  border: 1px solid #eee;
+  cursor: pointer;
+  font-size: 15px;
+}
+.booking-area .radio-item label {
+  font-size: 14px;
+}
+.booking-area .radio-item label::before {
+  content: "\f00c";
+  font-family: "Line Awesome Free";
+  font-weight: 600;
+  color: #fff;
+  background: #cca876;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 10px;
+  transform: translateY(-50%);
+  left: 0px;
+  font-size: 16px;
+  display: none;
+  line-height: 20px;
+  border-radius: 0 0 8px 0;
+}
+@media (max-width: 767px) {
+  .booking-area .radio-item label {
+    padding: 15px 5px !important;
+ }
+}
+.booking-area .radio-item .hide-input {
+  display: none;
+}
+.booking-area .radio-item .hide-input:checked ~ label {
+  background: rgba(27, 189, 228, 0.1);
+  position: relative;
+  border-color: #cca876;
+}
+.booking-area .radio-item .hide-input:checked ~ label::before {
+  display: block;
+}
+.booking-area .radio-item .hide-input:checked ~ label sup {
+  color: #cca876;
+}
+@media (max-width: 991px) {
+  .booking-area .radio-item {
+    width: 47%;
+ }
+}
+@media (max-width: 767px) {
+  .booking-area .radio-item {
+    width: 47%;
+ }
+}

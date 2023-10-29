@@ -56,13 +56,13 @@
                                     <h5 class="title">{{ __("Select Payment Method") }}<span>*</span></h5>
                                     <div class="radio-wrapper pt-2" id="pg-view">
                                         <div class="radio-item">
-                                            <input type="radio" id="level" value="{{ global_const()::CASH_PAYMENT }}" checked name="payment_method">
-                                            <label for="level">{{ __("Cash-Payment") }}</label>
+                                            <input type="radio" id="level" class="hide-input" value="{{ global_const()::CASH_PAYMENT }}" checked name="payment_method">
+                                            <label for="level"><img src="{{ asset("public/frontend/images/cashpay.png") }}" alt="icon">{{ __("Cash-Payment") }}</label>
                                         </div>
                                         @foreach ($payment_gateway as $item)
                                             <div class="radio-item">
-                                                <input type="radio" id="level_{{ $item->id }}" name="payment_method" value="{{ $item->id }}">
-                                                <label for="level_{{ $item->id }}">{{ $item->name }}</label>
+                                                <input type="radio" id="level_{{ $item->id }}" class="hide-input" name="payment_method" value="{{ $item->id }}">
+                                                <label for="level_{{ $item->id }}"><img src="{{ get_image($item->image ,'payment-gateways') }}" alt="icon">{{ $item->name }}</label>
                                             </div>
                                         @endforeach
                                     </div>
