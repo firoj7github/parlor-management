@@ -1432,3 +1432,27 @@ function get_user_notifications(){
     $notifications  = UserNotification::auth()->latest()->take(5)->get();
     return $notifications;
 }
+function generate_random_number($length = 12)
+{
+    $numbers = '0123456789';
+    $numbersLength = strlen($numbers);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $numbers[rand(0, $numbersLength - 1)];
+    }
+    return $randomString;
+}
+function generateTrxString($table,$column,$prefix = '',$length = 8) {
+    do{
+       $generate_number = generate_random_number($length);
+       $generate_number = $prefix.''.$generate_number;
+       $unique = DB::table($table)->where($column,$generate_number)->exists();
+       $loop = false;
+       if($unique) {
+        $loop = true;
+       }
+       $unique_number = $generate_number;
+    }while($loop);
+
+    return $unique_number;
+}

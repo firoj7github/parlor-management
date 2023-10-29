@@ -6,6 +6,7 @@ use Exception;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\TemporaryData;
 use App\Models\ParlourBooking;
 use App\Models\UserNotification;
 use App\Models\Admin\ParlourList;
@@ -14,11 +15,11 @@ use App\Models\Admin\SiteSections;
 use App\Constants\SiteSectionConst;
 use App\Http\Controllers\Controller;
 use App\Constants\PaymentGatewayConst;
+use App\Models\Admin\TransactionSetting;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Admin\ParlourListHasSchedule;
 use App\Models\Admin\PaymentGatewayCurrency;
 use App\Http\Helpers\PaymentGateway as PaymentGatewayHelper;
-use App\Models\Admin\TransactionSetting;
 
 class ParlourBookingController extends Controller
 {
@@ -161,8 +162,11 @@ class ParlourBookingController extends Controller
         $to_time    = $data->schedule->to_time ?? '';
         if($validated['payment_method'] == global_const()::CASH_PAYMENT){
             try{
+                $trx_id = generateTrxString('parlour_bookings', 'trx_id', 'PB', 8);
                 $data->update([
+                    'trx_id'            => $trx_id,
                     'payment_method'    => $validated['payment_method'],
+                    'remark'            => 'CASH',
                     'status'            => true,
                 ]);
                 UserNotification::create([
@@ -188,5 +192,24 @@ class ParlourBookingController extends Controller
             }
             return $instance;
         }
+    }
+    /**
+     * Method for paypal payment succes
+     */
+    public function success(Request $request, $gateway){
+        $requestData = $request->all();
+        $token = $requestData['token'] ?? "";
+        $checkTempData = TemporaryData::where("type",$gateway)->where("identifier",$token)->first();
+        if(!$checkTempData) return redirect()->route('find.parlour')->with(['error' => ['Transaction faild. Record didn\'t saved properly. Please try again.']]);
+        $checkTempData = $checkTempData->toArray();
+        try{
+            
+            $transaction = PaymentGatewayHelper::init($checkTempData)->responseReceive();
+        }catch(Exception $e) {
+            dd($e->getMessage());
+            return back()->with(['error' => [$e->getMessage()]]);
+        }
+        
+        return redirect()->route("user.history.index")->with(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);
     }
 }

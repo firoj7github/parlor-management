@@ -40,6 +40,11 @@ Route::controller(ParlourBookingController::class)->name('parlour.booking.')->gr
     Route::post('store','store')->name('store');
     Route::get('preview/{slug}','preview')->name('preview');
     Route::post('confirm/{slug}','confirm')->name('confirm');
+
+    //payment methods routes
+    //paypal
+    Route::get('success/response/{gateway}','success')->name('payment.success');
+    Route::get("cancel/response/{gateway}",'cancel')->name('payment.cancel');
 });
 
 

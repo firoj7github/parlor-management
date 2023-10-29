@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger("schedule_id");
             $table->unsignedBigInteger("user_id")->nullable();
             $table->unsignedBigInteger("payment_gateway_currency_id")->nullable();
+            $table->string('trx_id')->comment('Transaction ID')->nullable();
             $table->string('date')->comment("Booking Date");
             $table->string('payment_method')->nullable();
             $table->string('slug');
@@ -28,6 +29,7 @@ return new class extends Migration
             $table->decimal('gateway_payable_price',28,8)->nullable();
             $table->string('service')->comment('Service Type');
             $table->text('message')->nullable();
+            $table->string("remark")->nullable();
             $table->integer('serial_number');
             $table->boolean("status")->default(false)->comment("Booking Status");
             $table->timestamps();

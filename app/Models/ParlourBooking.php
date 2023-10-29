@@ -19,6 +19,7 @@ class ParlourBooking extends Model
         'schedule_id'                   => 'integer',
         'user_id'                       => 'integer',
         'payment_gateway_currency_id'   => 'integer',
+        'trx_id'                        => 'string',
         'date'                          => 'string',
         'payment_method'                => 'string',
         'slug'                          => 'string',
@@ -28,6 +29,7 @@ class ParlourBooking extends Model
         'gateway_payable_price'         => 'decimal:8',
         'service'                       => 'object',
         'message'                       => 'string',
+        'remark'                        => 'string',
         'serial_number'                 => 'integer',
         'status'                        => 'boolean',
     ];

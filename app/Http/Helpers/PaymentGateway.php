@@ -21,7 +21,7 @@ use App\Traits\PaymentGateway\FlutterwaveTrait;
 
 class PaymentGateway {
 
-    
+    use Paypal;
 
     protected $request_data;
     protected $output;
@@ -61,7 +61,7 @@ class PaymentGateway {
         }
 
         $this->output['request_data']   = $request_data;
-        dd($this->output['request_data']);
+        
         return $this;
     }
 
@@ -84,7 +84,7 @@ class PaymentGateway {
         }elseif($gateway->type == PaymentGatewayConst::MANUAL){ 
             $method = PaymentGatewayConst::register(strtolower($gateway->type));
         }
-
+        
         if(method_exists($this,$method)) {
             return $method;
         }
@@ -97,53 +97,31 @@ class PaymentGateway {
         return $this->chargeCalculate($currency);
     }
 
-    public function chargeCalculate($currency,$receiver_currency = null) {
+    public function chargeCalculate($currency) {
+        $temporary_data         = ParlourBooking::where('slug',$this->request_data['data']->slug)->first();
         
-        $temporary_data         = TemporaryData::where('identifier',$this->request_data['identifier'])->first();
-        $amount                 = ($temporary_data->data->payable_amount / $temporary_data->data->sender_base_rate) * $temporary_data->data->currency->rate;
-        $fees                   = $temporary_data->data->fees;
-        $convert_amount         = $temporary_data->data->convert_amount;
-        $receive_money          = $temporary_data->data->receive_money;
-        $sender_currency_rate   = $currency->rate;
+        $price                  = floatval($temporary_data->price);
+        $fees                   = floatval($temporary_data->total_charge);
+        $payable_amount         = floatval($temporary_data->payable_price);
+        $sender_currency_rate   = floatval($currency->rate);
+        $total_payable_amount   = $sender_currency_rate * $payable_amount;
+        ($price == "" || $price == null) ? $price : $price;
+
         
-        ($sender_currency_rate == "" || $sender_currency_rate == null) ? $sender_currency_rate = 0 : $sender_currency_rate;
-        ($amount == "" || $amount == null) ? $amount : $amount;
-
-        if($receiver_currency) {
-            $receiver_currency_rate = $receiver_currency->rate;
-            ($receiver_currency_rate == "" || $receiver_currency_rate == null) ? $receiver_currency_rate = 0 : $receiver_currency_rate;
-            $exchange_rate  = ($receiver_currency_rate / $sender_currency_rate);
-            $will_get       = $receive_money;
-
-            $data = [
-                'requested_amount'          => $amount,
-                'sender_cur_code'           => $currency->currency_code,
-                'sender_cur_rate'           => $sender_currency_rate ?? 0,
-                'receiver_cur_code'         => $receiver_currency->currency_code,
-                'receiver_cur_rate'         => $receiver_currency->rate ?? 0,
-                'total_charge'              => $fees,
-                'total_amount'              => $amount,
-                'exchange_rate'             => $exchange_rate,
-                'will_get'                  => $will_get,
-                'default_currency'          => get_default_currency_code(),
-            ];
-        }else {
-            $default_currency   = Currency::default();
-            $exchange_rate      =  $default_currency->rate;
-            $will_get           = $receive_money;
-            
-            $data = [
-                'requested_amount'          => $amount,
-                'sender_cur_code'           => $currency->currency_code,
-                'sender_cur_rate'           => $sender_currency_rate ?? 0,
-                'total_charge'              => $fees,
-                'total_amount'              => $amount,
-                'convert_amount'            => $convert_amount,
-                'exchange_rate'             => $exchange_rate,
-                'will_get'                  => $will_get,
-                'default_currency'          => get_default_currency_code(),
-            ];
-        }
+        $default_currency   = Currency::default();
+        $exchange_rate      =  $default_currency->rate;
+        
+        $data = [
+            'sender_cur_code'           => $currency->currency_code,
+            'sender_cur_rate'           => $sender_currency_rate ?? 0,
+            'price'                     => $price,
+            'total_charge'              => $fees,
+            'payable_amount'            => $payable_amount,
+            'total_payable_amount'      => $total_payable_amount,
+            'exchange_rate'             => $exchange_rate,
+            'default_currency'          => get_default_currency_code(),
+        ];
+       
         return (object) $data;
     }
 
@@ -163,7 +141,7 @@ class PaymentGateway {
 
     public function responseReceive($type = null) {
         $tempData = $this->request_data;
-
+        
         if(empty($tempData) || empty($tempData['type'])) throw new Exception('Transaction faild. Record didn\'t saved properly. Please try again.');
 
         $method_name = $tempData['type']."Success";
@@ -185,17 +163,18 @@ class PaymentGateway {
         $currency_id = $tempData['data']->currency ?? "";
         
         $gateway_currency = PaymentGatewayCurrency::find($currency_id);
-        
         if(!$gateway_currency) throw new Exception('Transaction faild. Gateway currency not available.');
         
-        $validator_data     = [
-            'identifier'    => $tempData['data']->user_record,
+        $validator_data         = [
+            'data'              => $tempData['data']->user_record,
+            'payment_method'    => $tempData['data']->payment_method,
         ];
-        
         $this->request_data = $validator_data;
+        
         $this->gateway();
         $this->output['tempData'] = $tempData;
         $type = $tempData['type'];
+        
         if($type == 'flutterwave'){
             if(method_exists(FlutterwaveTrait::class,$method_name)) {
                 return $this->$method_name($this->output);
