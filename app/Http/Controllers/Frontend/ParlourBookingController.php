@@ -143,10 +143,8 @@ class ParlourBookingController extends Controller
         ]);
         $validated  = $validator->validate();
         $from_time        = $data->schedule->from_time ?? '';
-        $parsed_from_time = Carbon::createFromFormat('H:i', $from_time)->format('h A');
 
         $to_time          = $data->schedule->to_time ?? '';
-        $parsed_to_time   = Carbon::createFromFormat('H:i', $to_time)->format('h A');
         if($validated['payment_method'] == global_const()::CASH_PAYMENT){
             try{
                 $data->update([
@@ -156,7 +154,7 @@ class ParlourBookingController extends Controller
                 UserNotification::create([
                     'user_id'  => auth()->user()->id,
                     'message'  => "Your Booking (Parlour: ".$data->parlour->name.",
-                    Date: ".$data->date.", Time: ".$parsed_from_time."-".$parsed_to_time.", Serial Number: ".$data->serial_number.") Successfully Booked.", 
+                    Date: ".$data->date.", Time: ".$from_time."-".$to_time.", Serial Number: ".$data->serial_number.") Successfully Booked.", 
                 ]);
             }catch(Exception $e){
 
