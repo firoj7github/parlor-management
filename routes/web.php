@@ -46,7 +46,12 @@ Route::controller(ParlourBookingController::class)->name('parlour.booking.')->gr
     Route::get('success/response/{gateway}','success')->name('payment.success');
     Route::get("cancel/response/{gateway}",'cancel')->name('payment.cancel');
 
+    //stripe
     Route::get('stripe/payment/success/{trx}','stripePaymentSuccess')->name('stripe.payment.success');
+
+    //flutterwave
+    Route::get('/flutterwave/callback', 'flutterwaveCallback')->name('flutterwave.callback');
+
 });
 
 

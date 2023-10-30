@@ -216,6 +216,8 @@ return [
         // Import/Export Excel
         Maatwebsite\Excel\ExcelServiceProvider::class,
 
+        KingFlamez\Rave\RaveServiceProvider::class,
+
     ],
 
     /*
@@ -237,6 +239,7 @@ return [
         'Excel'     => Maatwebsite\Excel\Facades\Excel::class,
         'Agent'     => Jenssegers\Agent\Facades\Agent::class,
         'Paystack'  => Unicodeveloper\Paystack\Facades\Paystack::class,
+        'Rave' => KingFlamez\Rave\Facades\Rave::class,
     ])->toArray(),
 
 ];

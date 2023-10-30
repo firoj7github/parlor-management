@@ -19,6 +19,7 @@ use App\Models\Admin\TransactionSetting;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Admin\ParlourListHasSchedule;
 use App\Models\Admin\PaymentGatewayCurrency;
+use KingFlamez\Rave\Facades\Rave as Flutterwave;
 use App\Http\Helpers\PaymentGateway as PaymentGatewayHelper;
 
 class ParlourBookingController extends Controller
@@ -242,6 +243,42 @@ class ParlourBookingController extends Controller
             
             return back()->with(['error' => ["Something Is Wrong..."]]);
         }
-        return redirect()->route("user.history.index")->with(['success' => ['Successfully send remittance']]);
+        return redirect()->route("user.history.index")->with(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);
+    }
+
+    //flutterwave callback
+    public function flutterwaveCallback(){
+
+        $status = request()->status;
+        //if payment is successful
+        if ($status ==  'successful') {
+
+            $transactionID = Flutterwave::getTransactionIDFromCallback();
+            $data = Flutterwave::verifyTransaction($transactionID);
+
+            $requestData = request()->tx_ref;
+            $token = $requestData;
+
+            $checkTempData = TemporaryData::where("type",'flutterwave')->where("identifier",$token)->first();
+
+            if(!$checkTempData) return redirect()->route('find.parlour')->with(['error' => ['Transaction faild. Record didn\'t saved properly. Please try again.']]);
+
+            $checkTempData = $checkTempData->toArray();
+
+            try{
+                
+                $transaction = PaymentGatewayHelper::init($checkTempData)->responseReceive();
+            }catch(Exception $e) {
+                return back()->with(['error' => [$e->getMessage()]]);
+            }
+            return redirect()->route("user.history.index")->with(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);
+
+        }
+        elseif ($status ==  'cancelled'){
+            return redirect()->route('find.parlour')->with(['error' => ['Send Remittance cancelled']]);
+        }
+        else{
+            return redirect()->route('find.parlour')->with(['error' => ['Transaction failed']]);
+        }
     }
 }

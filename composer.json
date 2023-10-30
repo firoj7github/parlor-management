@@ -8,6 +8,7 @@
         "php": "^8.0.2",
         "buglinjo/laravel-webp": "^2.3",
         "guzzlehttp/guzzle": "^7.2",
+        "kingflamez/laravelrave": "dev-master",
         "intervention/image": "^2.7",
         "jenssegers/agent": "^2.6",
         "laravel/framework": "^9.19",

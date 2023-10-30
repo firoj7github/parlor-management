@@ -189,7 +189,6 @@ trait Paypal
    
         $output = $this->output;
         $data = [
-        
             'gateway'           => $output['gateway']->id,
             'currency'          => $output['currency']->id,
             'amount'            => json_decode(json_encode($output['amount']),true),
@@ -198,7 +197,7 @@ trait Paypal
             'creator_id'        => auth()->guard(get_auth_guard())->user()->id,
             'creator_guard'     => get_auth_guard(),
             'user_record'       => $output['request_data']['data'],
-            'payment_method'       => $output['request_data']['payment_method'],
+            'payment_method'    => $output['request_data']['payment_method'],
         ];
 
         
