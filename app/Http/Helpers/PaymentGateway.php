@@ -21,7 +21,7 @@ use App\Traits\PaymentGateway\FlutterwaveTrait;
 
 class PaymentGateway {
 
-    use Paypal;
+    use Paypal,Stripe;
 
     protected $request_data;
     protected $output;
@@ -65,11 +65,6 @@ class PaymentGateway {
         return $this;
     }
 
-    // public function validator($data) {
-    //     return Validator::make($data,[
-    //         'identifier'                => "nullable",
-    //     ]);
-    // }
 
     public function get() {
         return $this->output;

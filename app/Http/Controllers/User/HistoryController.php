@@ -13,7 +13,7 @@ class HistoryController extends Controller
      */
     public function index(){
         $page_title     = "| History";
-        $data           = ParlourBooking::auth()->with(['parlour','schedule','payment_gateway','user'])->paginate(10);
+        $data           = ParlourBooking::auth()->with(['parlour','schedule','payment_gateway','user'])->whereNot('status',global_const()::PARLOUR_BOOKING_STATUS_REVIEW_PAYMENT)->orderBYDESC('id')->paginate(10);
 
         return view('user.sections.history.index',compact(
             'page_title',

@@ -1456,3 +1456,13 @@ function generateTrxString($table,$column,$prefix = '',$length = 8) {
 
     return $unique_number;
 }
+
+function generateTransactionReference()
+{
+    return 'TXREF_' . time();
+}
+if(!function_exists('dateFormat')){
+    function dateFormat($format, $date){
+        return date($format, strtotime($date));
+    }
+}

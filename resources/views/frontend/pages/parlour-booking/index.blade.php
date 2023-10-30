@@ -94,7 +94,7 @@
                                                 <label>{{ __("Select Date") }} <span>*</span></label>
                                                 <select class="form--control nice-select date" name="date">
                                                     @for ($i = 0; $i < $schedule_date; $i++)
-                                                        <option value="{{ $currentDate->format('d F Y') }}">{{ $currentDate->format('d F, Y') }}</option>
+                                                        <option value="{{ $currentDate->format('d F, Y') }}">{{ $currentDate->format('d F, Y') }}</option>
                                                         @php
                                                             $currentDate->addDay();
                                                         @endphp

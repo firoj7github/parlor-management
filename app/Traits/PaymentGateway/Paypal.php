@@ -10,6 +10,8 @@ use App\Models\UserNotification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Constants\PaymentGatewayConst;
+use App\Models\Admin\ParlourList;
+use App\Models\Admin\ParlourListHasSchedule;
 use App\Models\ParlourBooking;
 use App\Notifications\paypalNotification;
 use Illuminate\Support\Facades\Notification;
@@ -241,14 +243,14 @@ trait Paypal
             
             // Notification::route("mail",$user->email)->notify(new paypalNotification($user,$output,$trx_id));
             
-            // if(auth()->check()){
-            //     UserNotification::create([
-            //         'user_id'  => auth()->user()->id,
-            //         'message'  => "Your Remittance  (Payable amount: ".get_amount($output['amount']->total_payable_amount + $output['amount']->total_charge).",
-            //         Get Amount: ".get_amount($output['amount']->will_get).") Successfully Sended.", 
-            //     ]);
-                
-            // }
+            
+            $parlour_data   = ParlourList::where('id',$output['tempData']['data']->user_record->parlour_id)->first();
+            $schedule_data  = ParlourListHasSchedule::where('id',$output['tempData']['data']->user_record->schedule_id)->first();
+            UserNotification::create([
+                'user_id'  => $output['tempData']['data']->user_record->user_id,
+                'message'  => "Your Booking (Parlour: ".$parlour_data->name.",
+                Date: ".$output['tempData']['data']->user_record->date.", Time: ".$schedule_data->from_time."-".$schedule_data->to_time.", Serial Number: ".$output['tempData']['data']->user_record->serial_number.") Successfully Booked.", 
+            ]);
             
             $this->createTransaction($output, $trx_id);
 
@@ -297,10 +299,11 @@ trait Paypal
                 'message'                       => $this->output['user_data']->message,
                 'remark'                        => $output['gateway']->name,
                 'serial_number'                 => $this->output['user_data']->serial_number,
-                'status'                        => true,
+                'status'                        => global_const()::PARLOUR_BOOKING_STATUS_CONFIRM_PAYMENT,
                 'created_at'                    => now(),
             ]);
-
+            $previous_data = ParlourBooking::where('slug',$this->output['user_data']->slug)->first();
+            $previous_data->delete();
             DB::commit();
             
         }catch(Exception $e) {

@@ -100,7 +100,7 @@ class ParlourBookingController extends Controller
         $validated['total_charge']  = $total_charge;
         $validated['price']         = $price;
         $validated['payable_price'] = $total_price;
-
+        $validated['status']        = global_const()::PARLOUR_BOOKING_STATUS_REVIEW_PAYMENT;
 
         $alrady_appointed = ParlourBooking::where('parlour_id',$parlour->id)->where('schedule_id',$validated['schedule_id'])->count();
 
@@ -167,7 +167,7 @@ class ParlourBookingController extends Controller
                     'trx_id'            => $trx_id,
                     'payment_method'    => $validated['payment_method'],
                     'remark'            => 'CASH',
-                    'status'            => true,
+                    'status'            => global_const()::PARLOUR_BOOKING_STATUS_CONFIRM_PAYMENT,
                 ]);
                 UserNotification::create([
                     'user_id'  => auth()->user()->id,
@@ -206,10 +206,42 @@ class ParlourBookingController extends Controller
             
             $transaction = PaymentGatewayHelper::init($checkTempData)->responseReceive();
         }catch(Exception $e) {
-            dd($e->getMessage());
             return back()->with(['error' => [$e->getMessage()]]);
         }
         
         return redirect()->route("user.history.index")->with(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);
+    }
+    /**
+     * This method for cancel alert of PayPal
+     * @method POST
+     * @param Illuminate\Http\Request $request
+     * @return Illuminate\Http\Request
+     */
+    public function cancel(Request $request, $gateway) {
+        $requestData = $request->all();
+        $token = $requestData['token'] ?? "";
+        if( $token){
+            TemporaryData::where("identifier",$token)->delete();
+        }
+        return redirect()->route('find.parlour');
+    }
+    /**
+     * Method for stripe payment success
+     */
+    public function stripePaymentSuccess($trx){
+        
+        $token = $trx;
+        $checkTempData = TemporaryData::where("type",PaymentGatewayConst::STRIPE)->where("identifier",$token)->first();
+        if(!$checkTempData) return redirect()->route('find.parlour')->with(['error' => ['Transaction Failed. Record didn\'t saved properly. Please try again.']]);
+        $checkTempData = $checkTempData->toArray();
+
+        try{
+            $transaction = PaymentGatewayHelper::init($checkTempData)->responseReceive(); 
+            
+        }catch(Exception $e) {
+            
+            return back()->with(['error' => ["Something Is Wrong..."]]);
+        }
+        return redirect()->route("user.history.index")->with(['success' => ['Successfully send remittance']]);
     }
 }

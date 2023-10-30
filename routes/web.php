@@ -45,6 +45,8 @@ Route::controller(ParlourBookingController::class)->name('parlour.booking.')->gr
     //paypal
     Route::get('success/response/{gateway}','success')->name('payment.success');
     Route::get("cancel/response/{gateway}",'cancel')->name('payment.cancel');
+
+    Route::get('stripe/payment/success/{trx}','stripePaymentSuccess')->name('stripe.payment.success');
 });
 
 

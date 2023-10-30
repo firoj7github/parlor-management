@@ -21,4 +21,17 @@ class GlobalConst {
     const FEMALE        = "Female";
     const OTHERS        = "Others";
     const CASH_PAYMENT  = "Cash Payment";
+
+
+    const PARLOUR_BOOKING_STATUS_REVIEW_PAYMENT      = 1;
+    const PARLOUR_BOOKING_STATUS_PENDING             = 2;
+    const PARLOUR_BOOKING_STATUS_CONFIRM_PAYMENT     = 3;
+    const PARLOUR_BOOKING_STATUS_HOLD                = 4;
+    const PARLOUR_BOOKING_STATUS_SETTLED             = 5;
+    const PARLOUR_BOOKING_STATUS_COMPLETE            = 6;
+    const PARLOUR_BOOKING_STATUS_CANCEL              = 7;
+    const PARLOUR_BOOKING_STATUS_FAILED              = 8;
+    const PARLOUR_BOOKING_STATUS_REFUND              = 9;
+    const PARLOUR_BOOKING_STATUS_DELAYED             = 10;
+    const PARLOUR_BOOKING_STATUS_ALL                 = "ALL";
 }
