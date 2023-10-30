@@ -16,7 +16,7 @@ class PaymentGatewayConst {
     const RAZORPAY      = 'razorpay';
     const SSLCOMMERZ    = 'sslcommerz';
 
-
+    const APP           = "APP";
     const ENV_SANDBOX       = "SANDBOX";
     const ENV_PRODUCTION    = "PRODUCTION";
 
@@ -42,6 +42,11 @@ class PaymentGatewayConst {
             return $gateway_alias[$alias];
         }
         return "init";
+    }
+    public static function apiAuthenticateGuard() {
+        return [
+            'api'   => 'web',
+        ];
     }
 
 }

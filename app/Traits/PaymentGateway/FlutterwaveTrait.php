@@ -276,8 +276,6 @@ trait FlutterwaveTrait
                 throw new Exception($e->getMessage());
             }
         
-
-        
         return $id;
     }
 

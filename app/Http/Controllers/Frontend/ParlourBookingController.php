@@ -14,6 +14,7 @@ use App\Models\Admin\UsefullLink;
 use App\Models\Admin\SiteSections;
 use App\Constants\SiteSectionConst;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Constants\PaymentGatewayConst;
 use App\Models\Admin\TransactionSetting;
 use Illuminate\Support\Facades\Validator;
@@ -205,7 +206,7 @@ class ParlourBookingController extends Controller
         $checkTempData = $checkTempData->toArray();
         try{
             
-            $transaction = PaymentGatewayHelper::init($checkTempData)->responseReceive();
+            PaymentGatewayHelper::init($checkTempData)->responseReceive();
         }catch(Exception $e) {
             return back()->with(['error' => [$e->getMessage()]]);
         }
@@ -237,7 +238,7 @@ class ParlourBookingController extends Controller
         $checkTempData = $checkTempData->toArray();
 
         try{
-            $transaction = PaymentGatewayHelper::init($checkTempData)->responseReceive(); 
+            PaymentGatewayHelper::init($checkTempData)->responseReceive(); 
             
         }catch(Exception $e) {
             
@@ -267,7 +268,7 @@ class ParlourBookingController extends Controller
 
             try{
                 
-                $transaction = PaymentGatewayHelper::init($checkTempData)->responseReceive();
+               PaymentGatewayHelper::init($checkTempData)->responseReceive();
             }catch(Exception $e) {
                 return back()->with(['error' => [$e->getMessage()]]);
             }
@@ -275,10 +276,60 @@ class ParlourBookingController extends Controller
 
         }
         elseif ($status ==  'cancelled'){
-            return redirect()->route('find.parlour')->with(['error' => ['Send Remittance cancelled']]);
+            return redirect()->route('find.parlour')->with(['error' => ['Parlour Booking Canceled.']]);
         }
         else{
             return redirect()->route('find.parlour')->with(['error' => ['Transaction failed']]);
+        }
+    }
+    /**
+     * SSL Commerz Payment Success
+     */
+    public function sllCommerzSuccess(Request $request){
+        
+        $data           = $request->all();
+        $token          = $data['tran_id'];
+        $checkTempData  = TemporaryData::where("type",PaymentGatewayConst::SSLCOMMERZ)->where("identifier",$token)->first();
+        
+        if(!$checkTempData) return redirect()->route('find.parlour')->with(['error' => ['Transaction Failed. Record didn\'t saved properly. Please try again.']]);
+        $checkTempData  = $checkTempData->toArray();
+        $creator_id     = $checkTempData['data']->creator_id ?? null;
+        $creator_guard  = $checkTempData['data']->creator_guard ?? null;
+
+        $user = Auth::guard($creator_guard)->loginUsingId($creator_id);
+        if( $data['status'] != "VALID"){
+            return redirect()->route("find.parlour")->with(['error' => ['Failed!']]);
+        }
+        try{
+            PaymentGatewayHelper::init($checkTempData)->responseReceive();
+        }catch(Exception $e) {
+            
+            return back()->with(['error' => ["Something Is Wrong..."]]);
+        }
+        return redirect()->route("user.history.index")->with(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);
+    }
+    /**
+     * razor pay payment gateway callback
+     */
+    public function razorCallback(){
+        $request_data = request()->all();
+        //if payment is successful
+        if ($request_data['razorpay_payment_link_status'] ==  'paid') {
+            $token = $request_data['razorpay_payment_link_reference_id'];
+
+            $checkTempData = TemporaryData::where("type",PaymentGatewayConst::RAZORPAY)->where("identifier",$token)->first();
+            if(!$checkTempData) return redirect()->route('find.parlour')->with(['error' => ['Transaction Failed. Record didn\'t saved properly. Please try again.']]);
+            $checkTempData = $checkTempData->toArray();
+            try{
+                PaymentGatewayHelper::init($checkTempData)->responseReceive();
+            }catch(Exception $e) {
+                return back()->with(['error' => [$e->getMessage()]]);
+            }
+            return redirect()->route("user.history.index")->with(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);
+
+        }
+        else{
+            return redirect()->route('find.parlour')->with(['error' => ['Failed']]);
         }
     }
 }

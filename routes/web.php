@@ -52,6 +52,14 @@ Route::controller(ParlourBookingController::class)->name('parlour.booking.')->gr
     //flutterwave
     Route::get('/flutterwave/callback', 'flutterwaveCallback')->name('flutterwave.callback');
 
+    //ssl commerce
+    Route::post('sslcommerz/success','sllCommerzSuccess')->name('ssl.success');
+    Route::post('sslcommerz/fail','sllCommerzFails')->name('ssl.fail');
+    Route::post('sslcommerz/cancel','sllCommerzCancel')->name('ssl.cancel');
+
+    //razor-pay
+    Route::get('razor/callback', 'razorCallback')->name('razor.callback');
+
 });
 
 

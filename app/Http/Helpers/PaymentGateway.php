@@ -21,7 +21,7 @@ use App\Traits\PaymentGateway\FlutterwaveTrait;
 
 class PaymentGateway {
 
-    use Paypal,Stripe,FlutterwaveTrait;
+    use Paypal,Stripe,FlutterwaveTrait,SslcommerzTrait,RazorTrait;
 
     protected $request_data;
     protected $output;
