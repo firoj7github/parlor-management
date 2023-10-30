@@ -31,7 +31,7 @@ class ParlourBooking extends Model
         'message'                       => 'string',
         'remark'                        => 'string',
         'serial_number'                 => 'integer',
-        'status'                        => 'boolean',
+        'status'                        => 'integer',
     ];
     public function scopeAuth($query){
         $query->where('user_id',auth()->user()->id);

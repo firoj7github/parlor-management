@@ -31,7 +31,7 @@ return new class extends Migration
             $table->text('message')->nullable();
             $table->string("remark")->nullable();
             $table->integer('serial_number');
-            $table->boolean("status")->default(false)->comment("Booking Status");
+            $table->tinyInteger("status")->default(0)->comment("1: Review Payment, 2: Pending, 3: Confirm Payment, 4: On Hold, 5: Settled, 6: Completed, 7: Canceled, 8: Failed, 9: Refunded, 10: Delayed");
             $table->timestamps();
 
             $table->foreign("parlour_id")->references("id")->on("parlour_lists")->onDelete("cascade")->onUpdate("cascade");
