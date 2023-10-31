@@ -16,7 +16,7 @@ use App\Models\Admin\PaymentGatewayCurrency;
 use App\Providers\Admin\BasicSettingsProvider;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class sslcommerzNotification extends Notification
+class paymentNotification extends Notification
 {
     use Queueable;
     public $user;

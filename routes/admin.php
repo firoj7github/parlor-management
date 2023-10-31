@@ -98,6 +98,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::controller(ParlourBookingLogs::class)->prefix('booking')->name('parlour.booking.')->group(function(){
         Route::get('/','index')->name('index');
         Route::get('details/{trx_id}','details')->name('details');
+        Route::post('status/update/{trx_id}','statusUpdate')->name('status.update');
         Route::get('pending','pending')->name('pending');
         Route::get('confirm-payment','confirmPayment')->name('confirm.payment');
         Route::get('hold','hold')->name('hold');

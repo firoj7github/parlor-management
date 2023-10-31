@@ -5900,3 +5900,94 @@ textPath {
 }
 
 /* ERROR PAGE CODE END */
+
+
+
+.transaction-area .title {
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+.transaction-area {
+  padding: 20px;
+  border: 1px solid #eee;
+  background-color: white;
+  border-radius: 5px;
+}
+.transaction-area.fixed {
+  position: sticky;
+  top: 70px;
+}
+.transaction-area .thumb {
+  border-radius: 50%;
+  overflow: hidden;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+  border: 5px solid #eee;
+}
+.transaction-area .thumb img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+}
+.transaction-area .content {
+  padding-top: 40px;
+}
+.transaction-area .content .list {
+  margin-top: 10px;
+}
+.transaction-area .content .list li {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #363333;
+  border-bottom: 1px solid #eee;
+}
+@media only screen and (max-width: 470px) {
+  .transaction-area .content .list li {
+    font-size: 12px;
+    font-weight: 500;
+  }
+}
+@media only screen and (max-width: 350px) {
+  .transaction-area .content .list li {
+    font-size: 11px;
+    font-weight: 500;
+  }
+}
+.transaction-area .content .list li span {
+  text-transform: capitalize;
+  color: #6c7176;
+  font-weight: 500;
+  font-size: 13px;
+  padding-left: 5px;
+  float: right;
+}
+@media only screen and (max-width: 470px) {
+  .transaction-area .content .list li span {
+    font-size: 10px;
+    font-weight: 400;
+  }
+}
+@media only screen and (max-width: 350px) {
+  .transaction-area .content .list li span {
+    font-size: 9px;
+    font-weight: 400;
+  }
+}
+.transaction-area .content .list li + li {
+  margin-top: 15px;
+}
+.radio-area{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.radio-area .radio-wrapper{
+  padding-bottom: 10px;
+  flex: 0 0 20%;
+}

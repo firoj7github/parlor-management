@@ -10,12 +10,13 @@ use App\Models\Admin\ParlourList;
 use App\Models\Admin\SiteSections;
 use App\Constants\SiteSectionConst;
 use Illuminate\Notifications\Notification;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Models\Admin\ParlourListHasSchedule;
 use App\Models\Admin\PaymentGatewayCurrency;
 use App\Providers\Admin\BasicSettingsProvider;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class flutterwaveNotification extends Notification
+class emailNotification extends Notification
 {
     use Queueable;
     public $user;
@@ -34,16 +35,28 @@ class flutterwaveNotification extends Notification
         $this->trx_id = $trx_id;
     }
 
+    /**
+     * Get the notification's delivery channels.
+     *
+     * @param  mixed  $notifiable
+     * @return array
+     */
     public function via($notifiable)
     {
         return ['mail'];
     }
 
+    /**
+     * Get the mail representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return \Illuminate\Notifications\Messages\MailMessage
+     */
     public function toMail($notifiable)
     {
         $user                   = $this->user;
         $data                   = $this->data;
-        $user_data              = ParlourBooking::where('slug',$data['tempData']['data']->user_record->slug ?? "")->first();
+        $user_data              = ParlourBooking::where('slug',$data->slug ?? "")->first();
         $parlour_data           = ParlourList::where('id',$user_data->parlour_id)->first();
         $schedule_data          = ParlourListHasSchedule::where('id',$user_data->schedule_id)->first();
         $payment_method         = PaymentGatewayCurrency::where('id',$user_data->payment_gateway_currency_id)->first();

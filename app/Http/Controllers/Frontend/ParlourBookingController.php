@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Notification;
 use App\Notifications\cashpaymentNotification;
 use KingFlamez\Rave\Facades\Rave as Flutterwave;
 use App\Http\Helpers\PaymentGateway as PaymentGatewayHelper;
+use App\Notifications\emailNotification;
 
 class ParlourBookingController extends Controller
 {
@@ -183,7 +184,7 @@ class ParlourBookingController extends Controller
                     Date: ".$data->date.", Time: ".$from_time."-".$to_time.", Serial Number: ".$data->serial_number.") Successfully Booked.", 
                 ]);
                 if($basic_setting->email_notification == true){
-                    Notification::route("mail",$user->email)->notify(new cashpaymentNotification($user,$data,$trx_id));
+                    Notification::route("mail",$user->email)->notify(new emailNotification($user,$data,$trx_id));
                 }
             }catch(Exception $e){
                 return back()->with(['error' => ['Something went wrong! Please try again.']]);

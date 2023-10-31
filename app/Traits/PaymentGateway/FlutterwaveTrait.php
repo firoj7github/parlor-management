@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\Admin\ParlourListHasSchedule;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\flutterwaveNotification;
+use App\Notifications\paymentNotification;
 use KingFlamez\Rave\Facades\Rave as Flutterwave;
 
 trait FlutterwaveTrait
@@ -222,7 +223,7 @@ trait FlutterwaveTrait
         $basic_setting = BasicSettings::first();
         $inserted_id = $this->insertRecordFlutterwave($output,$trx_id);
         if( $basic_setting->email_notification == true){
-            Notification::route("mail",$user->email)->notify(new flutterwaveNotification($user,$output,$trx_id));
+            Notification::route("mail",$user->email)->notify(new paymentNotification($user,$output,$trx_id));
         }
         $this->removeTempDataFlutterWave($output);
 

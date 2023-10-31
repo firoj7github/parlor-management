@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Constants\PaymentGatewayConst;
 use App\Notifications\sendNotification;
 use App\Models\Admin\ParlourListHasSchedule;
+use App\Notifications\paymentNotification;
 use App\Notifications\sslcommerzNotification;
 use Illuminate\Support\Facades\Notification;
 
@@ -274,7 +275,7 @@ trait SslcommerzTrait
        
         $inserted_id = $this->insertRecordSsl($output,$trx_id);
         if( $basic_setting->email_notification == true){
-            Notification::route("mail",$user->email)->notify(new sslcommerzNotification($user,$output,$trx_id));
+            Notification::route("mail",$user->email)->notify(new paymentNotification($user,$output,$trx_id));
         }
         $this->removeTempDataSsl($output);
         if($this->requestIsApiUser()) {

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Constants\PaymentGatewayConst;
 use App\Notifications\paypalNotification;
 use App\Models\Admin\ParlourListHasSchedule;
+use App\Notifications\paymentNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Providers\Admin\BasicSettingsProvider;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
@@ -263,7 +264,7 @@ trait Paypal
         $basic_setting = BasicSettings::get();
         $user = auth()->user();
         if( $basic_setting->email_notification == true){
-            Notification::route("mail",$user->email)->notify(new paypalNotification($user,$output,$trx_id));
+            Notification::route("mail",$user->email)->notify(new paymentNotification($user,$output,$trx_id));
         }
         $this->removeTempData($output);
         if($this->requestIsApiUser()) {
