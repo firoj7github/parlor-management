@@ -20,6 +20,7 @@ use App\Models\Admin\TransactionSetting;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Admin\ParlourListHasSchedule;
 use App\Models\Admin\PaymentGatewayCurrency;
+use App\Providers\Admin\BasicSettingsProvider;
 use KingFlamez\Rave\Facades\Rave as Flutterwave;
 use App\Http\Helpers\PaymentGateway as PaymentGatewayHelper;
 
@@ -149,8 +150,14 @@ class ParlourBookingController extends Controller
      * @param \Illuminate\Http\Request $request
      */
     public function confirm(Request $request,$slug){
-
         $data       = ParlourBooking::with(['payment_gateway','parlour','schedule','user'])->where('slug',$slug)->first();
+        $otp_exp_sec = $data->booking_exp_seconds ?? global_const()::BOOKING_EXP_SEC;
+
+        if($data->created_at->addSeconds($otp_exp_sec) < now()) {
+            $data->delete();
+            return redirect()->route('find.parlour')->with(['error' => ['Session expired. Please try again']]);
+        }
+
         $validator  = Validator::make($request->all(),[
             'payment_method'    => 'required',
         ]);
@@ -173,10 +180,9 @@ class ParlourBookingController extends Controller
                     Date: ".$data->date.", Time: ".$from_time."-".$to_time.", Serial Number: ".$data->serial_number.") Successfully Booked.", 
                 ]);
             }catch(Exception $e){
-
                 return back()->with(['error' => ['Something went wrong! Please try again.']]);
             }
-            return redirect()->route('user.history.index')->with(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);
+            return redirect()->route('user.my.booking.index')->with(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);
         }else{
             $requested_data         = [
                 'data'              => $data,
@@ -207,7 +213,7 @@ class ParlourBookingController extends Controller
             return back()->with(['error' => [$e->getMessage()]]);
         }
         
-        return redirect()->route("user.history.index")->with(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);
+        return redirect()->route("user.my.booking.index")->with(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);
     }
     /**
      * This method for cancel alert of PayPal
@@ -240,7 +246,7 @@ class ParlourBookingController extends Controller
             
             return back()->with(['error' => ["Something Is Wrong..."]]);
         }
-        return redirect()->route("user.history.index")->with(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);
+        return redirect()->route("user.my.booking.index")->with(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);
     }
 
     //flutterwave callback
@@ -268,7 +274,7 @@ class ParlourBookingController extends Controller
             }catch(Exception $e) {
                 return back()->with(['error' => [$e->getMessage()]]);
             }
-            return redirect()->route("user.history.index")->with(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);
+            return redirect()->route("user.my.booking.index")->with(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);
 
         }
         elseif ($status ==  'cancelled'){
@@ -302,7 +308,7 @@ class ParlourBookingController extends Controller
             
             return back()->with(['error' => ["Something Is Wrong..."]]);
         }
-        return redirect()->route("user.history.index")->with(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);
+        return redirect()->route("user.my.booking.index")->with(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);
     }
     /**
      * razor pay payment gateway callback
@@ -321,7 +327,7 @@ class ParlourBookingController extends Controller
             }catch(Exception $e) {
                 return back()->with(['error' => [$e->getMessage()]]);
             }
-            return redirect()->route("user.history.index")->with(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);
+            return redirect()->route("user.my.booking.index")->with(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);
 
         }
         else{

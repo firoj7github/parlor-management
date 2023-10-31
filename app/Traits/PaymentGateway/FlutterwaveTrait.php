@@ -201,8 +201,6 @@ trait FlutterwaveTrait
         $trx_id = generateTrxString('parlour_bookings', 'trx_id', 'PB', 8);
         
         $user = auth()->user();
-        
-        // Notification::route("mail",$user->email)->notify(new flutterwaveNotification($user,$output,$trx_id));
             
         $parlour_data   = ParlourList::where('id',$output['tempData']['data']->user_record->parlour_id)->first();
         $schedule_data  = ParlourListHasSchedule::where('id',$output['tempData']['data']->user_record->schedule_id)->first();
@@ -219,8 +217,9 @@ trait FlutterwaveTrait
 
     public function createTransactionFlutterwave($output,$trx_id) {
         $trx_id =  $trx_id;
+        $user = auth()->user();
         $inserted_id = $this->insertRecordFlutterwave($output,$trx_id);
-        
+        Notification::route("mail",$user->email)->notify(new flutterwaveNotification($user,$output,$trx_id));
         $this->removeTempDataFlutterWave($output);
 
         if($this->requestIsApiUser()) {

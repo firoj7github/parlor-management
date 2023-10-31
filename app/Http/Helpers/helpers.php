@@ -1476,3 +1476,8 @@ function getTrxNum($length = 8)
     }
     return $randomString;
 }
+function getAmount($amount, $length = 8)
+{
+    $amount = round($amount, $length);
+    return $amount + 0;
+}

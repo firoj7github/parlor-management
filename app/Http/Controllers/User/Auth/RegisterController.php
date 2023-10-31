@@ -5,11 +5,7 @@ namespace App\Http\Controllers\User\Auth;
 use Exception;
 use App\Models\User;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\Admin\UsefulLink;
-use App\Models\Admin\SiteSections;
-use App\Constants\SiteSectionConst;
 use App\Http\Controllers\Controller;
 use App\Traits\User\RegisteredUsers;
 use Illuminate\Support\Facades\Hash;
@@ -130,7 +126,7 @@ class RegisterController extends Controller
     protected function registered(Request $request, $user)
     {
         try{
-            $this->createUserWallets($user);
+            
         }catch(Exception $e) {
             return redirect()->route("index")->with(['error' => [$e->getMessage()]]);
         }

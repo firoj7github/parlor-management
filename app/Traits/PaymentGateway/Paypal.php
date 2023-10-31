@@ -6,14 +6,15 @@ use Exception;
 use App\Traits\Transaction;
 use Illuminate\Support\Str;
 use App\Models\TemporaryData;
+use App\Models\ParlourBooking;
 use App\Models\UserNotification;
+use App\Models\Admin\ParlourList;
 use Illuminate\Support\Facades\DB;
+use App\Models\Admin\BasicSettings;
 use Illuminate\Support\Facades\Auth;
 use App\Constants\PaymentGatewayConst;
-use App\Models\Admin\ParlourList;
-use App\Models\Admin\ParlourListHasSchedule;
-use App\Models\ParlourBooking;
 use App\Notifications\paypalNotification;
+use App\Models\Admin\ParlourListHasSchedule;
 use Illuminate\Support\Facades\Notification;
 use App\Providers\Admin\BasicSettingsProvider;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
@@ -237,11 +238,6 @@ trait Paypal
         $output['capture'] = $response;
         try{
             $trx_id = generateTrxString('parlour_bookings', 'trx_id', 'PB', 8);
-            $basic_settings = BasicSettingsProvider::get();
-            $user = auth()->user();
-            
-            // Notification::route("mail",$user->email)->notify(new paypalNotification($user,$output,$trx_id));
-            
             
             $parlour_data   = ParlourList::where('id',$output['tempData']['data']->user_record->parlour_id)->first();
             $schedule_data  = ParlourListHasSchedule::where('id',$output['tempData']['data']->user_record->schedule_id)->first();
@@ -262,9 +258,13 @@ trait Paypal
     }
 
     public function createTransaction($output, $trx_id) {
-        
         $trx_id =  $trx_id;
         $inserted_id = $this->insertRecord($output, $trx_id);
+        $basic_setting = BasicSettings::get();
+        $user = auth()->user();
+        if( $basic_setting->email_notification == true){
+            Notification::route("mail",$user->email)->notify(new paypalNotification($user,$output,$trx_id));
+        }
         $this->removeTempData($output);
         if($this->requestIsApiUser()) {
             // logout user

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Constants\PaymentGatewayConst;
 use App\Notifications\sendNotification;
 use App\Models\Admin\ParlourListHasSchedule;
+use App\Notifications\sslcommerzNotification;
 use Illuminate\Support\Facades\Notification;
 
 
@@ -272,8 +273,9 @@ trait SslcommerzTrait
         $trx_id = generateTrxString('parlour_bookings', 'trx_id', 'PB', 8);
        
         $inserted_id = $this->insertRecordSsl($output,$trx_id);
-        
-        
+        if( $basic_setting->email_notification == true){
+            Notification::route("mail",$user->email)->notify(new sslcommerzNotification($user,$output,$trx_id));
+        }
         $this->removeTempDataSsl($output);
         if($this->requestIsApiUser()) {
             // logout user
@@ -291,9 +293,6 @@ trait SslcommerzTrait
                 Date: ".$output['tempData']['data']->user_record->date.", Time: ".$schedule_data->from_time."-".$schedule_data->to_time.", Serial Number: ".$output['tempData']['data']->user_record->serial_number.") Successfully Booked.", 
             ]);
         }
-        // if( $basic_setting->email_notification == true){
-        //     Notification::route("mail",$user->email)->notify(new sendNotification($user,$output,$trx_id));
-        // }
         return true;
     }
 

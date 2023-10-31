@@ -227,10 +227,9 @@ trait Stripe
                 Date: ".$output['tempData']['data']->user_record->date.", Time: ".$schedule_data->from_time."-".$schedule_data->to_time.", Serial Number: ".$output['tempData']['data']->user_record->serial_number.") Successfully Booked.", 
             ]);
         }
-        // if( $basic_setting->email_notification == true){
-        //     Notification::route("mail",$user->email)->notify(new sendNotification($user,$output,$trx_id));
-        // }
-        // return $this->output['trx_id'] ?? "";
+        if( $basic_setting->email_notification == true){
+            Notification::route("mail",$user->email)->notify(new sendNotification($user,$output,$trx_id));
+        }
     }
 
     public function insertRecordStripe($output, $trx_id) {
