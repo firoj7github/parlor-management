@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\CookieController;
 use App\Http\Controllers\Admin\ExtensionsController;
 use App\Http\Controllers\Admin\LanguageController;
+use App\Http\Controllers\Admin\ParlourBookingLogs;
 use App\Http\Controllers\Admin\ParlourListController;
 use App\Http\Controllers\Admin\PaymentGatewayCurrencyController;
 use App\Http\Controllers\Admin\PaymentGatewaysController;
@@ -91,6 +92,21 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('update/{slug}','update')->name('update');
         Route::put('status/update','statusUpdate')->name('status.update');
         Route::delete('delete','delete')->name('delete');
+    });
+
+    // parlour booking logs
+    Route::controller(ParlourBookingLogs::class)->prefix('booking')->name('parlour.booking.')->group(function(){
+        Route::get('/','index')->name('index');
+        Route::get('details/{trx_id}','details')->name('details');
+        Route::get('pending','pending')->name('pending');
+        Route::get('confirm-payment','confirmPayment')->name('confirm.payment');
+        Route::get('hold','hold')->name('hold');
+        Route::get('settled','settled')->name('settled');
+        Route::get('complete','complete')->name('complete');
+        Route::get('canceled','canceled')->name('canceled');
+        Route::get('failed','failed')->name('failed');
+        Route::get('refunded','refunded')->name('refunded');
+        Route::get('delayed','delayed')->name('delayed');
     });
 
     // User Care Section

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Frontend;
 
 use Exception;
-use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\TemporaryData;
@@ -23,7 +22,6 @@ use App\Models\Admin\ParlourListHasSchedule;
 use App\Models\Admin\PaymentGatewayCurrency;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\cashpaymentNotification;
-use App\Providers\Admin\BasicSettingsProvider;
 use KingFlamez\Rave\Facades\Rave as Flutterwave;
 use App\Http\Helpers\PaymentGateway as PaymentGatewayHelper;
 
@@ -188,7 +186,6 @@ class ParlourBookingController extends Controller
                     Notification::route("mail",$user->email)->notify(new cashpaymentNotification($user,$data,$trx_id));
                 }
             }catch(Exception $e){
-                dd($e->getMessage());
                 return back()->with(['error' => ['Something went wrong! Please try again.']]);
             }
             return redirect()->route('user.my.booking.index')->with(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);

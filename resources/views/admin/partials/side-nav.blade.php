@@ -60,6 +60,59 @@
                     ]
                 ])
                 @include('admin.components.side-nav.link-group',[
+                    'group_title'       => __("Logs"),
+                    'group_links'       => [
+                        'dropdown'      => [
+                            [
+                                'title'     => __("Booking"),
+                                'icon'      => "menu-icon las la-calculator",
+                                'links'     => [
+                                    [
+                                        'title'     => __("Pending Logs"),
+                                        'route'     => "admin.parlour.booking.pending",
+                                    ],
+                                    [
+                                        'title'     => __("Confirm Payment Logs"),
+                                        'route'     => "admin.parlour.booking.confirm.payment",
+                                    ],
+                                    [
+                                        'title'     => __("On Hold Logs"),
+                                        'route'     => "admin.parlour.booking.hold",
+                                    ],
+                                    [
+                                        'title'     => __("Settled Logs"),
+                                        'route'     => "admin.parlour.booking.settled",
+                                    ],
+                                    [
+                                        'title'     => __("Complete Logs"),
+                                        'route'     => "admin.parlour.booking.complete",
+                                    ],
+                                    [
+                                        'title'     => __("Canceled Logs"),
+                                        'route'     => "admin.parlour.booking.canceled",
+                                    ],
+                                    [
+                                        'title'     => __("Failed Logs"),
+                                        'route'     => "admin.parlour.booking.failed",
+                                    ],
+                                    [
+                                        'title'     => __("Refunded Logs"),
+                                        'route'     => "admin.parlour.booking.refunded",
+                                    ],
+                                    [
+                                        'title'     => __("Delayed Logs"),
+                                        'route'     => "admin.parlour.booking.delayed",
+                                    ],
+                                    [
+                                        'title'     => __("All Logs"),
+                                        'route'     => "admin.parlour.booking.index",
+                                    ]
+                                ],
+                            ],
+                        ],
+                    ]
+                ])
+                @include('admin.components.side-nav.link-group',[
                     'group_title'       => __("Interface Panel"),
                     'group_links'       => [
                         'dropdown'      => [
