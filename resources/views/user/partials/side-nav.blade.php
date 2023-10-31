@@ -18,9 +18,9 @@
                         </a>
                     </li>
                     <li class="sidebar-menu-item">
-                        <a href="{{ setRoute('user.history.index') }}">
+                        <a href="{{ setRoute('user.my.booking.index') }}">
                             <i class="menu-icon las la-cart-plus"></i>
-                            <span class="menu-title">{{ __("History") }}</span>
+                            <span class="menu-title">{{ __("My Booking") }}</span>
                         </a>
                     </li>
                     <li class="sidebar-menu-item">

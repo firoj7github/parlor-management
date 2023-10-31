@@ -55,8 +55,7 @@ class ParlourBookingController extends Controller
      * @param \Illuminate\Http\Request $request
      */
     public function store(Request $request){
-        $validated_user         = auth()->user();
-        if(!$validated_user) return back()->with(['error' => ['Please Login First.']]);
+        if(auth()->check() == false) return back()->with(['error' => ['Please Login First.']]);
         $charge_data            = TransactionSetting::where('slug','parlour')->where('status',1)->first();
         $validator              = Validator::make($request->all(),[
             'parlour'           => 'required',
@@ -75,12 +74,9 @@ class ParlourBookingController extends Controller
         $slug                       = $validated['parlour'];
         $parlour                    = ParlourList::where('slug',$slug)->first();
         if(!$parlour) return back()->with(['error'=> ['Parlour Not Found!']]);
-        if(auth()->check()){
-            $validated['user_id']   = auth()->user()->id;
-        }
-        else{
-            $validated['user_id']   = null;
-        }
+       
+        $validated['user_id']   = auth()->user()->id;
+        
 
         $validated['parlour_id']   = $parlour->id;
 
@@ -169,7 +165,7 @@ class ParlourBookingController extends Controller
                     'trx_id'            => $trx_id,
                     'payment_method'    => $validated['payment_method'],
                     'remark'            => 'CASH',
-                    'status'            => global_const()::PARLOUR_BOOKING_STATUS_CONFIRM_PAYMENT,
+                    'status'            => global_const()::PARLOUR_BOOKING_STATUS_PENDING,
                 ]);
                 UserNotification::create([
                     'user_id'  => auth()->user()->id,

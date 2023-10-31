@@ -4,6 +4,7 @@ use App\Http\Controllers\Frontend\ParlourBookingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\HistoryController;
+use App\Http\Controllers\User\MyBookingController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\SupportTicketController;
 
@@ -28,7 +29,8 @@ Route::prefix("user")->name("user.")->group(function(){
         Route::post('message/send','messageSend')->name('message.send');
     });
 
-    Route::controller(HistoryController::class)->prefix("history")->name("history.")->group(function(){
+    Route::controller(MyBookingController::class)->prefix("my-booking")->name("my.booking.")->group(function(){
         Route::get('index','index')->name('index');
+        Route::get('details/{slug}','details')->name('details');
     });
 });
