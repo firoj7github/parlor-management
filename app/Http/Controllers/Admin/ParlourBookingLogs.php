@@ -73,4 +73,130 @@ class ParlourBookingLogs extends Controller
         return back()->with(['success'  => ['Booking Status Updated Successfully.']]);
 
     }
+    /**
+     * Method for show Pending log page 
+     * @param string
+     * @return view
+     */
+    public function pending(){
+        $page_title     = "Pending Logs";
+        $data           = ParlourBooking::with(['parlour','schedule','payment_gateway'])->where('status',global_const()::PARLOUR_BOOKING_STATUS_PENDING)->get();
+
+        return view('admin.sections.booking-logs.pending',compact(
+            'page_title',
+            'data',
+        ));
+    }
+    /**
+     * Method for show progress log page 
+     * @param string
+     * @return view
+     */
+    public function confirmPayment(){
+        $page_title     = "Confirm Payment Logs";
+        $data           = ParlourBooking::with(['parlour','schedule','payment_gateway'])->where('status',global_const()::PARLOUR_BOOKING_STATUS_CONFIRM_PAYMENT)->get();
+
+        return view('admin.sections.booking-logs.confirm-payment',compact(
+            'page_title',
+            'data',
+        ));
+    }
+    /**
+     * Method for show hold log page 
+     * @param string
+     * @return view
+     */
+    public function hold(){
+        $page_title    = "Hold Logs";
+        $data          = ParlourBooking::with(['parlour','schedule','payment_gateway'])->where('status',global_const()::PARLOUR_BOOKING_STATUS_HOLD)->get();
+
+        return view('admin.sections.booking-logs.hold',compact(
+            'page_title',
+            'data',
+        ));
+    }
+    /**
+     * Method for show settle log page 
+     * @param string
+     * @return view
+     */
+    public function settled(){
+        $page_title     = "Settled Logs";
+        $data           = ParlourBooking::with(['parlour','schedule','payment_gateway'])->where('status',global_const()::PARLOUR_BOOKING_STATUS_SETTLED)->get();
+
+        return view('admin.sections.booking-logs.settled',compact(
+            'page_title',
+            'data',
+        ));
+    }
+    /**
+     * Method for show Complete log page 
+     * @param string
+     * @return view
+     */
+    public function complete(){
+        $page_title     = "Complete Logs";
+        $data           = ParlourBooking::with(['parlour','schedule','payment_gateway'])->where('status',global_const()::PARLOUR_BOOKING_STATUS_COMPLETE)->get();
+
+        return view('admin.sections.booking-logs.complete',compact(
+            'page_title',
+            'data',
+        ));
+    }
+    /**
+     * Method for show canceled log page 
+     * @param string
+     * @return view
+     */
+    public function canceled(){
+        $page_title    = "Canceled Logs";
+        $data          = ParlourBooking::with(['parlour','schedule','payment_gateway'])->where('status',global_const()::PARLOUR_BOOKING_STATUS_CANCEL)->get();
+
+        return view('admin.sections.booking-logs.cancel',compact(
+            'page_title',
+            'data',
+        ));
+    }
+    /**
+     * Method for show failed log page 
+     * @param string
+     * @return view
+     */
+    public function failed(){
+        $page_title     = "Failed Logs";
+        $data           = ParlourBooking::with(['parlour','schedule','payment_gateway'])->where('status',global_const()::PARLOUR_BOOKING_STATUS_FAILED)->get();
+
+        return view('admin.sections.booking-logs.failed',compact(
+            'page_title',
+            'data',
+        ));
+    }
+    /**
+     * Method for show refunded page 
+     * @param string
+     * @return view
+     */
+    public function refunded(){
+        $page_title     = "Refunded Logs";
+        $data           = ParlourBooking::with(['parlour','schedule','payment_gateway'])->where('status',global_const()::PARLOUR_BOOKING_STATUS_REFUND)->get();
+
+        return view('admin.sections.booking-logs.refunded',compact(
+            'page_title',
+            'data',
+        ));
+    }
+    /**
+     * Method for show delayed log page 
+     * @param string
+     * @return view
+     */
+    public function delayed(){
+        $page_title     = "Delayed Logs";
+        $data           = ParlourBooking::with(['parlour','schedule','payment_gateway'])->where('status',global_const()::PARLOUR_BOOKING_STATUS_DELAYED)->get();
+
+        return view('admin.sections.booking-logs.delayed',compact(
+            'page_title',
+            'data',
+        ));
+    }
 }

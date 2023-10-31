@@ -251,7 +251,7 @@
                 ])
 
                 @if (admin_permission_by_name("admin.setup.sections.section"))
-                    <li class="sidebar-menu-header">Setup Web Content</li>
+                    <li class="sidebar-menu-header">{{ __("Setup Web Content") }}</li>
                     @php
                         $current_url = URL::current();
 
@@ -371,11 +371,7 @@
                             <li class="sidebar-menu-item">
                                 <a href="{{ setRoute('admin.payment.gateway.view',['payment-method','automatic']) }}" class="nav-link @if ($current_url == setRoute('admin.payment.gateway.view',['payment-method','automatic'])) active @endif">
                                     <i class="menu-icon las la-ellipsis-h"></i>
-                                    <span class="menu-title">Automatic</span>
-                                </a>
-                                <a href="{{ setRoute('admin.payment.gateway.view',['payment-method','manual']) }}" class="nav-link @if ($current_url == setRoute('admin.payment.gateway.view',['payment-method','manual'])) active @endif">
-                                    <i class="menu-icon las la-ellipsis-h"></i>
-                                    <span class="menu-title">Manual</span>
+                                    <span class="menu-title">{{ __("Automatic") }}</span>
                                 </a>
                             </li>
                         </ul>

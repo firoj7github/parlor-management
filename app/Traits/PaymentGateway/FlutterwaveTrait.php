@@ -3,7 +3,6 @@
 namespace App\Traits\PaymentGateway;
 
 use Exception;
-use App\Traits\Transaction;
 use Illuminate\Support\Str;
 use App\Models\TemporaryData;
 use App\Models\ParlourBooking;
@@ -15,10 +14,8 @@ use App\Models\Admin\BasicSettings;
 use Illuminate\Support\Facades\Auth;
 use App\Constants\PaymentGatewayConst;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Session;
 use App\Models\Admin\ParlourListHasSchedule;
 use Illuminate\Support\Facades\Notification;
-use App\Notifications\flutterwaveNotification;
 use App\Notifications\paymentNotification;
 use KingFlamez\Rave\Facades\Rave as Flutterwave;
 

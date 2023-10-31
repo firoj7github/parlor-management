@@ -86,6 +86,9 @@
     </div>
     <div class="col-lg-12 mb-30">
         <div class="transaction-area">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="title mb-0"><i class="fas fa-user text--base me-2"></i>{{ __("Payment Information") }}</h4>
+            </div>
             <div class="content pt-0">
                 <div class="list-wrapper">
                     <ul class="list">

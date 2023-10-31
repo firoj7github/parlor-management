@@ -13,10 +13,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Admin\BasicSettings;
 use Illuminate\Support\Facades\Auth;
 use App\Constants\PaymentGatewayConst;
-use App\Notifications\sendNotification;
 use App\Models\Admin\ParlourListHasSchedule;
 use App\Notifications\paymentNotification;
-use App\Notifications\sslcommerzNotification;
 use Illuminate\Support\Facades\Notification;
 
 

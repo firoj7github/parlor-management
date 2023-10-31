@@ -10,9 +10,6 @@ use App\Models\UserNotification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Constants\PaymentGatewayConst;
-use App\Notifications\sendNotification;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Notification;
 use App\Providers\Admin\BasicSettingsProvider;
 
 trait RazorTrait

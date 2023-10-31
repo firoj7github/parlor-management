@@ -23,11 +23,10 @@
             'name'  => __("Dashboard"),
             'url'   => setRoute("admin.dashboard"),
         ]
-    ], 'active' => __("All Logs")])
+    ], 'active' => __($page_title)])
 @endsection
 
 @section('content')
-
 <div class="table-area">
     <div class="table-wrapper">
         <div class="table-header">

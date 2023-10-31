@@ -3,7 +3,6 @@
 namespace App\Traits\PaymentGateway;
 
 use Exception;
-use App\Traits\Transaction;
 use Illuminate\Support\Str;
 use App\Models\TemporaryData;
 use App\Models\ParlourBooking;
@@ -13,11 +12,9 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Admin\BasicSettings;
 use Illuminate\Support\Facades\Auth;
 use App\Constants\PaymentGatewayConst;
-use App\Notifications\paypalNotification;
 use App\Models\Admin\ParlourListHasSchedule;
 use App\Notifications\paymentNotification;
 use Illuminate\Support\Facades\Notification;
-use App\Providers\Admin\BasicSettingsProvider;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 

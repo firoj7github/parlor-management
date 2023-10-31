@@ -3,7 +3,6 @@
 namespace App\Traits\PaymentGateway;
 
 use Exception;
-use App\Traits\Transaction;
 use Illuminate\Support\Str;
 use App\Models\TemporaryData;
 use App\Http\Helpers\Response;
@@ -15,7 +14,6 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Admin\BasicSettings;
 use Illuminate\Support\Facades\Auth;
 use App\Constants\PaymentGatewayConst;
-use App\Notifications\sendNotification;
 use App\Models\Admin\ParlourListHasSchedule;
 use App\Notifications\paymentNotification;
 use Illuminate\Support\Facades\Notification;
