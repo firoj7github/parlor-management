@@ -61,9 +61,33 @@
     <td>Serial Number</td>
     <td>{{ $user_data->serial_number }} </td>
   </tr>
+  <tr>
+    <td>Status</td>
+    <td>
+      @if ($user_data->status == global_const()::PARLOUR_BOOKING_STATUS_PENDING)
+          <span>{{ __("Pending") }}</span>
+      @elseif ($user_data->status == global_const()::PARLOUR_BOOKING_STATUS_CONFIRM_PAYMENT)
+          <span>{{ __("Confirm Payment") }}</span>
+      @elseif ($user_data->status == global_const()::PARLOUR_BOOKING_STATUS_HOLD)
+          <span>{{ __("On Hold") }}</span>
+      @elseif ($user_data->status == global_const()::PARLOUR_BOOKING_STATUS_SETTLED)
+          <span>{{ __("Settled") }}</span>
+      @elseif ($user_data->status == global_const()::PARLOUR_BOOKING_STATUS_COMPLETE)
+          <span>{{ __("Completed") }}</span>
+      @elseif ($user_data->status == global_const()::PARLOUR_BOOKING_STATUS_CANCEL)
+          <span>{{ __("Canceled") }}</span>
+      @elseif ($user_data->status == global_const()::PARLOUR_BOOKING_STATUS_FAILED)
+          <span>{{ __("Failed") }}</span>
+      @elseif ($user_data->status == global_const()::PARLOUR_BOOKING_STATUS_REFUND)
+          <span>{{ __("Refunded") }}</span>
+      @else
+          <span>{{ __("Delayed") }}</span>
+      @endif
+    </td>
+  </tr>
 </table>
 
-<h5>Service & Schedule Information</h5>
+<h5>Payment Information</h5>
 
 <table>
   <tr>

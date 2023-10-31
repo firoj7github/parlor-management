@@ -261,7 +261,7 @@ trait Paypal
     public function createTransaction($output, $trx_id) {
         $trx_id =  $trx_id;
         $inserted_id = $this->insertRecord($output, $trx_id);
-        $basic_setting = BasicSettings::get();
+        $basic_setting = BasicSettings::first();
         $user = auth()->user();
         if( $basic_setting->email_notification == true){
             Notification::route("mail",$user->email)->notify(new paymentNotification($user,$output,$trx_id));
