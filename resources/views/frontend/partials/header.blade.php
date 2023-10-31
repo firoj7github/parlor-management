@@ -4,6 +4,7 @@
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     Start Header
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<div class="body-overlay"></div>
 <header class="header-section">
     <div class="header">
         <div class="header-bottom-area">

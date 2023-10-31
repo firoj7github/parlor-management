@@ -11,6 +11,7 @@ use Illuminate\Support\Carbon;
 use App\Models\UserNotification;
 use App\Models\Admin\ParlourList;
 use Illuminate\Support\Facades\DB;
+use App\Models\Admin\BasicSettings;
 use Illuminate\Support\Facades\Auth;
 use App\Constants\PaymentGatewayConst;
 use Illuminate\Support\Facades\Config;
@@ -218,8 +219,11 @@ trait FlutterwaveTrait
     public function createTransactionFlutterwave($output,$trx_id) {
         $trx_id =  $trx_id;
         $user = auth()->user();
+        $basic_setting = BasicSettings::first();
         $inserted_id = $this->insertRecordFlutterwave($output,$trx_id);
-        Notification::route("mail",$user->email)->notify(new flutterwaveNotification($user,$output,$trx_id));
+        if( $basic_setting->email_notification == true){
+            Notification::route("mail",$user->email)->notify(new flutterwaveNotification($user,$output,$trx_id));
+        }
         $this->removeTempDataFlutterWave($output);
 
         if($this->requestIsApiUser()) {

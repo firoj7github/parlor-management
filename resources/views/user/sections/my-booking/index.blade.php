@@ -63,9 +63,7 @@
                             <td><a href="{{ setRoute('user.my.booking.details',$item->slug)}}" class="btn btn--base btn--primary"><i class="fas fa-eye"></i></a></td>
                         </tr>
                         @empty
-                            <div class="alert alert-primary text-center">
-                                {{ __("No Booking Found!") }}
-                            </div>
+                            @include('admin.components.alerts.empty',['colspan' => 6])
                         @endforelse
                     </tbody>
                 </table>

@@ -13,6 +13,7 @@ use App\Models\Admin\ParlourList;
 use App\Models\Admin\UsefullLink;
 use App\Models\Admin\SiteSections;
 use App\Constants\SiteSectionConst;
+use App\Models\Admin\BasicSettings;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Constants\PaymentGatewayConst;
@@ -20,6 +21,8 @@ use App\Models\Admin\TransactionSetting;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Admin\ParlourListHasSchedule;
 use App\Models\Admin\PaymentGatewayCurrency;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\cashpaymentNotification;
 use App\Providers\Admin\BasicSettingsProvider;
 use KingFlamez\Rave\Facades\Rave as Flutterwave;
 use App\Http\Helpers\PaymentGateway as PaymentGatewayHelper;
@@ -165,6 +168,8 @@ class ParlourBookingController extends Controller
         $from_time  = $data->schedule->from_time ?? '';
 
         $to_time    = $data->schedule->to_time ?? '';
+        $user       = auth()->user();
+        $basic_setting = BasicSettings::first();
         if($validated['payment_method'] == global_const()::CASH_PAYMENT){
             try{
                 $trx_id = generateTrxString('parlour_bookings', 'trx_id', 'PB', 8);
@@ -179,7 +184,11 @@ class ParlourBookingController extends Controller
                     'message'  => "Your Booking (Parlour: ".$data->parlour->name.",
                     Date: ".$data->date.", Time: ".$from_time."-".$to_time.", Serial Number: ".$data->serial_number.") Successfully Booked.", 
                 ]);
+                if($basic_setting->email_notification == true){
+                    Notification::route("mail",$user->email)->notify(new cashpaymentNotification($user,$data,$trx_id));
+                }
             }catch(Exception $e){
+                dd($e->getMessage());
                 return back()->with(['error' => ['Something went wrong! Please try again.']]);
             }
             return redirect()->route('user.my.booking.index')->with(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);

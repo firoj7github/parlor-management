@@ -72,7 +72,7 @@
                                 <input type="email" class="form-control form--control" name="email" placeholder="{{ __("Email") }}">
                             </div>
                             <div class="col-lg-12 form-group">
-                                <select class="form--control select2-auto-tokenize country-select" data-placeholder="Select Country" data-old="{{ old('country') }}" name="country"></select>
+                                <select class="form--control select2-auto-tokenize w-100 country-select" data-placeholder="Select Country" data-old="{{ old('country') }}" name="country"></select>
                             </div>
                             <div class="col-lg-12 form-group show_hide_password">
                                 <input type="password" class="form-control form--control" name="password" placeholder="{{ __("Password") }}">
