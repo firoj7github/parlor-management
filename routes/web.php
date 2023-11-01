@@ -40,6 +40,7 @@ Route::controller(ParlourBookingController::class)->name('parlour.booking.')->gr
     Route::post('store','store')->name('store');
     Route::get('preview/{slug}','preview')->name('preview');
     Route::post('confirm/{slug}','confirm')->name('confirm');
+    Route::post('/booking/delete','deleteBooking')->name('delete');
 
     //payment methods routes
     //paypal

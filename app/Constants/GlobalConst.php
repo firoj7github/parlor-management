@@ -8,7 +8,7 @@ class GlobalConst {
     const ACTIVE = true;
     const BANNED = false;
     const DEFAULT_TOKEN_EXP_SEC = 3600;
-    const BOOKING_EXP_SEC       = 600;
+    const BOOKING_EXP_SEC       = 15;
 
     const VERIFIED      = 1;
     const APPROVED      = 1;

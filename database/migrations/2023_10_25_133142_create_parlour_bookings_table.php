@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger("user_id")->nullable();
             $table->unsignedBigInteger("payment_gateway_currency_id")->nullable();
             $table->string('trx_id')->comment('Transaction ID')->nullable();
-            $table->integer('booking_exp_seconds')->default(600)->nullable();
+            $table->integer('booking_exp_seconds')->default(15)->nullable();
             $table->string('date')->comment("Booking Date");
             $table->string('payment_method')->nullable();
             $table->string('slug');

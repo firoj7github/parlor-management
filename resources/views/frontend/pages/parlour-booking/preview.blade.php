@@ -96,5 +96,42 @@
 </section>
 @endsection
 @push('script')
+
+<script>
+    $(document).ready(function() {
+        var countdownDuration = '{{ global_const()::BOOKING_EXP_SEC }}';
+
+        function updateCountdown() {
+            countdownDuration--;
     
+            if (countdownDuration >= 0) {
+                setTimeout(updateCountdown, 1000);
+            } else {
+                deleteBooking();
+            }
+        }
+
+        
+        function deleteBooking() {
+            $.ajax({
+                method: 'POST',
+                url: '{{ route("parlour.booking.delete") }}',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    bookingSlug: '{{ $booking->slug }}'
+                },
+                success: function(response) {
+                    if (response.success) {
+                        window.location.href = '{{ route("find.parlour") }}';
+                    } else {
+                        
+                    }
+                }
+            });
+            console.log("delete");
+        }
+        
+        updateCountdown();
+    });
+</script>  
 @endpush

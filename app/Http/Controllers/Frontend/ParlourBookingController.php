@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\TemporaryData;
+use App\Events\BookingCreated;
 use App\Models\ParlourBooking;
 use App\Models\UserNotification;
 use App\Models\Admin\ParlourList;
@@ -16,15 +17,15 @@ use App\Models\Admin\BasicSettings;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Constants\PaymentGatewayConst;
+use App\Jobs\DeleteUnconfirmedBooking;
 use App\Models\Admin\TransactionSetting;
+use App\Notifications\emailNotification;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Admin\ParlourListHasSchedule;
 use App\Models\Admin\PaymentGatewayCurrency;
 use Illuminate\Support\Facades\Notification;
-use App\Notifications\cashpaymentNotification;
 use KingFlamez\Rave\Facades\Rave as Flutterwave;
 use App\Http\Helpers\PaymentGateway as PaymentGatewayHelper;
-use App\Notifications\emailNotification;
 
 class ParlourBookingController extends Controller
 {
@@ -127,6 +128,9 @@ class ParlourBookingController extends Controller
     public function preview(Request $request,$slug){
         $page_title         = "| Appointment Preview";
         $booking            = ParlourBooking::with(['parlour','schedule','payment_gateway'])->where('slug',$slug)->first();
+        if (!$booking) {
+            return redirect()->route('find.parlour')->with(['error' => ['Booking not found']]);
+        }
         $payment_gateway   = PaymentGatewayCurrency::whereHas('gateway', function ($gateway) {
             $gateway->where('slug', PaymentGatewayConst::payment_method_slug());
             $gateway->where('status', 1);
@@ -146,6 +150,17 @@ class ParlourBookingController extends Controller
             'contact'
         )); 
     }
+    public function deleteBooking(Request $request) {
+        $booking = ParlourBooking::where('slug', $request->bookingSlug)->first();
+
+        if ($booking) {
+            $booking->delete();
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false]);
+    }
+    
     /**
      * Method for confirm the booking
      * @param $slug

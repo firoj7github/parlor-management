@@ -81,7 +81,9 @@
                             <div class="col-lg-12 form-group">
                                 <div class="custom-check-group">
                                     <input type="checkbox" id="level-1" name="agree">
+
                                     <label for="level-1">{{ __("I have agreed with") }} <a href="#0">{{ __("Terms Of Use & Privacy Policy") }}</a></label>
+                               
                                 </div>
                             </div>
                             <div class="col-lg-12 form-group text-center">

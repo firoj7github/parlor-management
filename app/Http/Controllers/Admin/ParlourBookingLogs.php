@@ -20,7 +20,10 @@ class ParlourBookingLogs extends Controller
      */
     public function index(){
         $page_title     = "All Logs";
-        $data           = ParlourBooking::with(['parlour','schedule','payment_gateway'])->whereNot('status',global_const()::PARLOUR_BOOKING_STATUS_REVIEW_PAYMENT)->orderBYDESC('id')->paginate(15);
+        $data           = ParlourBooking::with(['parlour','schedule','payment_gateway'])
+                            ->whereNot('status',global_const()::PARLOUR_BOOKING_STATUS_REVIEW_PAYMENT)
+                            ->orderByDesc('id')
+                            ->paginate(15);
 
         return view('admin.sections.booking-logs.index',compact(
             'page_title',
