@@ -11,7 +11,7 @@ Route::controller(GlobalController::class)->prefix('global')->name('global.')->g
     Route::post('get-countries','getCountries')->name('countries');
     Route::post('get-timezones','getTimezones')->name('timezones');
 });
-
+Route::post('languages/switch',[GlobalController::class,'languageSwitch'])->name('languages.switch');
 // FileHolder Routes
 Route::post('fileholder-upload',[FileController::class,'storeFile'])->name('fileholder.upload');
 Route::post('fileholder-remove',[FileController::class,'removeFile'])->name('fileholder.remove');

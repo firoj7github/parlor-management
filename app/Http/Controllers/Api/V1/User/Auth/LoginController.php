@@ -86,7 +86,6 @@ class LoginController extends Controller
                 return Response::success($message, $user_data);
             }
 
-            $this->refreshUserWallets($user);
             $this->createLoginLog($user);
 
             $message = ['Login Successfull'];
@@ -152,7 +151,6 @@ class LoginController extends Controller
             'two_factor_verified'   => false,
         ]);
         try{
-            $this->refreshUserWallets($user);
         }catch(Exception $e) {
             return Response::error(['Login Failed! Failed to refresh wallet! Please try again'],[],500);
         }

@@ -2820,6 +2820,10 @@ input[type=number] {
   border-radius: 3px;
   font-size: 14px;
   font-weight: 500;
+  margin-left: 40px;
+}
+.language-select .nice-select .list{
+  height: auto !important;
 }
 @media only screen and (max-width: 991px) {
   .language-select {

@@ -85,7 +85,7 @@ class RegisterController extends Controller
         $user = User::create($validated);
 
         $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-        $this->createUserWallets($user);
+       
 
         if ($basic_settings->email_verification == true) {
             $data = [

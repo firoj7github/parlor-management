@@ -25,18 +25,17 @@
                     <div class="dashbord-item">
                         <div class="dashboard-content">
                             <div class="left">
-                                <h6 class="title">Total Visitors</h6>
+                                <h6 class="title">{{ __("Total Users") }}</h6>
                                 <div class="user-info">
-                                    <h2 class="user-count">6258</h2>
+                                    <h2 class="user-count">{{ formatNumberInKNotation($data['total_user_count']) }}</h2>
                                 </div>
                                 <div class="user-badge">
-                                    <span class="badge badge--success">Active 40</span>
-                                    <span class="badge badge--info">New 22</span>
-                                    <span class="badge badge--warning">Today 12</span>
+                                    <span class="badge badge--success">{{ __("Active") }} {{ $data['active_user'] }}</span>
+                                    <span class="badge badge--info">{{ __("Unverified") }} {{ $data['unverified_user'] }}</span>
                                 </div>
                             </div>
                             <div class="right">
-                                <div class="chart" id="chart6" data-percent="65"><span>65%</span></div>
+                                <div class="chart" id="chart6" data-percent="{{ $data['user_percent'] }}"><span>{{ round($data['user_percent']) }}%</span></div>
                             </div>
                         </div>
                     </div>
@@ -45,17 +44,17 @@
                     <div class="dashbord-item">
                         <div class="dashboard-content">
                             <div class="left">
-                                <h6 class="title">Add Money Balance</h6>
+                                <h6 class="title">{{ ("Total Parlours") }}</h6>
                                 <div class="user-info">
-                                    <h2 class="user-count">$865k</h2>
+                                    <h2 class="user-count">{{ formatNumberInKNotation($data['total_parlour_count']) }}</h2>
                                 </div>
                                 <div class="user-badge">
-                                    <span class="badge badge--info">Total 40k</span>
-                                    <span class="badge badge--warning">Pending 20K</span>
+                                    <span class="badge badge--info">{{ __("Active") }} {{ $data['active_parlour'] }}</span>
+                                    <span class="badge badge--warning">{{ __("Pending") }} {{ $data['pending_parlour'] }}</span>
                                 </div>
                             </div>
                             <div class="right">
-                                <div class="chart" id="chart7" data-percent="80"><span>80%</span></div>
+                                <div class="chart" id="chart7" data-percent="{{ $data['parlour_percent'] }}"><span>{{ round($data['parlour_percent']) }}%</span></div>
                             </div>
                         </div>
                     </div>
@@ -64,17 +63,17 @@
                     <div class="dashbord-item">
                         <div class="dashboard-content">
                             <div class="left">
-                                <h6 class="title">Money Out Balance</h6>
+                                <h6 class="title">{{ ("Total Bookings") }}</h6>
                                 <div class="user-info">
-                                    <h2 class="user-count">$273</h2>
+                                    <h2 class="user-count">{{ formatNumberInKNotation($data['total_booking_count']) }}</h2>
                                 </div>
                                 <div class="user-badge">
-                                    <span class="badge badge--info">Total 40k</span>
-                                    <span class="badge badge--warning">Pending 20K</span>
+                                    <span class="badge badge--info">{{ __("Confirm") }} {{ $data['confirm_booking'] }}</span>
+                                    <span class="badge badge--warning">{{ __("Pending") }} {{ $data['pending_booking'] }}</span>
                                 </div>
                             </div>
                             <div class="right">
-                                <div class="chart" id="chart8" data-percent="90"><span>90%</span></div>
+                                <div class="chart" id="chart8" data-percent="{{ $data['booking_percent'] }}"><span>{{ round($data['booking_percent']) }}%</span></div>
                             </div>
                         </div>
                     </div>
@@ -83,17 +82,17 @@
                     <div class="dashbord-item">
                         <div class="dashboard-content">
                             <div class="left">
-                                <h6 class="title">Total Profit</h6>
+                                <h6 class="title">{{ __("Total Support Ticket") }}</h6>
                                 <div class="user-info">
-                                    <h2 class="user-count">$650</h2>
+                                    <h2 class="user-count">{{ formatNumberInkNotation($data['total_ticket_count']) }}</h2>
                                 </div>
                                 <div class="user-badge">
-                                    <span class="badge badge--info">This Day 40k</span>
-                                    <span class="badge badge--warning">This Month 20K</span>
+                                    <span class="badge badge--info">{{ __("Active") }} {{ formatNumberInkNotation($data['active_ticket']) }}</span>
+                                    <span class="badge badge--warning">{{ __("Pending") }} {{ formatNumberInkNotation($data['pending_ticket']) }}</span>
                                 </div>
                             </div>
                             <div class="right">
-                                <div class="chart" id="chart9" data-percent="70"><span>70%</span></div>
+                                <div class="chart" id="chart10" data-percent="{{ $data['percent_ticket'] }}"><span>{{ round($data['percent_ticket']) }}%</span></div>
                             </div>
                         </div>
                     </div>
@@ -102,17 +101,10 @@
                     <div class="dashbord-item">
                         <div class="dashboard-content">
                             <div class="left">
-                                <h6 class="title">User Active Tickets</h6>
+                                <h6 class="title">{{ ("Total Booking Money") }}</h6>
                                 <div class="user-info">
-                                    <h2 class="user-count">630</h2>
+                                    <h2 class="user-count">{{ get_default_currency_symbol() }}{{ get_amount($data['total_money']) }}</h2>
                                 </div>
-                                <div class="user-badge">
-                                    <span class="badge badge--warning">Pending 45</span>
-                                    <span class="badge badge--success">Solved 25</span>
-                                </div>
-                            </div>
-                            <div class="right">
-                                <div class="chart" id="chart10" data-percent="50"><span>50%</span></div>
                             </div>
                         </div>
                     </div>
@@ -121,55 +113,10 @@
                     <div class="dashbord-item">
                         <div class="dashboard-content">
                             <div class="left">
-                                <h6 class="title">Total Users</h6>
+                                <h6 class="title">{{ ("Total Fees & Charges") }}</h6>
                                 <div class="user-info">
-                                    <h2 class="user-count">1190</h2>
+                                    <h2 class="user-count">{{ get_default_currency_symbol() }}{{ get_amount($data['total_charges']) }}</h2>
                                 </div>
-                                <div class="user-badge">
-                                    <span class="badge badge--info">Active 45</span>
-                                    <span class="badge badge--warning">Unverified 25</span>
-                                </div>
-                            </div>
-                            <div class="right">
-                                <div class="chart" id="chart11" data-percent="85"><span>85%</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xxxl-4 col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-15">
-                    <div class="dashbord-item">
-                        <div class="dashboard-content">
-                            <div class="left">
-                                <h6 class="title">Pending Add Money</h6>
-                                <div class="user-info">
-                                    <h2 class="user-count">$865k</h2>
-                                </div>
-                                <div class="user-badge">
-                                    <span class="badge badge--info">This Day 40k</span>
-                                    <span class="badge badge--warning">This Month 20K</span>
-                                </div>
-                            </div>
-                            <div class="right">
-                                <div class="chart" id="chart12" data-percent="60"><span>60%</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xxxl-4 col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-15">
-                    <div class="dashbord-item">
-                        <div class="dashboard-content">
-                            <div class="left">
-                                <h6 class="title">Pending Money Out</h6>
-                                <div class="user-info">
-                                    <h2 class="user-count">$273</h2>
-                                </div>
-                                <div class="user-badge">
-                                    <span class="badge badge--info">This Day 40k</span>
-                                    <span class="badge badge--warning">This Month 20K</span>
-                                </div>
-                            </div>
-                            <div class="right">
-                                <div class="chart" id="chart13" data-percent="75"><span>75%</span></div>
                             </div>
                         </div>
                     </div>

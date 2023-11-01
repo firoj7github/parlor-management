@@ -1481,3 +1481,25 @@ function getAmount($amount, $length = 8)
     $amount = round($amount, $length);
     return $amount + 0;
 }
+
+if (!function_exists('formatNumberInKNotation')) {
+    function formatNumberInKNotation (Int $number, Int $decimals = 1) : String {
+        # Define the unit size and supported units.
+        $unitSize = 1000;
+        $units = ["", "K", "M", "B", "T"];
+
+        # Calculate the number of units as the logarithm of the absolute value with the
+        # unit size as base.
+        $unitsCount = ($number === 0) ? 0 : floor(log(abs($number), $unitSize));
+
+        # Decide the unit to be used based on the counter.
+        $unit = $units[min($unitsCount, count($units) - 1)];
+
+        # Divide the value by unit size in the power of the counter and round it to keep
+        # at most the given number of decimal digits.
+        $value = round($number / pow($unitSize, $unitsCount), $decimals);
+
+        # Assemble and return the string.
+        return $value . $unit;
+    }
+}
