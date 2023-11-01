@@ -44,5 +44,8 @@
 @endsection
 
 @push("script")
-    
+    <script>
+        var message     = '@json($message)';
+        throwMessage('error',JSON.parse(message));
+    </script>
 @endpush

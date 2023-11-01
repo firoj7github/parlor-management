@@ -26,6 +26,7 @@ use App\Models\Admin\PaymentGatewayCurrency;
 use Illuminate\Support\Facades\Notification;
 use KingFlamez\Rave\Facades\Rave as Flutterwave;
 use App\Http\Helpers\PaymentGateway as PaymentGatewayHelper;
+use Illuminate\Support\Facades\Session;
 
 class ParlourBookingController extends Controller
 {
@@ -155,6 +156,7 @@ class ParlourBookingController extends Controller
 
         if ($booking) {
             $booking->delete();
+            Session::flash('message',['success'   => ['Booking Time Out!']]);
             return response()->json(['success' => true]);
         }
 

@@ -15,6 +15,7 @@ use App\Models\Admin\BlogCategory;
 use App\Models\Admin\ParlourList;
 use App\Models\Admin\ServiceType;
 use App\Models\Admin\UsefullLink;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class SiteController extends Controller
@@ -70,13 +71,16 @@ class SiteController extends Controller
         $usefull_links          = UsefullLink::where('status',true)->get();
         $contact_slug           = Str::slug(SiteSectionConst::CONTACT_SECTION);
         $contact                = SiteSections::getData($contact_slug)->first();
+        $message                = Session::get('message');
+
         return view('frontend.pages.find-parlour',compact(
             'page_title',
             'areas',
             'parlour_lists',
             'footer',
             'usefull_links',
-            'contact'
+            'contact',
+            'message'
         ));
     }
     /**
