@@ -96,22 +96,26 @@
 </section>
 @endsection
 @push('script')
-
 <script>
+    
     $(document).ready(function() {
-        var countdownDuration = '{{ global_const()::BOOKING_EXP_SEC }}';
+        let countdownDuration = localStorage.getItem('countdownDuration');
+        if (!countdownDuration) {
+            countdownDuration = '{{ global_const()::BOOKING_EXP_SEC }}'; 
+        }
 
         function updateCountdown() {
             countdownDuration--;
     
             if (countdownDuration >= 0) {
                 setTimeout(updateCountdown, 1000);
+                localStorage.setItem('countdownDuration', countdownDuration); 
             } else {
                 deleteBooking();
+                localStorage.removeItem('countdownDuration');
             }
         }
 
-        
         function deleteBooking() {
             $.ajax({
                 method: 'POST',
@@ -128,7 +132,6 @@
                     }
                 }
             });
-            console.log("delete");
         }
         
         updateCountdown();

@@ -172,7 +172,7 @@ class ParlourBookingController extends Controller
 
         if($data->created_at->addSeconds($otp_exp_sec) < now()) {
             $data->delete();
-            return redirect()->route('find.parlour')->with(['error' => ['Session expired. Please try again']]);
+            return redirect()->route('find.parlour')->with(['error' => ['Booking Time Out!']]);
         }
 
         $validator  = Validator::make($request->all(),[

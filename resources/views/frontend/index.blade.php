@@ -8,7 +8,6 @@
     @include('frontend.section.banner')
     @include('frontend.section.banner-search')
     @include('frontend.section.search-result')
-    @include('frontend.section.service')
     @include('frontend.section.how-it-work')
     @include('frontend.section.testimonial')
     @include('frontend.section.statistics')
