@@ -3,22 +3,35 @@
 namespace App\Http\Controllers\Admin;
 
 use Exception;
+use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Admin\Blog;
 use Illuminate\Http\Request;
 use App\Models\SupportTicket;
 use App\Http\Helpers\Response;
+use App\Models\ParlourBooking;
 use App\Models\Admin\ParlourList;
+use App\Models\Admin\BlogCategory;
 use App\Constants\NotificationConst;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Constants\SupportTicketConst;
 use App\Models\Admin\AdminNotification;
-use App\Models\ParlourBooking;
 use App\Providers\Admin\BasicSettingsProvider;
 use Pusher\PushNotifications\PushNotifications;
 
 class DashboardController extends Controller
 {
+    public function getAllMonthNames(){
+        $monthNames = collect([]);
+
+        for ($monthNumber = 1; $monthNumber <= 12; $monthNumber++) {
+            $monthName = Carbon::createFromDate(null, $monthNumber, null)->format('M');
+            $monthNames->push($monthName);
+        }
+
+        return $monthNames;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -78,13 +91,65 @@ class DashboardController extends Controller
         }else{
             $percent_ticket = ($active_ticket / ($active_ticket + $pending_ticket)) * 100;
         }
+        $user_chart = [$active_user, $banned_user,$unverified_user,$total_users];
+        $start = strtotime(date('Y-m-01'));
+        $end = strtotime(date('Y-m-31'));
 
+
+        $pending_data  = [];
+        $complete_data  = [];
+        $month_day  = [];
+
+        while ($start <= $end) {
+            $start_date = date('Y-m-d', $start);
+            
+            
+            $pending = ParlourBooking::where('status',global_const()::PARLOUR_BOOKING_STATUS_PENDING)
+                                        ->whereDate('created_at',$start_date)
+                                        ->count();
+            $complete = ParlourBooking::where('status',global_const()::PARLOUR_BOOKING_STATUS_CONFIRM_PAYMENT)
+                                        ->whereDate('created_at',$start_date)
+                                        ->count();
+            
+            $pending_data[]  = $pending;
+            $complete_data[]  = $complete;
+            $month_day[] = date('Y-m-d', $start);
+            $start = strtotime('+1 day',$start);
+        }
+        // Chart one
+        $chart_one_data = [
+            'pending_data'  => $pending_data,
+            'complete_data'  => $complete_data,
+            
+        ];
+        $booking_data               = ParlourBooking::
+                                        whereNot('status',global_const()::PARLOUR_BOOKING_STATUS_REVIEW_PAYMENT)
+                                        ->latest()->take(3)->get();
+
+        $total_categories           = (BlogCategory::toBase()->count() == 0) ? 1 : BlogCategory::toBase()->count();
+        $active_category            = BlogCategory::toBase()->where('status',true)->count();
+        $inactive_category          = BlogCategory::toBase()->where('status',false)->count();
+        $category_percent           = (($active_category * 100) / $total_categories);
+        
+        if($category_percent > 100){
+            $category_percent = 100;
+        }
+
+        $total_blogs           = (Blog::toBase()->count() == 0) ? 1 : Blog::toBase()->count();
+        $active_blog            = Blog::toBase()->where('status',true)->count();
+        $inactive_blog          = Blog::toBase()->where('status',false)->count();
+        $blog_percent           = (($active_blog * 100) / $total_blogs);
+        
+        if($blog_percent > 100){
+            $blog_percent = 100;
+        }
 
         $data                       = [
             'unverified_user'       => $unverified_user,
             'active_user'           => $active_user,
             'user_percent'          => $user_percent,
             'total_user_count'      => User::all()->count(),
+            'user_chart_data'       => $user_chart,
 
             'active_parlour'        => $active_parlour,
             'pending_parlour'       => $pending_parlour,
@@ -95,7 +160,8 @@ class DashboardController extends Controller
             'confirm_booking'        => $confirm_booking,
             'booking_percent'        => $booking_percent,
             'total_booking_count'    => ParlourBooking::all()->count(),
-
+            'chart_one_data'         => $chart_one_data,
+            'month_day'              => $month_day,
             'total_money'           => $total_money,
             'total_charges'         => $total_charges,
 
@@ -104,12 +170,24 @@ class DashboardController extends Controller
             'percent_ticket'        => $percent_ticket,
             'total_ticket_count'    => SupportTicket::all()->count(),
 
+            'active_category'        => $active_category,
+            'inactive_category'      => $inactive_category,
+            'category_percent'       => $category_percent,
+            'total_category_count'   => BlogCategory::all()->count(),
+
+            'active_blog'            => $active_blog,
+            'inactive_blog'          => $inactive_blog,
+            'blog_percent'           => $blog_percent,
+            'total_blog_count'       => Blog::all()->count(),
             
         ];
+        $months = $this->getAllMonthNames();
 
         return view('admin.sections.dashboard.index',compact(
             'page_title',
             'data',
+            'months',
+            'booking_data',
         ));
     }
 

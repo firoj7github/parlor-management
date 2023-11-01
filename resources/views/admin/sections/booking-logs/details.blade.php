@@ -92,7 +92,7 @@
             <div class="content pt-0">
                 <div class="list-wrapper">
                     <ul class="list">
-                        <li>{{ __("MTCN Number") }} <span>{{ $data->trx_id ?? ''  }}</span> </li>
+                        <li>{{ __("Booking Number") }} <span>{{ $data->trx_id ?? ''  }}</span> </li>
                         <li>{{ __("Payment Method") }} <span>{{ $data->payment_method ?? ''  }}</span> </li>
                         <li>{{ __("Service Price") }} <span>{{ get_default_currency_symbol() }}{{ get_amount($data->price) }}</span> </li>
                         <li>{{ __("Fees & Charges") }} <span>{{ get_default_currency_symbol() }}{{ get_amount($data->total_charge) }}</span> </li>

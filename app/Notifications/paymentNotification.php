@@ -66,7 +66,7 @@ class paymentNotification extends Notification
         $currency               = Currency::where('default',true)->first();
 
         return (new MailMessage)
-            ->subject("Your Parlour Booking - MTCN: ". $trx_id)
+            ->subject("Your Parlour Booking - Booking: ". $trx_id)
             ->view('frontend.email.confirmation', [
                 'user_data'         => $user_data,
                 'parlour_data'      => $parlour_data,

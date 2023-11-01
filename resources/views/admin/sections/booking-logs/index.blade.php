@@ -42,7 +42,7 @@
             <table class="custom-table">
                 <thead>
                     <tr>
-                        <th>{{ __("MTCN ID") }}</th>
+                        <th>{{ __("Booking ID") }}</th>
                         <th>{{ __("Parlour Name") }}</th>
                         <th>{{ __("Price") }}</th>
                         <th>{{ __("P. Method") }}</th>

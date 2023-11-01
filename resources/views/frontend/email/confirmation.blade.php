@@ -28,7 +28,7 @@
     
 <p>Dear {{ $user->fullname }},</p>
 
-<p>We are writing to provide you with comprehensive details regarding your recent booking with the MTCN number: {{ $trx_id }}. Ensuring transparency and clarity in our communication is paramount, and we are pleased to share the following information with you:</p>
+<p>We are writing to provide you with comprehensive details regarding your recent booking with the Booking number: {{ $trx_id }}. Ensuring transparency and clarity in our communication is paramount, and we are pleased to share the following information with you:</p>
 
 <h5>Parlour Summary</h5>
 <table>

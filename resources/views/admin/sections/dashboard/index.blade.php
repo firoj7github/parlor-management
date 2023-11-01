@@ -50,7 +50,7 @@
                                 </div>
                                 <div class="user-badge">
                                     <span class="badge badge--info">{{ __("Active") }} {{ $data['active_parlour'] }}</span>
-                                    <span class="badge badge--warning">{{ __("Pending") }} {{ $data['pending_parlour'] }}</span>
+                                    <span class="badge badge--warning">{{ __("Inactive") }} {{ $data['pending_parlour'] }}</span>
                                 </div>
                             </div>
                             <div class="right">
@@ -68,12 +68,50 @@
                                     <h2 class="user-count">{{ formatNumberInKNotation($data['total_booking_count']) }}</h2>
                                 </div>
                                 <div class="user-badge">
-                                    <span class="badge badge--info">{{ __("Confirm") }} {{ $data['confirm_booking'] }}</span>
+                                    <span class="badge badge--info">{{ __("Confirmed") }} {{ $data['confirm_booking'] }}</span>
                                     <span class="badge badge--warning">{{ __("Pending") }} {{ $data['pending_booking'] }}</span>
                                 </div>
                             </div>
                             <div class="right">
                                 <div class="chart" id="chart8" data-percent="{{ $data['booking_percent'] }}"><span>{{ round($data['booking_percent']) }}%</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxxl-4 col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-15">
+                    <div class="dashbord-item">
+                        <div class="dashboard-content">
+                            <div class="left">
+                                <h6 class="title">{{ ("Total Blog Category") }}</h6>
+                                <div class="user-info">
+                                    <h2 class="user-count">{{ formatNumberInKNotation($data['total_category_count']) }}</h2>
+                                </div>
+                                <div class="user-badge">
+                                    <span class="badge badge--info">{{ __("Active") }} {{ $data['active_category'] }}</span>
+                                    <span class="badge badge--warning">{{ __("Inactive") }} {{ $data['inactive_category'] }}</span>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <div class="chart" id="chart11" data-percent="{{ $data['category_percent'] }}"><span>{{ round($data['category_percent']) }}%</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxxl-4 col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-15">
+                    <div class="dashbord-item">
+                        <div class="dashboard-content">
+                            <div class="left">
+                                <h6 class="title">{{ ("Total Blogs") }}</h6>
+                                <div class="user-info">
+                                    <h2 class="user-count">{{ formatNumberInKNotation($data['total_blog_count']) }}</h2>
+                                </div>
+                                <div class="user-badge">
+                                    <span class="badge badge--info">{{ __("Active") }} {{ $data['active_blog'] }}</span>
+                                    <span class="badge badge--warning">{{ __("Inactive") }} {{ $data['inactive_blog'] }}</span>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <div class="chart" id="chart12" data-percent="{{ $data['booking_percent'] }}"><span>{{ round($data['booking_percent']) }}%</span></div>
                             </div>
                         </div>
                     </div>
@@ -129,59 +167,24 @@
             <div class="col-xxl-6 col-xl-6 col-lg-6 mb-15">
                 <div class="chart-wrapper">
                     <div class="chart-area-header">
-                        <h5 class="title">Monthly Add Money Chart</h5>
+                        <h5 class="title">{{ __("Booking Analytics") }}</h5>
                     </div>
                     <div class="chart-container">
-                        <div id="chart1" class="sales-chart"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xxl-6 col-xl-6 col-lg-6 mb-15">
-                <div class="chart-wrapper">
-                    <div class="chart-area-header">
-                        <h5 class="title">Revenue Chart</h5>
-                    </div>
-                    <div class="chart-container">
-                        <div id="chart2" class="revenue-chart"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xxl-6 col-xl-6 col-lg-6 mb-15">
-                <div class="chart-wrapper">
-                    <div class="chart-area-header">
-                        <h5 class="title">Add Money Analytics</h5>
-                    </div>
-                    <div class="chart-container">
-                        <div id="chart3" class="order-chart"></div>
+                        <div id="chart1" data-chart_one_data="{{ json_encode($data['chart_one_data']) }}" data-month_day="{{ json_encode($data['month_day']) }}"  class="sales-chart"></div>
                     </div>
                 </div>
             </div>
             <div class="col-xxxl-6 col-xxl-3 col-xl-6 col-lg-6 mb-15">
                 <div class="chart-wrapper">
                     <div class="chart-area-header">
-                        <h5 class="title">User Analytics</h5>
+                        <h5 class="title">{{ __("User Analytics") }}</h5>
                     </div>
                     <div class="chart-container">
-                        <div id="chart4" class="balance-chart"></div>
+                        <div id="chart4" class="balance-chart"  data-user_chart_data="{{ json_encode($data['user_chart_data']) }}"></div>
                     </div>
                     <div class="chart-area-footer">
                         <div class="chart-btn">
-                            <a href="javascript:void(0)" class="btn--base w-100">Send Report</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xxxl-12 col-xxl-3 col-xl-12 col-lg-12 mb-15">
-                <div class="chart-wrapper">
-                    <div class="chart-area-header">
-                        <h5 class="title">Growth</h5>
-                    </div>
-                    <div class="chart-container">
-                        <div id="chart5" class="growth-chart"></div>
-                    </div>
-                    <div class="chart-area-footer">
-                        <div class="chart-btn">
-                            <a href="javascript:void(0)" class="btn--base w-100">Send Report</a>
+                            <a href="{{ setRoute('admin.users.index') }}" class="btn--base w-100">{{ __("View User") }}</a>
                         </div>
                     </div>
                 </div>
@@ -191,85 +194,56 @@
     <div class="table-area mt-15">
         <div class="table-wrapper">
             <div class="table-header">
-                <h5 class="title">Latest Transactions</h5>
+                <h5 class="title">{{ __("Latest Bookings") }}</h5>
             </div>
             <div class="table-responsive">
                 <table class="custom-table">
                     <thead>
                         <tr>
-                            <th></th>
-                            <th>Full Name</th>
-                            <th>Email</th>
-                            <th>Username</th>
-                            <th>Phone</th>
-                            <th>Amount</th>
-                            <th>Method</th>
-                            <th>Status</th>
-                            <th>Time</th>
+                            <th>{{ __("Booking ID") }}</th>
+                            <th>{{ __("Parlour Name") }}</th>
+                            <th>{{ __("Price") }}</th>
+                            <th>{{ __("P. Method") }}</th>
+                            <th>{{ __("Status") }}</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <ul class="user-list">
-                                    <li><img src="assets/images/user/user-1.jpg" alt="user"></li>
-                                </ul>
-                            </td>
-                            <td><span>Sean Black</span></td>
-                            <td>sean@gmail.com</td>
-                            <td>sean</td>
-                            <td>123-456(008)90</td>
-                            <td>5.00</td>
-                            <td><span class="text--info">Stripe</span></td>
-                            <td><span class="badge badge--warning">Pending</span></td>
-                            <td>2022-05-30 03:46 PM</td>
-                            <td>
-                                <button type="button" class="btn btn--base bg--success"><i class="las la-check-circle"></i></button>
-                                <button type="button" class="btn btn--base bg--danger"><i class="las la-times-circle"></i></button>
-                                <a href="add-logs-edit.html" class="btn btn--base"><i class="las la-expand"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <ul class="user-list">
-                                    <li><img src="assets/images/user/user-2.jpg" alt="user"></li>
-                                </ul>
-                            </td>
-                            <td><span>Merri Diamond</span></td>
-                            <td>merri@gmail.com</td>
-                            <td>merri</td>
-                            <td>123-456(008)90</td>
-                            <td>5.00</td>
-                            <td><span class="text--info">Paypal</span></td>
-                            <td><span class="badge badge--success">Completed</span></td>
-                            <td>2022-05-30 03:46 PM</td>
-                            <td>
-                                <button type="button" class="btn btn--base bg--success"><i class="las la-check-circle"></i></button>
-                                <button type="button" class="btn btn--base bg--danger"><i class="las la-times-circle"></i></button>
-                                <a href="add-logs-edit.html" class="btn btn--base"><i class="las la-expand"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <ul class="user-list">
-                                    <li><img src="assets/images/user/user-3.jpg" alt="user"></li>
-                                </ul>
-                            </td>
-                            <td><span>Sean Black</span></td>
-                            <td>sean@gmail.com</td>
-                            <td>sean</td>
-                            <td>123-456(008)90</td>
-                            <td>5.00</td>
-                            <td><span class="text--info">Razorpay</span></td>
-                            <td><span class="badge badge--danger">Canceled</span></td>
-                            <td>2022-05-30 03:46 PM</td>
-                            <td>
-                                <button type="button" class="btn btn--base bg--success"><i class="las la-check-circle"></i></button>
-                                <button type="button" class="btn btn--base bg--danger"><i class="las la-times-circle"></i></button>
-                                <a href="add-logs-edit.html" class="btn btn--base"><i class="las la-expand"></i></a>
-                            </td>
-                        </tr>
+                        @forelse ($booking_data ?? [] as $key => $item)
+                            <tr>
+                                <td>{{ $item->trx_id ?? '' }}</td>
+                                <td>{{ $item->parlour->name ?? '' }}</td>
+                                <td>{{ get_default_currency_symbol() }}{{ get_amount($item->price) }}</td>
+                                <td>{{ $item->payment_method ?? '' }}</td>
+                                <td>
+                                    @if ($item->status == global_const()::PARLOUR_BOOKING_STATUS_PENDING)
+                                        <span>{{ __("Pending") }}</span>
+                                    @elseif ($item->status == global_const()::PARLOUR_BOOKING_STATUS_CONFIRM_PAYMENT)
+                                        <span>{{ __("Confirm Payment") }}</span>
+                                    @elseif ($item->status == global_const()::PARLOUR_BOOKING_STATUS_HOLD)
+                                        <span>{{ __("On Hold") }}</span>
+                                    @elseif ($item->status == global_const()::PARLOUR_BOOKING_STATUS_SETTLED)
+                                        <span>{{ __("Settled") }}</span>
+                                    @elseif ($item->status == global_const()::PARLOUR_BOOKING_STATUS_COMPLETE)
+                                        <span>{{ __("Completed") }}</span>
+                                    @elseif ($item->status == global_const()::PARLOUR_BOOKING_STATUS_CANCEL)
+                                        <span>{{ __("Canceled") }}</span>
+                                    @elseif ($item->status == global_const()::PARLOUR_BOOKING_STATUS_FAILED)
+                                        <span>{{ __("Failed") }}</span>
+                                    @elseif ($item->status == global_const()::PARLOUR_BOOKING_STATUS_REFUND)
+                                        <span>{{ __("Refunded") }}</span>
+                                    @else
+                                        <span>{{ __("Delayed") }}</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{ setRoute('admin.parlour.booking.details',$item->trx_id) }}" class="btn btn--base btn--primary"><i class="las la-info-circle"></i></a>
+                                    
+                                </td>
+                            </tr>
+                        @empty
+                            @include('admin.components.alerts.empty',['colspan' => 6])
+                        @endforelse
                     </tbody>
                 </table>
             </div>
