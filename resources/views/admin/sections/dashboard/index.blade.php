@@ -143,6 +143,10 @@
                                 <div class="user-info">
                                     <h2 class="user-count">{{ get_default_currency_symbol() }}{{ get_amount($data['total_money']) }}</h2>
                                 </div>
+                                <div class="user-badge">
+                                    <span class="badge badge--info">{{ __("This Month Money") }} {{ get_default_currency_symbol() }}{{ get_amount($data['this_month_money']) }}</span>
+                                    <span class="badge badge--warning">{{ __("Last Month Money") }} {{ get_default_currency_symbol() }}{{ get_amount($data['last_month_money']) }}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -154,6 +158,10 @@
                                 <h6 class="title">{{ ("Total Fees & Charges") }}</h6>
                                 <div class="user-info">
                                     <h2 class="user-count">{{ get_default_currency_symbol() }}{{ get_amount($data['total_charges']) }}</h2>
+                                </div>
+                                <div class="user-badge">
+                                    <span class="badge badge--info">{{ __("This Month Charges") }} {{ get_default_currency_symbol() }}{{ get_amount($data['this_month_charge']) }}</span>
+                                    <span class="badge badge--warning">{{ __("Last Month Charges") }} {{ get_default_currency_symbol() }}{{ get_amount($data['last_month_charge']) }}</span>
                                 </div>
                             </div>
                         </div>

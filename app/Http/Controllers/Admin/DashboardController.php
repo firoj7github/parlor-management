@@ -39,7 +39,11 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $page_title = "Dashboard";
+        $page_title         = "Dashboard";
+        $last_month_start   =  date('Y-m-01', strtotime('-1 month', strtotime(date('Y-m-d'))));
+        $last_month_end     =  date('Y-m-31', strtotime('-1 month', strtotime(date('Y-m-d'))));
+        $this_month_start   = date('Y-m-01');
+        $this_month_end     = date('Y-m-d');
 
         $total_users     = (User::toBase()->count() == 0) ? 1 : User::toBase()->count();
         $unverified_user = User::toBase()->where('email_verified',0)->count();
@@ -79,6 +83,24 @@ class DashboardController extends Controller
                                 ->whereNot('status',global_const()::PARLOUR_BOOKING_STATUS_REVIEW_PAYMENT)
                                 ->sum('total_charge');
         
+        $this_month_money = ParlourBooking::toBase()
+                            ->whereNot('status',global_const()::PARLOUR_BOOKING_STATUS_REVIEW_PAYMENT)
+                            ->whereBetween('created_at', [$this_month_start, $this_month_end])
+                            ->sum('price');
+
+        $last_month_money = ParlourBooking::toBase()
+                            ->whereNot('status',global_const()::PARLOUR_BOOKING_STATUS_REVIEW_PAYMENT)
+                            ->whereBetween('created_at', [$last_month_start, $last_month_end])
+                            ->sum('price');
+        $this_month_charge = ParlourBooking::toBase()
+                            ->whereNot('status',global_const()::PARLOUR_BOOKING_STATUS_REVIEW_PAYMENT)
+                            ->whereBetween('created_at', [$this_month_start, $this_month_end])
+                            ->sum('total_charge');
+
+        $last_month_charge = ParlourBooking::toBase()
+                            ->whereNot('status',global_const()::PARLOUR_BOOKING_STATUS_REVIEW_PAYMENT)
+                            ->whereBetween('created_at', [$last_month_start, $last_month_end])
+                            ->sum('total_charge');
 
         $total_ticket       = (SupportTicket::toBase()->count() == 0) ? 1 : SupportTicket::toBase()->count();
         $active_ticket      = SupportTicket::toBase()->where('status',SupportTicketConst::ACTIVE)->count();
@@ -164,6 +186,10 @@ class DashboardController extends Controller
             'month_day'              => $month_day,
             'total_money'           => $total_money,
             'total_charges'         => $total_charges,
+            'this_month_money'      => $this_month_money,
+            'last_month_money'      => $last_month_money,
+            'this_month_charge'     => $this_month_charge,
+            'last_month_charge'     => $last_month_charge,
 
             'active_ticket'         => $active_ticket,
             'pending_ticket'        => $pending_ticket,
