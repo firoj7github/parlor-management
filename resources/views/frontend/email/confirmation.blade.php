@@ -2,7 +2,6 @@
 <html>
 <head>
   <style>
-    /* Add some basic styling to the table */
     table {
       border-collapse: collapse;
       width: 100%;
@@ -10,6 +9,7 @@
       box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 7px 0px;
       border: 1px solid #eee;
       overflow: hidden;
+      margin-bottom: 10px;
     }
 
     th, td {
@@ -21,6 +21,9 @@
     th {
       background-color: #f2f2f2;
     }
+    .rcmBody{
+      padding: 20px;
+    }
   </style>
 </head>
 <body>
@@ -30,7 +33,7 @@
 
 <p>We are writing to provide you with comprehensive details regarding your recent booking with the Booking number: {{ $trx_id }}. Ensuring transparency and clarity in our communication is paramount, and we are pleased to share the following information with you:</p>
 
-<h5>Parlour Summary</h5>
+<h5>Parlour Summary :</h5>
 <table>
   <tr>
     <td>Parlour Name</td>
@@ -46,7 +49,7 @@
   </tr>
 </table>
 
-<h5>Service & Schedule Information</h5>
+<h5>Service & Schedule Information :</h5>
 
 <table>
   <tr>
@@ -87,7 +90,7 @@
   </tr>
 </table>
 
-<h5>Payment Information</h5>
+<h5>Payment Information :</h5>
 
 <table>
   <tr>
@@ -106,7 +109,7 @@
 
 
 
-<p>We believe that providing these detailed breakdowns will give you a clear understanding of the remittance process and the associated particulars. Should you have any questions, require further assistance, or notice any discrepancies, please do not hesitate to reach out to our dedicated support team at {{ $contact->value->email }}.</p>
+<p>We believe that providing these detailed breakdowns will give you a clear understanding of the remittance process and the associated particulars. Should you have any questions, require further assistance, or notice any discrepancies, please do not hesitate to reach out to our dedicated support team at <a href="{{ $contact->value->email }}">{{ $contact->value->email }}</a> .</p>
 
 <p>Your satisfaction and trust are of utmost importance to us, and we are committed to ensuring a seamless and secure remittance experience for you. Thank you for choosing us as your trusted partner for your financial needs.</p>
 <p>Best Regards</p>

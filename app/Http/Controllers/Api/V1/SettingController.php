@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Helpers\Response;
 use App\Models\Admin\BasicSettings;
 use App\Http\Controllers\Controller;
+use App\Models\UserNotification;
 
 class SettingController extends Controller
 {
@@ -33,6 +34,21 @@ class SettingController extends Controller
         return Response::success(['Basic Settings Data Fetch Successfully.'],[
             'basic_settings'    => $basic_settings,
             'basic_image_path'  => $basic_image_path,
+        ],200);
+    }
+    /**
+     * Method for get user notification
+     */
+    public function notification(){
+        $user       = auth()->user()->id;
+        $notification   = UserNotification::where('user_id',$user)->orderBy("id")->get()->map(function($data){
+            return [
+                'id'            => $data->id,
+                'message'       => $data->message,
+            ]; 
+        });
+        return Response::success(['Notification Data Fetch Successfuly.'],[
+            'notification'      => $notification,
         ],200);
     }
 }
