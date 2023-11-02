@@ -100,13 +100,12 @@ class SiteController extends Controller
 
         $validator = Validator::make($request->all(),[
             'area'          => 'nullable',
-            'name'       => 'nullable',
+            'name'          => 'nullable',
         ]);
         if($validator->fails()) {
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
-        if($request->area && $request->name ){
-            
+        if($request->area && $request->name ){ 
             $parlour_lists    = ParlourList::where('area_id',$request->area)->where('name','like','%'.$request->name.'%')->get(); 
             
         }else if($request->area){

@@ -14,6 +14,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin\AppOnboardScreens;
 use App\Models\Admin\ParlourHasService;
 use App\Models\Admin\ParlourListHasSchedule;
+use Illuminate\Support\Facades\Validator;
 
 class SettingController extends Controller
 {
@@ -170,5 +171,29 @@ class SettingController extends Controller
             'parlour_has_schedule'      => $parlour_has_schedule,
             'parlour_image_path'        => $parlour_image_path,
         ],200);
+    }
+    /**
+     * Method for search parlour
+     */
+    public function searchParlour(Request $request){
+        
+        $validator      = Validator::make($request->all(),[
+            'area'          => 'nullable',
+            'name'          => 'nullable',
+        ]);
+        if ($validator->fails()) {
+            return Response::error($validator->errors()->all(),[]);
+        }
+        if($request->area && $request->name ){ 
+            $parlour_lists    = ParlourList::where('area_id',$request->area)->where('name','like','%'.$request->name.'%')->get(); 
+        }else if($request->area){
+            $parlour_lists    = ParlourList::where('area_id',$request->area)->get();
+        }else {
+            $parlour_lists    = ParlourList::where('name','like','%'.$request->name.'%')->get();
+        }
+        if ($parlour_lists->isEmpty()) {
+            return Response::error(['Parlour not found!'],[],404);
+        }
+        return Response::success(['Parlour Find Successfully!'],$parlour_lists,200);
     }
 }
