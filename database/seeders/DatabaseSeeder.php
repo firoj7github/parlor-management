@@ -16,6 +16,7 @@ use Database\Seeders\Admin\ExtensionSeeder;
 use Database\Seeders\Admin\SetupPageSeeder;
 use Database\Seeders\Admin\AppSettingsSeeder;
 use Database\Seeders\Admin\AdminHasRoleSeeder;
+use Database\Seeders\Admin\AppOnboardScreenSeeder;
 use Database\Seeders\Admin\SiteSectionsSeeder;
 use Database\Seeders\Admin\BasicSettingsSeeder;
 use Database\Seeders\Admin\BlogSeeder;
@@ -42,6 +43,7 @@ class DatabaseSeeder extends Seeder
             BasicSettingsSeeder::class,
             SetupSeoSeeder::class,
             AppSettingsSeeder::class,
+            AppOnboardScreenSeeder::class,
             SiteSectionsSeeder::class,
             LanguageSeeder::class,
             SetupKycSeeder::class,

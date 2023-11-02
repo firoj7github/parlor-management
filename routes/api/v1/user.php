@@ -13,5 +13,6 @@ Route::prefix("user")->name("api.user.")->group(function(){
     // Logout Route
     Route::post('logout',[ProfileController::class,'logout']);
     Route::get('notification',[SettingController::class,'notification']);
+    
 });
 
