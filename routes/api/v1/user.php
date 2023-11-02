@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\SettingController;
+use App\Http\Controllers\Api\V1\User\ParlourBookingController;
 use App\Http\Controllers\Api\V1\User\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +14,8 @@ Route::prefix("user")->name("api.user.")->group(function(){
     // Logout Route
     Route::post('logout',[ProfileController::class,'logout']);
     Route::get('notification',[SettingController::class,'notification']);
-    
+    Route::controller(ParlourBookingController::class)->prefix('parlour-booking')->group(function(){
+        Route::post('checkout',[ParlourBookingController::class,'checkout']);
+    });
 });
 

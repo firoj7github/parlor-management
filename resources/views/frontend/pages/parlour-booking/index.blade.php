@@ -174,11 +174,11 @@
         });
         function run(selectedDate,todaysDate,currentTime,data){
             $.each(data,function(index,item){
-            var fromTime            = item.from_time;
-            var disabled            = currentTime > fromTime ? 'disabled' : '';
-            var disableClassName    = disabled === 'disabled' ? 'danger' : '';
-            var textClass           = disabled === 'disabled' ? 'text--disable' : '';
-            var itemData            = '';
+                var fromTime            = item.from_time;
+                var disabled            = currentTime > fromTime ? 'disabled' : '';
+                var disableClassName    = disabled === 'disabled' ? 'danger' : '';
+                var textClass           = disabled === 'disabled' ? 'text--disable' : '';
+                var itemData            = '';
 
                 if(todaysDate == selectedDate){
                     itemData    += `

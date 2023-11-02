@@ -13,8 +13,9 @@ use App\Models\Admin\BasicSettings;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\AppOnboardScreens;
 use App\Models\Admin\ParlourHasService;
-use App\Models\Admin\ParlourListHasSchedule;
+use App\Providers\Admin\CurrencyProvider;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Admin\ParlourListHasSchedule;
 
 class SettingController extends Controller
 {
@@ -136,10 +137,24 @@ class SettingController extends Controller
                 'number_of_dates'   => $data->number_of_dates,
                 'image'             => $data->image,
                 'status'            => $data->status,
-                'created_at'        => $data->created_at   
+                'created_at'        => $data->created_at  
             ];
         });
-        
+        $parlour_image_path   = [
+            'base_url'      => url('/'),
+            'path_location' => files_asset_path_basename('site-section'),
+            'default_image' => files_asset_path_basename('default')
+        ];
+        return Response::success(['Data Fetch Successfuly.'],[
+            'area'                      => $areas,
+            'parlour_list'              => $parlour_list,
+            'parlour_image_path'        => $parlour_image_path,
+        ],200);
+    }
+    /**
+     * Method for parlour Service and schedule
+     */
+    public function scheduleService(){
         $parlour_has_service   = ParlourHasService::orderBy("id")->get()->map(function($data){
             return [
                 'id'                => $data->id,
@@ -159,17 +174,10 @@ class SettingController extends Controller
                 'status'            => $data->status
             ];
         });
-        $parlour_image_path   = [
-            'base_url'      => url('/'),
-            'path_location' => files_asset_path_basename('site-section'),
-            'default_image' => files_asset_path_basename('default')
-        ];
+        
         return Response::success(['Data Fetch Successfuly.'],[
-            'area'                      => $areas,
-            'parlour_list'              => $parlour_list,
             'parlour_has_service'       => $parlour_has_service,
             'parlour_has_schedule'      => $parlour_has_schedule,
-            'parlour_image_path'        => $parlour_image_path,
         ],200);
     }
     /**
