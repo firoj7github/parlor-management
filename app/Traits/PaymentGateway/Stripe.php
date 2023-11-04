@@ -284,7 +284,7 @@ trait Stripe
         if(!$output) $output = $this->output;
         $credentials = $this->getStripeCredentials($output);
         $reference = generateTransactionReference();
-        $amount = $output['amount']->total_amount ? number_format($output['amount']->total_amount,2,'.','') : 0;
+        $amount = $output['amount']->total_payable_amount ? number_format($output['amount']->total_payable_amount,2,'.','') : 0;
         $currency = $output['currency']['currency_code']??"USD";
 
         if(auth()->guard(get_auth_guard())->check()){
@@ -294,7 +294,7 @@ trait Stripe
             $user_name = $user->firstname.' '.$user->lastname ?? '';
         }
 
-        $return_url = route('api.user.send-remittance.stripe.payment.success', $reference."?r-source=".PaymentGatewayConst::APP);
+        $return_url = route('api.user.parlour.booking.stripe.payment.success', $reference."?r-source=".PaymentGatewayConst::APP);
 
 
          // Enter the details of the payment

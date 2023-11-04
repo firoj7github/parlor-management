@@ -176,13 +176,16 @@ class ParlourBookingController extends Controller
                 if($payment_gateway->type == "AUTOMATIC") {
                     if($temData->type == PaymentGatewayConst::STRIPE) {
                         $payment_informations =[
-                            'trx' =>  $temData->identifier,
-                            'gateway_currency_name' =>  $payment_gateway_currency->name,
-                            'request_amount' => get_amount($temData->data->amount->requested_amount).' '.$temData->data->amount->default_currency,
-                            'exchange_rate' => "1".' '.$temData->data->amount->default_currency.' = '.get_amount($temData->data->amount->sender_cur_rate).' '.$temData->data->amount->sender_cur_code,
-                            'total_charge' => get_amount($temData->data->amount->total_charge).' '.$temData->data->amount->sender_cur_code,
-                            'will_get' => get_amount($temData->data->amount->will_get).' '.$temData->data->amount->default_currency,
-                            'payable_amount' =>  get_amount($temData->data->amount->total_amount).' '.$temData->data->amount->sender_cur_code,
+                            'trx'                       =>  $temData->identifier,
+                            'gateway_currency_name'     =>  $payment_gateway_currency->name,
+                            'sender_cur_code'           => $temData->data->amount->sender_cur_code,
+                            'sender_cur_rate'           => $temData->data->amount->sender_cur_rate,
+                            'price'                     => $temData->data->amount->price,
+                            'total_charge'              => $temData->data->amount->total_charge,
+                            'payable_amount'            => $temData->data->amount->payable_amount,
+                            'total_payable_amount'      => $temData->data->amount->total_payable_amount,
+                            'exchange_rate'             => $temData->data->amount->exchange_rate,
+                            'default_currency'          => $temData->data->amount->default_currency,
                         ];
                         $data =[
                              'gategay_type'          => $payment_gateway->type,
@@ -194,16 +197,19 @@ class ParlourBookingController extends Controller
                              'method'                => "get",
                         ];
      
-                        return Response::success(['Send Remittance Inserted Successfully'], $data);
+                        return Response::success(['Parlour Booking Added'], $data);
                     }elseif($temData->type == PaymentGatewayConst::RAZORPAY) {
                      $payment_informations =[
-                         'trx' =>  $temData->identifier,
-                         'gateway_currency_name' =>  $payment_gateway_currency->name,
-                         'request_amount' => get_amount($temData->data->amount->requested_amount).' '.$temData->data->amount->default_currency,
-                         'exchange_rate' => "1".' '.$temData->data->amount->default_currency.' = '.get_amount($temData->data->amount->sender_cur_rate).' '.$temData->data->amount->sender_cur_code,
-                         'total_charge' => get_amount($temData->data->amount->total_charge).' '.$temData->data->amount->sender_cur_code,
-                         'will_get' => get_amount($temData->data->amount->will_get).' '.$temData->data->amount->default_currency,
-                         'payable_amount' =>  get_amount($temData->data->amount->total_amount).' '.$temData->data->amount->sender_cur_code,
+                        'trx'                       =>  $temData->identifier,
+                        'gateway_currency_name'     =>  $payment_gateway_currency->name,
+                        'sender_cur_code'           => $temData->data->amount->sender_cur_code,
+                        'sender_cur_rate'           => $temData->data->amount->sender_cur_rate,
+                        'price'                     => $temData->data->amount->price,
+                        'total_charge'              => $temData->data->amount->total_charge,
+                        'payable_amount'            => $temData->data->amount->payable_amount,
+                        'total_payable_amount'      => $temData->data->amount->total_payable_amount,
+                        'exchange_rate'             => $temData->data->amount->exchange_rate,
+                        'default_currency'          => $temData->data->amount->default_currency,
                      ];
                      $data =[
                           'gategay_type'          => $payment_gateway->type,
@@ -215,7 +221,7 @@ class ParlourBookingController extends Controller
                           'method' => "get",
                      ];
      
-                     return Response::success(['Send Remittance Inserted Successfully'], $data);
+                     return Response::success(['Parlour Booking Added'], $data);
                 }else if($temData->type == PaymentGatewayConst::PAYPAL) {
                     
                         $payment_informations = [
@@ -244,13 +250,16 @@ class ParlourBookingController extends Controller
      
                     }else if($temData->type == PaymentGatewayConst::FLUTTER_WAVE) {
                         $payment_informations =[
-                            'trx'                   => $temData->identifier,
-                            'gateway_currency_name' => $payment_gateway_currency->name,
-                            'request_amount'        => get_amount($temData->data->amount->requested_amount).' '.$temData->data->amount->default_currency,
-                            'exchange_rate'         => "1".' '.$temData->data->amount->default_currency.' = '.get_amount($temData->data->amount->sender_cur_rate).' '.$temData->data->amount->sender_cur_code,
-                            'total_charge'          => get_amount($temData->data->amount->total_charge).' '.$temData->data->amount->sender_cur_code,
-                            'will_get'              => get_amount($temData->data->amount->will_get).' '.$temData->data->amount->default_currency,
-                            'payable_amount'        => get_amount($temData->data->amount->total_amount).' '.$temData->data->amount->sender_cur_code,
+                            'trx'                       => $temData->identifier,
+                            'gateway_currency_name'     => $payment_gateway_currency->name,
+                            'sender_cur_code'           => $temData->data->amount->sender_cur_code,
+                            'sender_cur_rate'           => $temData->data->amount->sender_cur_rate,
+                            'price'                     => $temData->data->amount->price,
+                            'total_charge'              => $temData->data->amount->total_charge,
+                            'payable_amount'            => $temData->data->amount->payable_amount,
+                            'total_payable_amount'      => $temData->data->amount->total_payable_amount,
+                            'exchange_rate'             => $temData->data->amount->exchange_rate,
+                            'default_currency'          => $temData->data->amount->default_currency,
                         ];
                         $data =[
                             'gateway_type'          => $payment_gateway->type,
@@ -262,17 +271,20 @@ class ParlourBookingController extends Controller
                             'method'                => "get",
                         ];
      
-                        return Response::success(['Send Remittance Inserted Successfully'], $data);
+                        return Response::success(['Parlour Booking Added'], $data);
                      }elseif($temData->type == PaymentGatewayConst::SSLCOMMERZ) {
      
                         $payment_informations =[
-                        'trx'                   =>  $temData->identifier,
-                        'gateway_currency_name' =>  $payment_gateway_currency->name,
-                        'request_amount'        => get_amount($temData->data->amount->requested_amount).' '.$temData->data->amount->default_currency,
-                        'exchange_rate'         => "1".' '.$temData->data->amount->default_currency.' = '.get_amount($temData->data->amount->sender_cur_rate).' '.$temData->data->amount->sender_cur_code,
-                        'total_charge'          => get_amount($temData->data->amount->total_charge).' '.$temData->data->amount->sender_cur_code,
-                        'will_get'              => get_amount($temData->data->amount->will_get).' '.$temData->data->amount->default_currency,
-                        'payable_amount'        =>  get_amount($temData->data->amount->total_amount).' '.$temData->data->amount->sender_cur_code,
+                        'trx'                       =>  $temData->identifier,
+                        'gateway_currency_name'     =>  $payment_gateway_currency->name,
+                        'sender_cur_code'           => $temData->data->amount->sender_cur_code,
+                        'sender_cur_rate'           => $temData->data->amount->sender_cur_rate,
+                        'price'                     => $temData->data->amount->price,
+                        'total_charge'              => $temData->data->amount->total_charge,
+                        'payable_amount'            => $temData->data->amount->payable_amount,
+                        'total_payable_amount'      => $temData->data->amount->total_payable_amount,
+                        'exchange_rate'             => $temData->data->amount->exchange_rate,
+                        'default_currency'          => $temData->data->amount->default_currency,
                         ];
                         $data =[
                         'gateway_type' => $payment_gateway->type,
@@ -284,32 +296,8 @@ class ParlourBookingController extends Controller
                         'method' => "get",
                         ];
      
-                        return Response::success(['Send Remittance Inserted Successfully'],$data);
+                        return Response::success(['Parlour Booking Added'],$data);
                      }
-                }elseif($payment_gateway->type == "MANUAL"){
-     
-                    $payment_informations =[
-                        'trx'                   => $temData->identifier,
-    
-                        'gateway_currency_name' => $payment_gateway_currency->name,
-                        'request_amount'        => get_amount($temData->data->amount->requested_amount).' '.$temData->data->amount->default_currency,
-                        'exchange_rate'         => "1".' '.$temData->data->amount->default_currency.' = '.get_amount($temData->data->amount->sender_cur_rate).' '.$temData->data->amount->sender_cur_code,
-                        'total_charge'          => get_amount($temData->data->amount->total_charge).' '.$temData->data->amount->sender_cur_code,
-                        'will_get'              => get_amount($temData->data->amount->will_get).' '.$temData->data->amount->default_currency,
-                        'payable_amount'        => get_amount($temData->data->amount->total_amount).' '.$temData->data->amount->sender_cur_code,
-                    ];
-                    $data =[
-                        'gategay_type'          => $payment_gateway->type,
-                        'gateway_currency_name' => $payment_gateway_currency->name,
-                        'alias'                 => $payment_gateway_currency->alias,
-                        'identify'              => $temData->type,
-                        'details'               => $payment_gateway->desc??null,
-                        'input_fields'          => $payment_gateway->input_fields??null,
-                        'payment_informations'  => $payment_informations,
-                        'url'                   => route('api.user.manual.payment.confirmed'),
-                        'method'                => "post",
-                    ];
-                    return Response::success(['Send Remittance Inserted Successfully'], $data);
                 }else{
                     $error = ['error'=>["Something is wrong"]];
                     return Response::error($error);
@@ -341,6 +329,36 @@ class ParlourBookingController extends Controller
             return Response::error($message);
         }
         
-        return Response::success(["Payment successfull, please go back your app"],[],200);
+        return Response::success(["Congratulations! Parlour Booking Confirmed Successfully."],[],200);
+    }
+    /**
+     * Method for paypal method cancel
+     */
+    public function cancel(Request $request, $gateway) {
+        $requestData = $request->all();
+        $token = $requestData['token'] ?? "";
+        if( $token){
+            TemporaryData::where("identifier",$token)->delete();
+        }
+        return Response::success(["Cancel Payment"],[],200);
+    }
+    /**
+     * Method for stripe payment success
+     */
+    public function stripePaymentSuccess($trx){
+        $token = $trx;
+        $checkTempData = TemporaryData::where("type",PaymentGatewayConst::STRIPE)->where("identifier",$token)->first();
+        if(!$checkTempData) {
+            return Response::error(["Transaction failed. Record didn\'t saved properly. Please try again."],[],400);
+        }
+        $checkTempData = $checkTempData->toArray();
+
+        try{
+            PaymentGatewayHelper::init($checkTempData)->responseReceiveApi();
+        }catch(Exception $e) {
+            $message = ['error' => [$e->getMessage()]];
+            return Response::error($message);
+        }
+        return Response::success(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);
     }
 }

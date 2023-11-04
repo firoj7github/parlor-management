@@ -21,8 +21,6 @@ Route::prefix("user")->name("api.user.")->group(function(){
             Route::post('checkout','checkout');
             Route::get('payment-method','paymentMethod');
             Route::post('confirm','confirm');
-    
-            
         });
     });
     
@@ -30,6 +28,9 @@ Route::prefix("user")->name("api.user.")->group(function(){
         //paypal
         Route::get('success/response/{gateway}','success')->name('payment.success');
         Route::get("cancel/response/{gateway}",'cancel')->name('payment.cancel');
+
+        //stripe
+        Route::get('stripe/payment/success/{trx}','stripePaymentSuccess')->name('stripe.payment.success');
     });
     
 });
