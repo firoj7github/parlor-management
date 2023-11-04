@@ -311,7 +311,7 @@ trait Stripe
                 "name"         => $user_name
             ],
             "customizations" => [
-                "title"       => "Add Money",
+                "title"       => "Parlour Booking",
                 "description" => dateFormat('d M Y', Carbon::now()),
             ]
         ];
@@ -322,7 +322,7 @@ trait Stripe
        //create product for Product Id
        try{
             $product_id = $stripe->products->create([
-                'name' => 'Send Remittance( '.$basic_settings->site_name.' )',
+                'name' => 'Parlour Booking( '.$basic_settings->site_name.' )',
             ]);
        }catch(Exception $e){
             $error = ['error'=>[$e->getMessage()]];

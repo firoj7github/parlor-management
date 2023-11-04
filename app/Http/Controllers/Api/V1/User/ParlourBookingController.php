@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Admin\ParlourListHasSchedule;
 use App\Models\Admin\PaymentGatewayCurrency;
 use Illuminate\Support\Facades\Notification;
+use KingFlamez\Rave\Facades\Rave as Flutterwave;
 use App\Http\Helpers\PaymentGateway as PaymentGatewayHelper;
 
 class ParlourBookingController extends Controller
@@ -360,5 +361,43 @@ class ParlourBookingController extends Controller
             return Response::error($message);
         }
         return Response::success(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);
+    }
+    /**
+     * Method for flutterwave success
+     */
+    public function flutterwaveCallback(){
+
+        $status = request()->status;
+        //if payment is successful
+        if ($status ==  'successful') {
+
+            $transactionID = Flutterwave::getTransactionIDFromCallback();
+            $data = Flutterwave::verifyTransaction($transactionID);
+
+            $requestData = request()->tx_ref;
+            $token = $requestData;
+
+            $checkTempData = TemporaryData::where("type",'flutterwave')->where("identifier",$token)->first();
+            $message = ['error' => ['Transaction faild. Record didn\'t saved properly. Please try again.']];
+            if(!$checkTempData) return Response::error($message);
+
+
+            $checkTempData = $checkTempData->toArray();
+
+            try{
+               PaymentGatewayHelper::init($checkTempData)->responseReceiveApi();
+            }catch(Exception $e) {
+                $message = ['error' => [$e->getMessage()]];
+                Response::error($message);
+            }
+            return Response::success(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);
+
+        }
+        elseif ($status ==  'cancelled'){
+            return Response::error(['Payment Cancelled']);
+        }
+        else{
+            return Response::error(['Payment Failed']);
+        }
     }
 }

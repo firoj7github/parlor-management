@@ -31,6 +31,9 @@ Route::prefix("user")->name("api.user.")->group(function(){
 
         //stripe
         Route::get('stripe/payment/success/{trx}','stripePaymentSuccess')->name('stripe.payment.success');
+
+        //flutterwave
+        Route::get('/flutterwave/callback', 'flutterwaveCallback')->name('flutterwave.callback');
     });
     
 });

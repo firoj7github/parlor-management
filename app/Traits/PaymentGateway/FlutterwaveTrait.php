@@ -294,7 +294,7 @@ trait FlutterwaveTrait
         //This generates a payment reference
         $reference = Flutterwave::generateReference();
 
-        $amount = $output['amount']->total_amount ? number_format($output['amount']->total_amount,2,'.','') : 0;
+        $amount = $output['amount']->total_payable_amount ? number_format($output['amount']->total_payable_amount,2,'.','') : 0;
 
         if(auth()->guard(get_auth_guard())->check()){
             $user = auth()->guard(get_auth_guard())->user();
@@ -303,7 +303,7 @@ trait FlutterwaveTrait
             $user_name = $user->firstname.' '.$user->lastname ?? '';
         }
 
-        $return_url = route('api.user.send-remittance.flutterwave.callback', "r-source=".PaymentGatewayConst::APP);
+        $return_url = route('api.user.parlour.booking.flutterwave.callback', "r-source=".PaymentGatewayConst::APP);
 
         // Enter the details of the payment
         $data = [
@@ -319,7 +319,7 @@ trait FlutterwaveTrait
                 "name"         => $user_name
             ],
             "customizations" => [
-                "title"       => "Send Remittance",
+                "title"       => "Parlour Booking",
                 "description" => dateFormat('d M Y', Carbon::now()),
             ]
         ];
