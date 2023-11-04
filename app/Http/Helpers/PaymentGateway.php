@@ -37,6 +37,7 @@ class PaymentGateway {
 
     public function gateway() {
         $request_data = $this->request_data;
+        
         if(empty($request_data)) throw new Exception("Gateway Information is not available. Please provide payment gateway currency alias");
 
         $gateway_currency   = PaymentGatewayCurrency::where("id",$request_data['payment_method'])->first();
@@ -47,7 +48,7 @@ class PaymentGateway {
                 $this->$request_data->payment_gateway->alias = "Gateway not available",
             ]);
         }
-
+       
         if($gateway_currency->gateway->isAutomatic()) {
             $this->output['gateway']    = $gateway_currency->gateway;
             $this->output['currency']   = $gateway_currency;
@@ -59,7 +60,7 @@ class PaymentGateway {
             $this->output['amount']     = $this->amount();
             $this->output['distribute'] = $this->gatewayDistribute($gateway_currency->gateway);
         }
-
+        
         $this->output['request_data']   = $request_data;
         
         return $this;
@@ -131,6 +132,7 @@ class PaymentGateway {
             }
         }
         $distributeMethod = $this->output['distribute'];
+        
         return $this->$distributeMethod($output) ?? throw new Exception("Something went worng! Please try again.");
     }
 
@@ -205,7 +207,7 @@ class PaymentGateway {
     }
     public function responseReceiveApi($type = null) {
         $tempData = $this->request_data;
-
+        
         if(empty($tempData) || empty($tempData['type'])){
             return Response::error(['Transaction faild. Record didn\'t saved properly. Please try again.']);
         }
@@ -234,14 +236,16 @@ class PaymentGateway {
         }
 
         $validator_data     = [
-            'identifier'    => $tempData['data']->user_record,
+            'data'              => $tempData['data']->user_record,
+            'payment_method'    => $tempData['data']->payment_method,
         ];
 
         $this->request_data = $validator_data;
         $this->gateway();
         $this->output['tempData'] = $tempData;
         $type = $tempData['type'];
-        if($type == 'flutterWave'){
+        
+        if($type == 'flutterwave'){
             if(method_exists(FlutterwaveTrait::class,$method_name)) {
                 return $this->$method_name($this->output);
             }
@@ -271,6 +275,7 @@ class PaymentGateway {
     public function api() {
         $output               = $this->output;
         $output['distribute'] = $this->gatewayDistribute() . "Api";
+        
         $method               = $output['distribute'];
         $response             = $this->$method($output);
         $output['response']   = $response;

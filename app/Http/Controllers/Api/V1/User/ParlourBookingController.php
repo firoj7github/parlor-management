@@ -5,17 +5,22 @@ namespace App\Http\Controllers\Api\V1\User;
 use Exception;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\TemporaryData;
 use App\Http\Helpers\Response;
 use App\Models\ParlourBooking;
 use App\Models\UserNotification;
 use App\Models\Admin\ParlourList;
 use App\Models\Admin\BasicSettings;
 use App\Http\Controllers\Controller;
+use App\Models\Admin\PaymentGateway;
+use App\Constants\PaymentGatewayConst;
 use App\Models\Admin\TransactionSetting;
 use App\Notifications\emailNotification;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Admin\ParlourListHasSchedule;
+use App\Models\Admin\PaymentGatewayCurrency;
 use Illuminate\Support\Facades\Notification;
+use App\Http\Helpers\PaymentGateway as PaymentGatewayHelper;
 
 class ParlourBookingController extends Controller
 {
@@ -23,6 +28,7 @@ class ParlourBookingController extends Controller
      * Method for parlour booking checkout
      */
     public function checkout(Request $request){
+        
         if(auth()->check() == false) return Response::error(['Please Login First!'],404);
         $charge_data            = TransactionSetting::where('slug','parlour')->where('status',1)->first();
         $validator              = Validator::make($request->all(),[
@@ -87,6 +93,19 @@ class ParlourBookingController extends Controller
         }
         return Response::success(['Parlour booking successfully'],$booking,200);
     }
+    /**
+     * Method for get payment method
+     */
+    public function paymentMethod(){
+        $payment_gateway   = PaymentGatewayCurrency::whereHas('gateway', function ($gateway) {
+            $gateway->where('slug', PaymentGatewayConst::payment_method_slug());
+            $gateway->where('status', 1);
+        })->get();
+        return Response::success(['Payment Method Data Fetch Successfully.'],$payment_gateway,200);
+    }
+    /**
+     * Method for confirm booking
+     */
     public function confirm(Request $request){
         $data       = ParlourBooking::with(['payment_gateway','parlour','schedule','user'])->where('slug',$request->slug)->first();
         $otp_exp_sec = $data->booking_exp_seconds ?? global_const()::BOOKING_EXP_SEC;
@@ -124,9 +143,204 @@ class ParlourBookingController extends Controller
                     Notification::route("mail",$user->email)->notify(new emailNotification($user,$data,$trx_id));
                 }
             }catch(Exception $e){
-                return Response::error(['Something went wrong! Please try again.'],[],404);;
+                return Response::error(['Something went wrong! Please try again.'],[],404);
             }
             return Response::success(['Congratulations! Parlour Booking Confirmed Successfully.'],$data,200);
         }
+        if($validated['payment_method'] != global_const()::CASH_PAYMENT){
+            $requested_data         = [
+                'data'              => $data,
+                'payment_method'    => $validated['payment_method']
+            ];
+            
+            $payment_gateways_currencies = PaymentGatewayCurrency::where('id',$validated['payment_method'])->whereHas('gateway', function ($gateway) {
+                $gateway->where('slug', PaymentGatewayConst::payment_method_slug());
+                $gateway->where('status', 1);
+            })->first();
+            if(!$payment_gateways_currencies){
+                $error = ['error'=>['Gateway Information is not available. Please provide payment gateway currency alias']];
+                return Response::error($error);
+            }
+            $user = auth()->user();
+            try{
+               
+                $instance = PaymentGatewayHelper::init($requested_data)->gateway()->api()->get();
+                $trx = $instance['response']['id']??$instance['response']['trx']??$instance['response']['reference_id']??$instance['response'];;
+                $temData = TemporaryData::where('identifier',$trx)->first();
+                if(!$temData){
+                    $error = ['error'=>["Invalid Request"]];
+                    return Response::error($error);
+                }
+                $payment_gateway_currency = PaymentGatewayCurrency::where('id', $temData->data->currency)->first();
+                $payment_gateway = PaymentGateway::where('id', $temData->data->gateway)->first();
+                if($payment_gateway->type == "AUTOMATIC") {
+                    if($temData->type == PaymentGatewayConst::STRIPE) {
+                        $payment_informations =[
+                            'trx' =>  $temData->identifier,
+                            'gateway_currency_name' =>  $payment_gateway_currency->name,
+                            'request_amount' => get_amount($temData->data->amount->requested_amount).' '.$temData->data->amount->default_currency,
+                            'exchange_rate' => "1".' '.$temData->data->amount->default_currency.' = '.get_amount($temData->data->amount->sender_cur_rate).' '.$temData->data->amount->sender_cur_code,
+                            'total_charge' => get_amount($temData->data->amount->total_charge).' '.$temData->data->amount->sender_cur_code,
+                            'will_get' => get_amount($temData->data->amount->will_get).' '.$temData->data->amount->default_currency,
+                            'payable_amount' =>  get_amount($temData->data->amount->total_amount).' '.$temData->data->amount->sender_cur_code,
+                        ];
+                        $data =[
+                             'gategay_type'          => $payment_gateway->type,
+                             'gateway_currency_name' => $payment_gateway_currency->name,
+                             'alias'                 => $payment_gateway_currency->alias,
+                             'identify'              => $temData->type,
+                             'payment_informations'  => $payment_informations,
+                             'url'                   => @$temData->data->response->link."?prefilled_email=".@$user->email,
+                             'method'                => "get",
+                        ];
+     
+                        return Response::success(['Send Remittance Inserted Successfully'], $data);
+                    }elseif($temData->type == PaymentGatewayConst::RAZORPAY) {
+                     $payment_informations =[
+                         'trx' =>  $temData->identifier,
+                         'gateway_currency_name' =>  $payment_gateway_currency->name,
+                         'request_amount' => get_amount($temData->data->amount->requested_amount).' '.$temData->data->amount->default_currency,
+                         'exchange_rate' => "1".' '.$temData->data->amount->default_currency.' = '.get_amount($temData->data->amount->sender_cur_rate).' '.$temData->data->amount->sender_cur_code,
+                         'total_charge' => get_amount($temData->data->amount->total_charge).' '.$temData->data->amount->sender_cur_code,
+                         'will_get' => get_amount($temData->data->amount->will_get).' '.$temData->data->amount->default_currency,
+                         'payable_amount' =>  get_amount($temData->data->amount->total_amount).' '.$temData->data->amount->sender_cur_code,
+                     ];
+                     $data =[
+                          'gategay_type'          => $payment_gateway->type,
+                          'gateway_currency_name' => $payment_gateway_currency->name,
+                          'alias'                 => $payment_gateway_currency->alias,
+                          'identify'              => $temData->type,
+                          'payment_informations'  => $payment_informations,
+                          'url' => @$instance['response']['short_url'],
+                          'method' => "get",
+                     ];
+     
+                     return Response::success(['Send Remittance Inserted Successfully'], $data);
+                }else if($temData->type == PaymentGatewayConst::PAYPAL) {
+                    
+                        $payment_informations = [
+                            'trx'                       => $temData->identifier,
+                            'gateway_currency_name'     => $payment_gateway_currency->name,
+                            'sender_cur_code'           => $temData->data->amount->sender_cur_code,
+                            'sender_cur_rate'           => $temData->data->amount->sender_cur_rate,
+                            'price'                     => $temData->data->amount->price,
+                            'total_charge'              => $temData->data->amount->total_charge,
+                            'payable_amount'            => $temData->data->amount->payable_amount,
+                            'total_payable_amount'      => $temData->data->amount->total_payable_amount,
+                            'exchange_rate'             => $temData->data->amount->exchange_rate,
+                            'default_currency'          => $temData->data->amount->default_currency,
+                        ];
+                        $data =[
+                            'gategay_type'          => $payment_gateway->type,
+                            'gateway_currency_name' => $payment_gateway_currency->name,
+                            'alias'                 => $payment_gateway_currency->alias,
+                            'identify'              => $temData->type,
+                            'payment_informations'  => $payment_informations,
+                            'url'                   => @$temData->data->response->links,
+                            'method'                => "get",
+                        ];
+                        
+                        return Response::success(['Parlour Booking Added'], $data);
+     
+                    }else if($temData->type == PaymentGatewayConst::FLUTTER_WAVE) {
+                        $payment_informations =[
+                            'trx'                   => $temData->identifier,
+                            'gateway_currency_name' => $payment_gateway_currency->name,
+                            'request_amount'        => get_amount($temData->data->amount->requested_amount).' '.$temData->data->amount->default_currency,
+                            'exchange_rate'         => "1".' '.$temData->data->amount->default_currency.' = '.get_amount($temData->data->amount->sender_cur_rate).' '.$temData->data->amount->sender_cur_code,
+                            'total_charge'          => get_amount($temData->data->amount->total_charge).' '.$temData->data->amount->sender_cur_code,
+                            'will_get'              => get_amount($temData->data->amount->will_get).' '.$temData->data->amount->default_currency,
+                            'payable_amount'        => get_amount($temData->data->amount->total_amount).' '.$temData->data->amount->sender_cur_code,
+                        ];
+                        $data =[
+                            'gateway_type'          => $payment_gateway->type,
+                            'gateway_currency_name' => $payment_gateway_currency->name,
+                            'alias'                 => $payment_gateway_currency->alias,
+                            'identify'              => $temData->type,
+                            'payment_informations'  => $payment_informations,
+                            'url'                   => @$temData->data->response->link,
+                            'method'                => "get",
+                        ];
+     
+                        return Response::success(['Send Remittance Inserted Successfully'], $data);
+                     }elseif($temData->type == PaymentGatewayConst::SSLCOMMERZ) {
+     
+                        $payment_informations =[
+                        'trx'                   =>  $temData->identifier,
+                        'gateway_currency_name' =>  $payment_gateway_currency->name,
+                        'request_amount'        => get_amount($temData->data->amount->requested_amount).' '.$temData->data->amount->default_currency,
+                        'exchange_rate'         => "1".' '.$temData->data->amount->default_currency.' = '.get_amount($temData->data->amount->sender_cur_rate).' '.$temData->data->amount->sender_cur_code,
+                        'total_charge'          => get_amount($temData->data->amount->total_charge).' '.$temData->data->amount->sender_cur_code,
+                        'will_get'              => get_amount($temData->data->amount->will_get).' '.$temData->data->amount->default_currency,
+                        'payable_amount'        =>  get_amount($temData->data->amount->total_amount).' '.$temData->data->amount->sender_cur_code,
+                        ];
+                        $data =[
+                        'gateway_type' => $payment_gateway->type,
+                        'gateway_currency_name' => $payment_gateway_currency->name,
+                        'alias' => $payment_gateway_currency->alias,
+                        'identify' => $temData->type,
+                        'payment_informations' => $payment_informations,
+                        'url' => $instance['response']['link'],
+                        'method' => "get",
+                        ];
+     
+                        return Response::success(['Send Remittance Inserted Successfully'],$data);
+                     }
+                }elseif($payment_gateway->type == "MANUAL"){
+     
+                    $payment_informations =[
+                        'trx'                   => $temData->identifier,
+    
+                        'gateway_currency_name' => $payment_gateway_currency->name,
+                        'request_amount'        => get_amount($temData->data->amount->requested_amount).' '.$temData->data->amount->default_currency,
+                        'exchange_rate'         => "1".' '.$temData->data->amount->default_currency.' = '.get_amount($temData->data->amount->sender_cur_rate).' '.$temData->data->amount->sender_cur_code,
+                        'total_charge'          => get_amount($temData->data->amount->total_charge).' '.$temData->data->amount->sender_cur_code,
+                        'will_get'              => get_amount($temData->data->amount->will_get).' '.$temData->data->amount->default_currency,
+                        'payable_amount'        => get_amount($temData->data->amount->total_amount).' '.$temData->data->amount->sender_cur_code,
+                    ];
+                    $data =[
+                        'gategay_type'          => $payment_gateway->type,
+                        'gateway_currency_name' => $payment_gateway_currency->name,
+                        'alias'                 => $payment_gateway_currency->alias,
+                        'identify'              => $temData->type,
+                        'details'               => $payment_gateway->desc??null,
+                        'input_fields'          => $payment_gateway->input_fields??null,
+                        'payment_informations'  => $payment_informations,
+                        'url'                   => route('api.user.manual.payment.confirmed'),
+                        'method'                => "post",
+                    ];
+                    return Response::success(['Send Remittance Inserted Successfully'], $data);
+                }else{
+                    $error = ['error'=>["Something is wrong"]];
+                    return Response::error($error);
+                }
+     
+            }catch(Exception $e) {
+                $error = ['error'=>[$e->getMessage()]];
+                return Response::error($error);
+            }
+            
+        }
+    }
+    /**
+     * Method for paypal payment succes
+     */
+    public function success(Request $request, $gateway){
+        
+        $requestData = $request->all();
+        $token = $requestData['token'] ?? "";
+        $checkTempData = TemporaryData::where("type",$gateway)->where("identifier",$token)->first();
+        if(!$checkTempData) {
+            return Response::error(["Transaction failed. Record didn\'t saved properly. Please try again."],[],400);
+        }
+        $checkTempData = $checkTempData->toArray();
+        try{
+            PaymentGatewayHelper::init($checkTempData)->responseReceiveApi();
+        }catch(Exception $e) {
+            $message = ['error' => [$e->getMessage()]];
+            return Response::error($message);
+        }
+        
+        return Response::success(["Payment successfull, please go back your app"],[],200);
     }
 }

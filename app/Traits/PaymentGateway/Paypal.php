@@ -61,7 +61,6 @@ trait Paypal
     public function paypalInitApi($output = null) {
         if(!$output) $output = $this->output;
         $credentials = $this->getPaypalCredetials($output);
-        
         $config = $this->paypalConfig($credentials,$output['amount']);
         $paypalProvider = new PayPalClient;
         $paypalProvider->setApiCredentials($config);
@@ -70,8 +69,8 @@ trait Paypal
         $response = $paypalProvider->createOrder([
             "intent" => "CAPTURE",
             "application_context" => [
-                "return_url" =>route('api.user.send-remittance.payment.success',PaymentGatewayConst::PAYPAL."?r-source=".PaymentGatewayConst::APP),
-                "cancel_url" =>route('api.user.send-remittance.payment.cancel',PaymentGatewayConst::PAYPAL."?r-source=".PaymentGatewayConst::APP),
+                "return_url" =>route('api.user.parlour.booking.payment.success',PaymentGatewayConst::PAYPAL."?r-source=".PaymentGatewayConst::APP),
+                "cancel_url" =>route('api.user.parlour.booking.payment.cancel',PaymentGatewayConst::PAYPAL."?r-source=".PaymentGatewayConst::APP),
             ],
             "purchase_units" => [
                 0 => [
@@ -185,7 +184,7 @@ trait Paypal
     }
 
     public function paypalJunkInsert($response) {
-   
+        
         $output = $this->output;
         $data = [
             'gateway'           => $output['gateway']->id,
@@ -199,7 +198,6 @@ trait Paypal
             'payment_method'    => $output['request_data']['payment_method'],
         ];
 
-        
         return TemporaryData::create([
             'user_id'       => Auth::id(),
             'type'          => PaymentGatewayConst::PAYPAL,
@@ -211,6 +209,7 @@ trait Paypal
     public function paypalSuccess($output = null) {
         if(!$output) $output = $this->output;
         $token = $this->output['tempData']['identifier'] ?? "";
+        
         $user_data = ParlourBooking::where('slug',$output['tempData']['data']->user_record->slug ?? "")->first();
         $this->output['user_data']  = $user_data;
 
@@ -304,7 +303,7 @@ trait Paypal
             DB::commit();
             
         }catch(Exception $e) {
-            dd($e->getMessage());
+           
             DB::rollBack();
             throw new Exception($e->getMessage());
         }
