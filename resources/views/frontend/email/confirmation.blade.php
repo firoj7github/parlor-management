@@ -21,7 +21,7 @@
     th {
       background-color: #f2f2f2;
     }
-    .rcmBody{
+    .mail-body{
       padding: 20px;
     }
   </style>
@@ -29,7 +29,8 @@
 <body>
 
     
-<p>Dear {{ $user->fullname }},</p>
+<div class="mail-body">
+  <p>Dear {{ $user->fullname }},</p>
 
 <p>We are writing to provide you with comprehensive details regarding your recent booking with the Booking number: {{ $trx_id }}. Ensuring transparency and clarity in our communication is paramount, and we are pleased to share the following information with you:</p>
 
@@ -39,7 +40,7 @@
     <td>Parlour Name</td>
     <td>{{ $parlour_data->name }}</td>
     <td>Experience</td>
-    <td>{{ $parlour_data->experience }}</td>
+    <td>{{ $parlour_data->experience }}</td>  
   </tr>
   <tr>
     <td>Contact</td>
@@ -49,7 +50,7 @@
   </tr>
 </table>
 
-<h5>Service & Schedule Information :</h5>
+<h5 style="padding-top: 20px;">Service & Schedule Information :</h5>
 
 <table>
   <tr>
@@ -90,7 +91,7 @@
   </tr>
 </table>
 
-<h5>Payment Information :</h5>
+<h5 style="padding-top: 20px;">Payment Information :</h5>
 
 <table>
   <tr>
@@ -109,11 +110,12 @@
 
 
 
-<p>We believe that providing these detailed breakdowns will give you a clear understanding of the remittance process and the associated particulars. Should you have any questions, require further assistance, or notice any discrepancies, please do not hesitate to reach out to our dedicated support team at <a href="{{ $contact->value->email }}">{{ $contact->value->email }}</a> .</p>
+<p style="padding-top: 20px;">We believe that providing these detailed breakdowns will give you a clear understanding of the remittance process and the associated particulars. Should you have any questions, require further assistance, or notice any discrepancies, please do not hesitate to reach out to our dedicated support team at <a href="{{ $contact->value->email }}">{{ $contact->value->email }}</a> .</p>
 
 <p>Your satisfaction and trust are of utmost importance to us, and we are committed to ensuring a seamless and secure remittance experience for you. Thank you for choosing us as your trusted partner for your financial needs.</p>
 <p>Best Regards</p>
 <p>{{ $basic_settings->site_name }}</p>
+</div>
 
 </body>
 </html>
