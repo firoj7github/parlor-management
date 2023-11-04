@@ -9,5 +9,5 @@ Route::controller(SettingController::class)->group(function(){
     Route::get("parlour-list","parlourList");
     Route::get("schedule-service","scheduleService");
     Route::post("search-parlour","searchParlour");
-    
+    Route::get("country-list","countryList");
 });

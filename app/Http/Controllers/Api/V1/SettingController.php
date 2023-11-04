@@ -204,4 +204,12 @@ class SettingController extends Controller
         }
         return Response::success(['Parlour Find Successfully!'],$parlour_lists,200);
     }
+    /**
+     * Method for get all country list
+     */
+    public function countryList(){
+        return Response::success(['Parlour Find Successfully!'],[
+            'countries'     => get_all_countries(['id','name','mobile_code']),
+        ],200);
+    }
 }
