@@ -7,9 +7,12 @@ use App\Models\TemporaryData;
 use App\Http\Helpers\Response;
 use App\Models\ParlourBooking;
 use App\Models\UserNotification;
+use App\Models\Admin\ParlourList;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Constants\PaymentGatewayConst;
+use App\Models\Admin\ParlourListHasSchedule;
+use Illuminate\Support\Facades\Notification;
 use App\Providers\Admin\BasicSettingsProvider;
 
 trait RazorTrait
@@ -250,7 +253,7 @@ trait RazorTrait
         $credentials = $this->getCredentials($output);
         $api_key = $credentials->public_key;
         $api_secret = $credentials->secret_key;
-        $amount = $output['amount']->total_amount ? number_format($output['amount']->total_amount,2,'.','') : 0;
+        $amount = $output['amount']->total_payable_amount ? number_format($output['amount']->total_payable_amount,2,'.','') : 0;
         if(auth()->guard(get_auth_guard())->check()){
             $user = auth()->guard(get_auth_guard())->user();
             $user_email = $user->email;
@@ -258,22 +261,19 @@ trait RazorTrait
             $user_name = $user->firstname.' '.$user->lastname ?? '';
         }
 
-        $return_url = route('api.user.send-remittance.razor.callback', "r-source=".PaymentGatewayConst::APP);
+        $return_url = route('api.user.parlour.booking.razor.callback', "r-source=".PaymentGatewayConst::APP);
 
 
         $payment_link = "https://api.razorpay.com/v1/payment_links";
 
-        // Enter the details of the payment
-        // Convert the decimal amount to paise (multiply by 100)
-        // $amountInDecimal =$amount;  // Your original amount
-        // $amountInPaise = (int) ($amountInDecimal * 100);
+      
         $data = array(
             "amount" => $amount * 100,
             "currency" => $output['amount']->sender_cur_code,
             "accept_partial" => false,
             "first_min_partial_amount" => 100,
             "reference_id" =>getTrxNum(),
-            "description" => "Payment For XRemit  Add Balance",
+            "description" => "Payment For Parlour Booking",
             "customer" => array(
                 "name" => $user_name ,
                 "contact" => $user_phone,
@@ -285,7 +285,7 @@ trait RazorTrait
             ),
             "reminder_enable" => true,
             "notes" => array(
-                "policy_name"=> "XRemit "
+                "policy_name"=> "Parlour Booking "
             ),
             "callback_url"=> $return_url,
             "callback_method"=> "get"

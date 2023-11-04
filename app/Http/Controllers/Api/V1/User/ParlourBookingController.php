@@ -10,9 +10,11 @@ use App\Http\Helpers\Response;
 use App\Models\ParlourBooking;
 use App\Models\UserNotification;
 use App\Models\Admin\ParlourList;
+use Illuminate\Support\Facades\DB;
 use App\Models\Admin\BasicSettings;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\PaymentGateway;
+use Illuminate\Support\Facades\Auth;
 use App\Constants\PaymentGatewayConst;
 use App\Models\Admin\TransactionSetting;
 use App\Notifications\emailNotification;
@@ -360,7 +362,7 @@ class ParlourBookingController extends Controller
             $message = ['error' => [$e->getMessage()]];
             return Response::error($message);
         }
-        return Response::success(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);
+        return Response::success(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.'],[],200]);
     }
     /**
      * Method for flutterwave success
@@ -390,7 +392,7 @@ class ParlourBookingController extends Controller
                 $message = ['error' => [$e->getMessage()]];
                 Response::error($message);
             }
-            return Response::success(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.']]);
+            return Response::success(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.'],[],200]);
 
         }
         elseif ($status ==  'cancelled'){
@@ -398,6 +400,127 @@ class ParlourBookingController extends Controller
         }
         else{
             return Response::error(['Payment Failed']);
+        }
+    }
+    /**
+     * Method for sslcommerz success 
+     */
+    //sslcommerz success
+    public function sllCommerzSuccess(Request $request){
+
+        $data = $request->all();
+        $token = $data['tran_id'];
+        $checkTempData = TemporaryData::where("type",PaymentGatewayConst::SSLCOMMERZ)->where("identifier",$token)->first();
+        $message = ['error' => ['Transaction Failed. Record didn\'t saved properly. Please try again.']];
+        if(!$checkTempData) return Response::error($message);
+        $checkTempData = $checkTempData->toArray();
+
+        $creator_table = $checkTempData['data']->creator_table ?? null;
+        $creator_id = $checkTempData['data']->creator_id ?? null;
+        $creator_guard = $checkTempData['data']->creator_guard ?? null;
+        $api_authenticated_guards = PaymentGatewayConst::apiAuthenticateGuard();
+        if($creator_table != null && $creator_id != null && $creator_guard != null) {
+            if(!array_key_exists($creator_guard,$api_authenticated_guards)) throw new Exception('Request user doesn\'t save properly. Please try again');
+            $creator = DB::table($creator_table)->where("id",$creator_id)->first();
+            if(!$creator) throw new Exception("Request user doesn\'t save properly. Please try again");
+            $api_user_login_guard = $api_authenticated_guards[$creator_guard];
+            Auth::guard($api_user_login_guard)->loginUsingId($creator->id);
+        }
+        if( $data['status'] != "VALID"){
+            $message = ['error' => ["Added Money Failed"]];
+            return Response::error($message);
+        }
+        try{
+            PaymentGatewayHelper::init($checkTempData)->responseReceiveApi();
+        }catch(Exception $e) {
+            $message = ['error' => ["Something Is Wrong..."]];
+            return Response::error($message);
+        }
+        return Response::success(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.'],[],200]);
+    }
+    //sslCommerz fails
+    public function sllCommerzFails(Request $request){
+        $data = $request->all();
+        $token = $data['tran_id'];
+        $checkTempData = TemporaryData::where("type",PaymentGatewayConst::SSLCOMMERZ)->where("identifier",$token)->first();
+        $message = ['error' => ['Transaction Failed. Record didn\'t saved properly. Please try again.']];
+        if(!$checkTempData) return Response::error($message);
+        $checkTempData = $checkTempData->toArray();
+
+        $creator_table = $checkTempData['data']->creator_table ?? null;
+        $creator_id = $checkTempData['data']->creator_id ?? null;
+        $creator_guard = $checkTempData['data']->creator_guard ?? null;
+
+        $api_authenticated_guards = PaymentGatewayConst::apiAuthenticateGuard();
+        if($creator_table != null && $creator_id != null && $creator_guard != null) {
+            if(!array_key_exists($creator_guard,$api_authenticated_guards)) throw new Exception('Request user doesn\'t save properly. Please try again');
+            $creator = DB::table($creator_table)->where("id",$creator_id)->first();
+            if(!$creator) throw new Exception("Request user doesn\'t save properly. Please try again");
+            $api_user_login_guard = $api_authenticated_guards[$creator_guard];
+            Auth::guard($api_user_login_guard)->loginUsingId($creator->id);
+        }
+        if($data['status'] == "FAILED"){
+            TemporaryData::destroy($checkTempData['id']);
+            $message = ['error' => ["Parlour Booking Failed"]];
+            return Response::error($message);
+        }
+
+    }
+    //sslCommerz canceled
+    public function sllCommerzCancel(Request $request){
+        $data = $request->all();
+        $token = $data['tran_id'];
+        $checkTempData = TemporaryData::where("type",PaymentGatewayConst::SSLCOMMERZ)->where("identifier",$token)->first();
+        $message = ['error' => ['Transaction Failed. Record didn\'t saved properly. Please try again.']];
+        if(!$checkTempData) return Response::error($message);
+        $checkTempData = $checkTempData->toArray();
+
+
+        $creator_table = $checkTempData['data']->creator_table ?? null;
+        $creator_id = $checkTempData['data']->creator_id ?? null;
+        $creator_guard = $checkTempData['data']->creator_guard ?? null;
+
+        $api_authenticated_guards = PaymentGatewayConst::apiAuthenticateGuard();
+        if($creator_table != null && $creator_id != null && $creator_guard != null) {
+            if(!array_key_exists($creator_guard,$api_authenticated_guards)) throw new Exception('Request user doesn\'t save properly. Please try again');
+            $creator = DB::table($creator_table)->where("id",$creator_id)->first();
+            if(!$creator) throw new Exception("Request user doesn\'t save properly. Please try again");
+            $api_user_login_guard = $api_authenticated_guards[$creator_guard];
+            Auth::guard($api_user_login_guard)->loginUsingId($creator->id);
+        }
+        if( $data['status'] != "VALID"){
+            TemporaryData::destroy($checkTempData['id']);
+            $message = ['error' => ["Parlour Booking Canceled"]];
+            return Response::error($message);
+        }
+    }
+    /**
+     * razor pay callback
+     */
+    public function razorCallback(){
+        $request_data = request()->all();
+        //if payment is successful
+        if ($request_data['razorpay_payment_link_status'] ==  'paid') {
+            $token = $request_data['razorpay_payment_link_reference_id'];
+
+            $checkTempData = TemporaryData::where("type",PaymentGatewayConst::RAZORPAY)->where("identifier",$token)->first();
+            if(!$checkTempData) {
+
+                return Response::error(['Transaction Failed. Record didn\'t saved properly. Please try again.'],404);
+            }
+            $checkTempData = $checkTempData->toArray();
+            try{
+                PaymentGatewayHelper::init($checkTempData)->responseReceiveApi();
+            }catch(Exception $e) {
+                $message = ['error' => [$e->getMessage()]];
+                return Response::error($message);
+            }
+            return Response::success(["Congratulations! Parlour Booking Confirmed Successfully."],[],200);
+
+        }
+        else{
+            $message = ['error' => ['Payment Failed']];
+            return Response::error($message);
         }
     }
 }

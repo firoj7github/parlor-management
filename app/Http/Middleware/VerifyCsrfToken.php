@@ -17,5 +17,8 @@ class VerifyCsrfToken extends Middleware
         '/sslcommerz/success',
         '/sslcommerz/cancel',
         '/sslcommerz/fail',
+        'api-parlour-booking/sslcommerz/success',
+        'api-parlour-booking/sslcommerz/cancel',
+        'api-parlour-booking/sslcommerz/fail'
     ];
 }

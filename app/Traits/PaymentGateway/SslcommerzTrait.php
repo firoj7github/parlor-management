@@ -336,12 +336,6 @@ trait SslcommerzTrait
         return $id;
     }
 
-   
-
-   
-
-    
-
     public function removeTempDataSsl($output) {
         TemporaryData::where("identifier",$output['tempData']['identifier'])->delete();
     }
@@ -350,7 +344,7 @@ trait SslcommerzTrait
         if(!$output) $output = $this->output;
         $credentials = $this->getSslCredentials($output);
         $reference = generateTransactionReference();
-        $amount = $output['amount']->total_amount ? number_format($output['amount']->total_amount,2,'.','') : 0;
+        $amount = $output['amount']->total_payable_amount ? number_format($output['amount']->total_payable_amount,2,'.','') : 0;
         $currency = $output['currency']['currency_code']??"USD";
 
         if(auth()->guard(get_auth_guard())->check()){
@@ -365,9 +359,9 @@ trait SslcommerzTrait
         $post_data['total_amount'] =$amount;
         $post_data['currency'] = $currency;
         $post_data['tran_id'] =  $reference;
-        $post_data['success_url'] =  route('api.send.remittance.ssl.success',"?r-source=".PaymentGatewayConst::APP);
-        $post_data['fail_url'] = route('api.send.remittance.ssl.fail',"?r-source=".PaymentGatewayConst::APP);
-        $post_data['cancel_url'] = route('api.send.remittance.ssl.cancel',"?r-source=".PaymentGatewayConst::APP);
+        $post_data['success_url'] =  route('api.parlour.booking.ssl.success',"?r-source=".PaymentGatewayConst::APP);
+        $post_data['fail_url'] = route('api.parlour.booking.ssl.fail',"?r-source=".PaymentGatewayConst::APP);
+        $post_data['cancel_url'] = route('api.parlour.booking.ssl.cancel',"?r-source=".PaymentGatewayConst::APP);
         # $post_data['multi_card_name'] = "mastercard,visacard,amexcard";  # DISABLE TO DISPLAY ALL AVAILABLE
         
         # EMI INFO

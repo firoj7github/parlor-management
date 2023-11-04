@@ -34,6 +34,9 @@ Route::prefix("user")->name("api.user.")->group(function(){
 
         //flutterwave
         Route::get('/flutterwave/callback', 'flutterwaveCallback')->name('flutterwave.callback');
+
+        //razor pay
+        Route::get('razor/callback', 'razorCallback')->name('razor.callback');
     });
     
 });
