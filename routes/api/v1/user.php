@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\SettingController;
+use App\Http\Controllers\Api\V1\User\MyBookingController;
 use App\Http\Controllers\Api\V1\User\ParlourBookingController;
 use App\Http\Controllers\Api\V1\User\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -22,8 +23,14 @@ Route::prefix("user")->name("api.user.")->group(function(){
             Route::get('payment-method','paymentMethod');
             Route::post('confirm','confirm');
         });
+
+        //my bookings
+        Route::controller(MyBookingController::class)->prefix('my-booking')->name('my.booking.')->group(function(){
+            Route::get('/','index');
+        });
     });
     
+    //payment gateways
     Route::controller(ParlourBookingController::class)->prefix('parlour-booking')->name('parlour.booking.')->group(function(){
         //paypal
         Route::get('success/response/{gateway}','success')->name('payment.success');
@@ -38,6 +45,7 @@ Route::prefix("user")->name("api.user.")->group(function(){
         //razor pay
         Route::get('razor/callback', 'razorCallback')->name('razor.callback');
     });
+    
     
 });
 
