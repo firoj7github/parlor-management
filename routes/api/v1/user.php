@@ -15,7 +15,8 @@ Route::prefix("user")->name("api.user.")->group(function(){
     Route::post('logout',[ProfileController::class,'logout']);
     Route::get('notification',[SettingController::class,'notification']);
     Route::controller(ParlourBookingController::class)->prefix('parlour-booking')->group(function(){
-        Route::post('checkout',[ParlourBookingController::class,'checkout']);
+        Route::post('checkout','checkout');
+        Route::post('confirm','confirm');
     });
 });
 

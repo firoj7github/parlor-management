@@ -6,7 +6,6 @@ use Exception;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\TemporaryData;
-use App\Events\BookingCreated;
 use App\Models\ParlourBooking;
 use App\Models\UserNotification;
 use App\Models\Admin\ParlourList;
@@ -17,7 +16,6 @@ use App\Models\Admin\BasicSettings;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Constants\PaymentGatewayConst;
-use App\Jobs\DeleteUnconfirmedBooking;
 use App\Models\Admin\TransactionSetting;
 use App\Notifications\emailNotification;
 use Illuminate\Support\Facades\Validator;
@@ -80,7 +78,7 @@ class ParlourBookingController extends Controller
         $parlour                    = ParlourList::where('slug',$slug)->first();
         if(!$parlour) return back()->with(['error'=> ['Parlour Not Found!']]);
        
-        $validated['user_id']   = auth()->user()->id;
+        $validated['user_id']       = auth()->user()->id;
         
 
         $validated['parlour_id']   = $parlour->id;
@@ -108,7 +106,7 @@ class ParlourBookingController extends Controller
         $alrady_appointed = ParlourBooking::where('parlour_id',$parlour->id)->where('schedule_id',$validated['schedule_id'])->count();
 
         if($alrady_appointed >= $schedule->max_client) {
-            return back()->with(['error' => ['Appiontment Limit is over!']]);
+            return back()->with(['error' => ['Booking Limit is over!']]);
         }
 
         $next_appointment_no = $alrady_appointed + 1;
