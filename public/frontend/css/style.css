@@ -1657,7 +1657,7 @@ option {
   content: "";
   display: block;
   position: absolute;
-  top: 7px;
+  top: 5px;
   left: 7px;
   width: 5px;
   height: 10px;
@@ -1759,13 +1759,8 @@ option {
   -webkit-backdrop-filter: blur(10px);
           backdrop-filter: blur(10px);
 }
-
-.fileholder.active {
-  border: 2px dashed #5a5278;
-}
-
 .fileholder-drag-drop-title {
-  color: #c4c5cf;
+  color: #ffffff !important;
 }
 
 .fileholder-drag-drop-icon svg path:nth-child(2) {
@@ -1794,11 +1789,12 @@ option {
 }
 
 .fileholder.active {
-  border: 2px dashed var(--primary-color);
+  border: 2px dashed var(--primary-color) !important;
+  min-height: 120px !important;
 }
 
 .fileholder-drag-drop-title {
-  color: #e3e3e3;
+  color: #ffffff;
 }
 
 .fileholder-drag-drop-icon svg path:nth-child(2) {
@@ -1857,7 +1853,7 @@ option {
   border: 1px solid rgba(255, 255, 255, 0.1);
   background-color: var(--primary-color);
   border-radius: 8px;
-  padding: 20px 25px;
+  padding: 8px 25px;
   display: inline-block;
   color: #ffffff;
   width: 100%;
@@ -3602,6 +3598,7 @@ input[type=number] {
 .footer-section .footer-social-icon i {
   height: 40px;
   width: 40px;
+  background-color: var(--primary-color);
   text-align: center;
   line-height: 38px;
   border-radius: 50%;
@@ -3844,10 +3841,9 @@ input[type=number] {
 .service-section .service-area .service-icon {
   padding-bottom: 20px;
 }
-.service-section .service-area .service-icon svg {
-  width: 50px;
-  height: 50px;
-  fill: var(--primary-color);
+.service-section .service-area .service-icon i {
+  font-size: 30px;
+  color: var(--primary-color);
 }
 
 .statistics-section .counter {
@@ -3856,10 +3852,9 @@ input[type=number] {
   border-radius: 10px;
   border: 1px dashed var(--primary-color);
 }
-.statistics-section .counter svg {
-  width: 50px;
-  height: 50px;
-  fill: var(--primary-color);
+.statistics-section .counter i {
+  font-size: 40px;
+  color: var(--primary-color);
   margin-bottom: 15px;
 }
 
@@ -3985,10 +3980,9 @@ input[type=number] {
   border: 1px solid var(--primary-color);
   border-radius: 10px;
 }
-.how-its-work-section .work-steps .icon svg {
-  width: 50px;
-  height: 50px;
-  fill: var(--primary-color);
+.how-its-work-section .work-steps .icon i {
+  font-size: 30px;
+  color: var(--primary-color);
 }
 .how-its-work-section .work-steps:hover {
   -webkit-transform: translateY(0px);
@@ -4013,7 +4007,9 @@ input[type=number] {
 .how-its-work-section .work-steps .step-content {
   padding-top: 10px;
 }
-
+.step-content h3{
+  font-size: 20px;
+}
 .photo-section .photo-item img {
   border-radius: 10px;
 }
@@ -5357,6 +5353,7 @@ input[type=number] {
   height: 38px;
   border-radius: 10px;
   overflow: hidden;
+  margin-top: 5px;
 }
 .header-user-wrapper .header-user-thumb a img {
   width: 100%;
@@ -6480,6 +6477,7 @@ input[type=number] {
   border-radius: 50%;
   overflow: hidden;
   margin: 0 auto;
+  margin-bottom: 20px;
 }
 .appointment-area .salon-thumb img {
   width: 100%;
@@ -6726,3 +6724,4 @@ input[type=number] {
 .mfp-content .head {
   color: #000000;
 }
+

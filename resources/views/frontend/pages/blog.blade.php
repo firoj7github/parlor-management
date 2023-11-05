@@ -33,7 +33,7 @@
                                 <p>{!! Str::words($item->data->language->$app_local->description ?? '','10','...') !!}</p>
                             </div>
                             <div class="blog-btn">
-                                <a href="{{ setRoute('blog.details',$item->slug) }}" class="btn--base w-100">{{ __("About More") }}</a>
+                                <a href="{{ setRoute('blog.details',$item->slug) }}" class="btn--base w-100">{{ __("Blog Details") }}</a>
                             </div>
                         </div>
                     </a>

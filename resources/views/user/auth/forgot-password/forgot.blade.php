@@ -32,7 +32,7 @@
                                 </div>
                                 <div class="col-lg-12 text-center">
                                     <div class="account-item">
-                                        <label>{{ __("Already Have An Account?") }} <a href="javascript:void(0)" class="header-account-btn text--base">{{ __("Login Now") }}</a></label>
+                                        <label>{{ __("Back To") }} <a href="{{ setRoute('index') }}" class="header-account-btn text--base">{{ __("Home Page") }}</a></label>
                                     </div>
                                 </div>
                             </div>
