@@ -208,7 +208,7 @@ class SettingController extends Controller
      * Method for get all country list
      */
     public function countryList(){
-        return Response::success(['Parlour Find Successfully!'],[
+        return Response::success(['Country List Fetch Successfully!'],[
             'countries'     => get_all_countries(['id','name','mobile_code']),
         ],200);
     }

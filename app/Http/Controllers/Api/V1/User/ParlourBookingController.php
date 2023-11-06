@@ -115,7 +115,7 @@ class ParlourBookingController extends Controller
         
         if($data->created_at->addSeconds($otp_exp_sec) < now()) {
             $data->delete();
-            return redirect()->route('find.parlour')->with(['error' => ['Booking Time Out!']]);
+            return Response::error(['Booking time is over.'],[],404);
         }
         
         $validator  = Validator::make($request->all(),[

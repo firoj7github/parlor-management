@@ -24,6 +24,7 @@ use Database\Seeders\Admin\ParlourListSeeder;
 use Database\Seeders\Admin\PaymentGatewaySeeder;
 use Database\Seeders\Admin\SetupArea;
 use Database\Seeders\Admin\TransactionSettingSeeder;
+use Database\Seeders\Admin\UsefulLinkSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -49,6 +50,7 @@ class DatabaseSeeder extends Seeder
             SetupKycSeeder::class,
             ExtensionSeeder::class,
             AdminHasRoleSeeder::class,
+            UsefulLinkSeeder::class,
             UserSeeder::class,
             SetupPageSeeder::class,
             

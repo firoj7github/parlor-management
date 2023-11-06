@@ -23,6 +23,7 @@ class GlobalConst {
     const OTHERS        = "Others";
     const CASH_PAYMENT  = "Cash Payment";
 
+    const USEFUL_LINK_PRIVACY_POLICY    = "PRIVACY_POLICY";
 
     const PARLOUR_BOOKING_STATUS_REVIEW_PAYMENT      = 1;
     const PARLOUR_BOOKING_STATUS_PENDING             = 2;

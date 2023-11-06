@@ -13,7 +13,6 @@ use App\Models\Admin\Area;
 use App\Models\Admin\Blog;
 use App\Models\Admin\BlogCategory;
 use App\Models\Admin\ParlourList;
-use App\Models\Admin\ServiceType;
 use App\Models\Admin\UsefullLink;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
