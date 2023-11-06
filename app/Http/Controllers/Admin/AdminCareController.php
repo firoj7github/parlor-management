@@ -20,7 +20,6 @@ use Illuminate\Support\Str;
 use App\Http\Helpers\Response;
 use App\Notifications\Admin\NewAdminCredential;
 use App\Notifications\Admin\SendEmailToAll;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 
@@ -249,8 +248,7 @@ class AdminCareController extends Controller
             // Delete Current Role
             DB::table('admin_has_roles')->where("admin_id",$admin->id)->delete();
             DB::table('admin_has_roles')->insert($role_data);
-            // $admin->roles()->delete();
-            // AdminHasRole::insert($role_data);
+            
             DB::commit();
         }catch(Exception $e) {
             DB::rollBack();
@@ -411,7 +409,7 @@ class AdminCareController extends Controller
      */
     public function rolePermissionIndex()
     {
-        // dd('working');
+        
         $page_title = "Permission Group";
         $roles = AdminRole::get();
         $permissions = AdminRolePermission::get();

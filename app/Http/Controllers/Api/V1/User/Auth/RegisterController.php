@@ -10,9 +10,7 @@ use App\Models\UserAuthorization;
 use App\Traits\User\LoggedInUsers;
 use App\Http\Helpers\Response;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 use App\Providers\Admin\BasicSettingsProvider;
@@ -20,7 +18,6 @@ use App\Traits\User\RegisteredUsers;
 
 use App\Http\Resources\User\UserResource;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Notifications\User\Auth\SendAuthorizationCode;
 
 class RegisterController extends Controller

@@ -144,7 +144,7 @@ class BlogCategoryController extends Controller
             }
         }
         if($modal == null) {
-            $validated = Validator::make($request->all(),$validation_rules)->validate();
+            Validator::make($request->all(),$validation_rules)->validate();
         }else {
             $validator = Validator::make($request->all(),$validation_rules);
             if($validator->fails()) {

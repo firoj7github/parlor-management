@@ -12,11 +12,9 @@ use App\Http\Helpers\Response;
 use App\Models\ParlourBooking;
 use App\Models\Admin\ParlourList;
 use App\Models\Admin\BlogCategory;
-use App\Constants\NotificationConst;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Constants\SupportTicketConst;
-use App\Models\Admin\AdminNotification;
 use App\Providers\Admin\BasicSettingsProvider;
 use Pusher\PushNotifications\PushNotifications;
 

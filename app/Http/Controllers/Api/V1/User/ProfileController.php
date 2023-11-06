@@ -7,12 +7,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Helpers\Response;
 use Illuminate\Support\Carbon;
-use App\Models\DoctorAppointment;
 use App\Http\Controllers\Controller;
-use App\Models\HomeTestService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Providers\Admin\CurrencyProvider;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 use App\Providers\Admin\BasicSettingsProvider;
@@ -154,7 +151,7 @@ class ProfileController extends Controller
     public function logout(Request $request) {
         
         $user = Auth::guard(get_auth_guard())->user();
-        // dd($user);
+        
         $token = $user->token();
         try{
             $token->revoke();

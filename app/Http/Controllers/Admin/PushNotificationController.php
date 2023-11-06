@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Events\Admin\NotificationEvent;
 use Exception;
 use App\Models\Admin\Admin;
 use Illuminate\Http\Request;

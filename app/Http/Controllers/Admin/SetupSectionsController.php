@@ -223,14 +223,14 @@ class SetupSectionsController extends Controller
         $section_data['items'][$unique_id]['button_name']   = $validated['button_name'];
         $section_data['items'][$unique_id]['image']         = "";
         
-        // dd($section_data);
+        
         if($request->hasFile("image")) {
             $section_data['items'][$unique_id]['image'] = $this->imageValidate($request,"image",$section->value->items->image ?? null);
         }
 
         $update_data['key']     = $slug;
         $update_data['value']   = $section_data;
-        // dd($update_data);
+        
         try{
             SiteSections::updateOrCreate(['key' => $slug],$update_data);
         }catch(Exception $e) {
@@ -399,7 +399,7 @@ class SetupSectionsController extends Controller
 
         $update_data['key']   = $slug;
         $update_data['value'] = $data;
-        // dd($update_data);
+        
 
         try{
             SiteSections::updateOrCreate(["key"=>$slug],$update_data);
@@ -423,7 +423,7 @@ class SetupSectionsController extends Controller
 
         $language_wise_data = $this->contentValidate($request,$basic_field_name,"HowItsWork-add");
         if($language_wise_data instanceof RedirectResponse) return $language_wise_data;
-        // dd($language_wise_data);
+        
         $slug       = Str::slug(SiteSectionConst::HOW_ITS_WORK_SECTION);
         $section    = SiteSections::where('key',$slug)->first();
         if($section != null){
@@ -446,7 +446,7 @@ class SetupSectionsController extends Controller
 
         $update_data['key']   = $slug;
         $update_data['value'] = $section_data;
-        // dd($update_data);
+        
         try{
             SiteSections::updateOrCreate(['key' => $slug],$update_data);
         }catch(Exception $e){
@@ -478,7 +478,7 @@ class SetupSectionsController extends Controller
 
         $language_wise_data = $this->contentValidate($request,$basic_field_name,"HowItsWork-edit");
         if($language_wise_data instanceof RedirectResponse) return $language_wise_data;
-         // dd($language_wise_data);
+         
         $language_wise_data = array_map(function($language){
             return replace_array_key($language,"_edit");
         },$language_wise_data);
@@ -571,7 +571,7 @@ class SetupSectionsController extends Controller
         $data['language']       = $this->contentValidate($request,$basic_field_name);
         $update_data['key']     = $slug;
         $update_data['value']   = $data;
-        // dd($update_data);
+        
         try{
             SiteSections::updateOrCreate(['key'=>$slug],$update_data);
         }catch(Exception $e){
@@ -619,7 +619,7 @@ class SetupSectionsController extends Controller
         $section_data['items'][$unique_id]['designation']  = $validated['designation'];
         $section_data['items'][$unique_id]['rating']       = $validated['rating'];
         $section_data['items'][$unique_id]['created_at']   = now();
-        // dd($section_data);
+      
         if($request->hasFile("image")) {
             $section_data['items'][$unique_id]['image']    = $this->imageValidate($request,"image",$section->value->items->image ?? null);
         }
@@ -786,7 +786,7 @@ class SetupSectionsController extends Controller
 
         $update_data['key']     = $slug;
         $update_data['value']   = $section_data;
-        // dd($update_data);
+        
         try{
             SiteSections::updateOrCreate(['key' => $slug],$update_data);
         }catch(Exception $e) {
@@ -818,7 +818,7 @@ class SetupSectionsController extends Controller
 
         $language_wise_data = $this->contentValidate($request,$basic_field_name,"statistic-edit");
         if($language_wise_data instanceof RedirectResponse) return $language_wise_data;
-         // dd($language_wise_data);
+         
         $language_wise_data = array_map(function($language){
             return replace_array_key($language,"_edit");
         },$language_wise_data);
@@ -1387,7 +1387,7 @@ class SetupSectionsController extends Controller
 
         $update_data['key']    = $slug;
         $update_data['value']  = $data;
-        // dd($update_data);
+        
         try{
             SiteSections::updateOrCreate(['key' => $slug],$update_data);
         }catch(Exception $e) {
@@ -1613,7 +1613,7 @@ class SetupSectionsController extends Controller
         $data['language']      = $this->contentValidate($request,$basic_field_name);
         $update_data['key']    = $slug;
         $update_data['value']  = $data;
-        // dd($update_data);
+        
         try{
             SiteSections::updateOrCreate(['key'=>$slug],$update_data);
         }catch(Exception $e){
@@ -1652,7 +1652,7 @@ class SetupSectionsController extends Controller
 
         $update_data['key']     = $slug;
         $update_data['value']   = $section_data;
-        // dd($update_data);
+       
         try{
             SiteSections::updateOrCreate(['key' => $slug],$update_data);
         }catch(Exception $e) {
@@ -1681,17 +1681,17 @@ class SetupSectionsController extends Controller
 
         if(!$section) return back()->with(['error' => ['Section Not Found!']]);
         $section_values    = json_decode(json_encode($section->value),true);
-        // dd($section_values);
+        
         if(!isset($section_values['items'])) return back()->with(['error' => ['Section Item Not Found!']]);
         if(!array_key_exists($request->target,$section_values['items'])) return back()->with(['[error' => ['Section Item is invalid']]);
 
         $language_wise_data = $this->contentValidate($request,$basic_field_name,"faq-edit");
-        // dd($language_wise_data);
+        
         if($language_wise_data instanceof RedirectResponse) return $language_wise_data;
         $language_wise_data = array_map(function($language){
             return replace_array_key($language,'_edit');
         },$language_wise_data);
-        // dd($language_wise_data);
+        
         $section_values['items'][$request->target]['language'] = $language_wise_data;
 
         try{
@@ -1831,7 +1831,7 @@ class SetupSectionsController extends Controller
 
         $language_wise_data = $this->contentValidate($request,$basic_field_name,"service-add");
         if($language_wise_data instanceof RedirectResponse) return $language_wise_data;
-        // dd($language_wise_data);
+        
         $slug       = Str::slug(SiteSectionConst::SERVICE_SECTION);
         $section    = SiteSections::where('key',$slug)->first();
         if($section != null){
@@ -1855,7 +1855,7 @@ class SetupSectionsController extends Controller
 
         $update_data['key']   = $slug;
         $update_data['value'] = $section_data;
-        // dd($update_data);
+        
         try{
             SiteSections::updateOrCreate(['key' => $slug],$update_data);
         }catch(Exception $e){
@@ -1888,7 +1888,7 @@ class SetupSectionsController extends Controller
 
         $language_wise_data = $this->contentValidate($request,$basic_field_name,"service-edit");
         if($language_wise_data instanceof RedirectResponse) return $language_wise_data;
-         // dd($language_wise_data);
+         
         $language_wise_data = array_map(function($language){
             return replace_array_key($language,"_edit");
         },$language_wise_data);
@@ -2029,7 +2029,7 @@ class SetupSectionsController extends Controller
         $data['language']     = $this->contentValidate($request,$basic_field_name);
         $update_data['key']   = $slug;
         $update_data['value'] = $data;
-        // dd($update_data);
+        
 
         try{
             SiteSections::updateOrCreate(["key"=>$slug],$update_data);

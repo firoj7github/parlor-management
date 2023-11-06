@@ -78,7 +78,7 @@ class AppSettingsController extends Controller
         $validated = $validator->validate();
 
         try{
-            $app_settings = AppSettings::updateOrCreate(['id' => 1],$validated);
+            AppSettings::updateOrCreate(['id' => 1],$validated);
         }catch(Exception $e) {
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }

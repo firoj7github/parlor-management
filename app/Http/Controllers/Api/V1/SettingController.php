@@ -13,7 +13,6 @@ use App\Models\Admin\BasicSettings;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\AppOnboardScreens;
 use App\Models\Admin\ParlourHasService;
-use App\Providers\Admin\CurrencyProvider;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Admin\ParlourListHasSchedule;
 

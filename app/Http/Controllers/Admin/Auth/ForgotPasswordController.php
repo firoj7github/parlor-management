@@ -7,7 +7,6 @@ use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
 
 class ForgotPasswordController extends Controller
 {

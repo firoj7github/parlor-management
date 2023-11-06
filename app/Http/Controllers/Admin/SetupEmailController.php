@@ -97,7 +97,7 @@ class SetupEmailController extends Controller
             "MAIL_FROM_NAME"    => $data['app_name'],
         ];
 
-        // dd($env_modify_keys);
+        
 
         try{
             modifyEnv($env_modify_keys);
