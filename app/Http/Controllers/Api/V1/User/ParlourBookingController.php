@@ -104,7 +104,15 @@ class ParlourBookingController extends Controller
             $gateway->where('slug', PaymentGatewayConst::payment_method_slug());
             $gateway->where('status', 1);
         })->get();
-        return Response::success(['Payment Method Data Fetch Successfully.'],$payment_gateway,200);
+        $image_path  = [
+            'base_url'                     => url("/"),
+            'path_location'                => files_asset_path_basename("payment-gateways"),
+            'default_image'                => files_asset_path_basename("default"),
+        ];
+        return Response::success(['Payment Method Data Fetch Successfully.'],[
+            'payment_gateway' => $payment_gateway,
+            'image_path'      => $image_path,
+        ],200);
     }
     /**
      * Method for confirm booking
