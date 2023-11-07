@@ -16,6 +16,14 @@ class MyBookingController extends Controller
                         ->where('user_id',auth()->user()->id)
                         ->whereNot('status',global_const()::PARLOUR_BOOKING_STATUS_REVIEW_PAYMENT)
                         ->get();
-        return Response::success(['Your Booking Data.'],$data,200);
+        $parlour_image_path   = [
+            'base_url'      => url('/'),
+            'path_location' => files_asset_path_basename('site-section'),
+            'default_image' => files_asset_path_basename('default')
+        ];
+        return Response::success(['Your Booking Data.'],[
+            'data' => $data,
+            'parlour_image_path'    => $parlour_image_path
+        ],200);
     }
 }

@@ -195,8 +195,15 @@ class ParlourBookingController extends Controller
                 ]);
                 UserNotification::create([
                     'user_id'  => auth()->user()->id,
-                    'message'  => "Your Booking (Parlour: ".$data->parlour->name.",
-                    Date: ".$data->date.", Time: ".$from_time."-".$to_time.", Serial Number: ".$data->serial_number.") Successfully Booked.", 
+                    'message'  => [
+                        'title' => "Your Booking",
+                        'parlour'   => $data->parlour->name,
+                        'date'      => $data->date,
+                        'from_time' => $from_time,
+                        'to_time'   => $to_time,
+                        'serial_number' => $data->serial_number,
+                        'success'       => "Successfully Booked"
+                    ], 
                 ]);
                 if($basic_setting->email_notification == true){
                     Notification::route("mail",$user->email)->notify(new emailNotification($user,$data,$trx_id));

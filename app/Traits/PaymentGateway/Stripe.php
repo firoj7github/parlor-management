@@ -222,8 +222,15 @@ trait Stripe
             $schedule_data  = ParlourListHasSchedule::where('id',$output['tempData']['data']->user_record->schedule_id)->first();
             UserNotification::create([
                 'user_id'  => $output['tempData']['data']->user_record->user_id,
-                'message'  => "Your Booking (Parlour: ".$parlour_data->name.",
-                Date: ".$output['tempData']['data']->user_record->date.", Time: ".$schedule_data->from_time."-".$schedule_data->to_time.", Serial Number: ".$output['tempData']['data']->user_record->serial_number.") Successfully Booked.", 
+                'message'  => [
+                    'title' => "Your Booking",
+                    'parlour'   => $parlour_data->name,
+                    'date'      => $output['tempData']['data']->user_record->date,
+                    'from_time' => $schedule_data->from_time,
+                    'to_time'   => $schedule_data->to_time,
+                    'serial_number' => $output['tempData']['data']->user_record->serial_number,
+                    'success'       => "Successfully Booked."
+                ],
             ]);
         }
         if( $basic_setting->email_notification == true){

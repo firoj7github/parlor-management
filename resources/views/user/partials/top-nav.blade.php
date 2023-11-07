@@ -30,7 +30,7 @@
                                         <h5 class="title">{{ __("Booking") }}</h5>
                                         <span class="time">{{ @$item->created_at->diffForHumans() }}</span>
                                     </div>
-                                    <span class="sub-title">{{ @$item->message }}</span>
+                                    <span class="sub-title">{{ @$item->message->title ." " . "Parlour: " . "(" . @$item->message->parlour . ")" . " " . "Date: " . " " . @$item->message->date . " " . "Time:" . " " . @$item->message->from_time ."-" . @$item->message->to_time . " " . "Serial Number:" ." " . @$item->message->serial_number ." " . @$item->message->success }}</span>
                                 </div>
                             </li>
                         @empty
