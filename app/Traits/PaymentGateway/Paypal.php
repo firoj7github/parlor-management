@@ -307,6 +307,24 @@ trait Paypal
             ]);
             $previous_data = ParlourBooking::where('slug',$this->output['user_data']->slug)->first();
             $previous_data->delete();
+            if(auth()->check()){
+                $parlour_data   = ParlourList::where('id',$output['tempData']['data']->user_record->parlour_id)->first();
+                $schedule_data  = ParlourListHasSchedule::where('id',$output['tempData']['data']->user_record->schedule_id)->first();
+                UserNotification::create([
+                    'user_id'  => $output['tempData']['data']->user_record->user_id,
+                    'message'  => [
+                        'title' => "Your Booking",
+                        'parlour'   => $parlour_data->name,
+                        'date'      => $output['tempData']['data']->user_record->date,
+                        'from_time' => $schedule_data->from_time,
+                        'to_time'   => $schedule_data->to_time,
+                        'serial_number' => $output['tempData']['data']->user_record->serial_number,
+                        'success'       => "Successfully Booked."
+                    ],
+                    
+                ]);
+            }
+    
             DB::commit();
             
         }catch(Exception $e) {
