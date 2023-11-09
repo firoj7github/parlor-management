@@ -38,11 +38,11 @@ class DashboardController extends Controller
     public function index()
     {
         $page_title         = "Dashboard";
-        $last_month_start   =  date('Y-m-01', strtotime('-1 month', strtotime(date('Y-m-d'))));
-        $last_month_end     =  date('Y-m-31', strtotime('-1 month', strtotime(date('Y-m-d'))));
+        $last_month_start   = date('Y-m-01', strtotime('-1 month', strtotime(date('Y-m-d'))));
+        $last_month_end     = date('Y-m-31', strtotime('-1 month', strtotime(date('Y-m-d'))));
         $this_month_start   = date('Y-m-01');
         $this_month_end     = date('Y-m-d');
-
+        
         $total_users     = (User::toBase()->count() == 0) ? 1 : User::toBase()->count();
         $unverified_user = User::toBase()->where('email_verified',0)->count();
         $active_user     = User::toBase()->where('status',true)->count();
@@ -83,21 +83,27 @@ class DashboardController extends Controller
         
         $this_month_money = ParlourBooking::toBase()
                             ->whereNot('status',global_const()::PARLOUR_BOOKING_STATUS_REVIEW_PAYMENT)
-                            ->whereBetween('created_at', [$this_month_start, $this_month_end])
+                            ->whereDate('created_at',">=" , $this_month_start)
+                            ->whereDate('created_at',"<=" , $this_month_end)
                             ->sum('price');
+                            
         
         $last_month_money = ParlourBooking::toBase()
                             ->whereNot('status',global_const()::PARLOUR_BOOKING_STATUS_REVIEW_PAYMENT)
-                            ->whereBetween('created_at', [$last_month_start, $last_month_end])
+                            ->whereDate('created_at',">=" , $last_month_start)
+                            ->whereDate('created_at',"<=" , $last_month_end)
                             ->sum('price');
+                            
         $this_month_charge = ParlourBooking::toBase()
                             ->whereNot('status',global_const()::PARLOUR_BOOKING_STATUS_REVIEW_PAYMENT)
-                            ->whereBetween('created_at', [$this_month_start, $this_month_end])
+                            ->whereDate('created_at',">=" , $this_month_start)
+                            ->whereDate('created_at',"<=" , $this_month_end)
                             ->sum('total_charge');
 
         $last_month_charge = ParlourBooking::toBase()
                             ->whereNot('status',global_const()::PARLOUR_BOOKING_STATUS_REVIEW_PAYMENT)
-                            ->whereBetween('created_at', [$last_month_start, $last_month_end])
+                            ->whereDate('created_at',">=" , $last_month_start)
+                            ->whereDate('created_at',"<=" , $last_month_end)
                             ->sum('total_charge');
 
         $total_ticket       = (SupportTicket::toBase()->count() == 0) ? 1 : SupportTicket::toBase()->count();

@@ -19,6 +19,7 @@ class CurrencySeeder extends Seeder
             'country'   => "United States",
             'name'      => "United States dollar",
             'code'      => "USD",
+            'flag'      => "seeder/usa.webp",
             'symbol'    => "$",
             'type'      => "FIAT",
             'sender'    => true,
