@@ -191,7 +191,7 @@
         }
 
         function generateInputName(currency,keyword) {
-            // return "gateway_currency['"+currency+"']['"+keyword+"']";
+            
             return 'gateway_currency['+currency+']['+keyword+']';
         }
     </script>

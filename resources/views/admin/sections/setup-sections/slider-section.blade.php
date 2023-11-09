@@ -101,8 +101,6 @@
             var oldData   = JSON.parse($(this).parents("tr").attr("data-item"));
             var editModal = $("#slider-edit");
 
-            // console.log(oldData);
-
             editModal.find("form").first().find("input[name=target]").val(oldData.id);
             editModal.find("input[name="+default_language+"_heading_edit]").val(oldData.language[default_language].heading);
             editModal.find("input[name="+default_language+"_sub_heading_edit]").val(oldData.language[default_language].sub_heading);

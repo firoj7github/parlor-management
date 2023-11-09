@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
-use App\Models\Admin\SetupKyc;
-use App\Providers\Admin\BasicSettingsProvider;
 use Exception;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use App\Models\Admin\SetupKyc;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Controller;
+use App\Providers\Admin\BasicSettingsProvider;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Arr;
 
 class ProfileController extends Controller
 {

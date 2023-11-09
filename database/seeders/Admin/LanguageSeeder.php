@@ -4,7 +4,6 @@ namespace Database\Seeders\Admin;
 
 use App\Models\Admin\Language;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class LanguageSeeder extends Seeder
 {
@@ -22,7 +21,7 @@ class LanguageSeeder extends Seeder
                 'status'            => 1,
                 'last_edit_by'      => 1,
                 'dir'               =>'ltr'
-            ], [
+            ],[
                 'name'              => "Spanish",
                 'code'              => "es",
                 'status'            => 0,

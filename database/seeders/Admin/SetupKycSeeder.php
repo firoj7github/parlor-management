@@ -2,7 +2,6 @@
 
 namespace Database\Seeders\Admin;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Admin\SetupKyc;
 

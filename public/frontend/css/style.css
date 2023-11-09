@@ -2608,7 +2608,7 @@ input[type=number] {
 }
 @media (max-width: 991px) {
   .header-bottom-area .navbar-expand-lg {
-    padding: 15px !important;
+    padding: 10px !important;
   }
 }
 @media (max-width: 991px) {
@@ -2826,7 +2826,12 @@ input[type=number] {
     margin-left: 12px;
   }
 }
-
+@media only screen and (max-width: 991px) {
+  .language-select .nice-select{
+    width: 120px !important;
+    margin-bottom: 30px;
+  }
+}
 @media only screen and (max-width: 991px) {
   .header-link {
     display: none;

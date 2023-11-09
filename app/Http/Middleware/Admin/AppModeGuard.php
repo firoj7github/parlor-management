@@ -5,7 +5,6 @@ namespace App\Http\Middleware\Admin;
 use App\Http\Helpers\Response;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Validation\ValidationException;
 
 class AppModeGuard

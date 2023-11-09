@@ -45,7 +45,7 @@ trait SslcommerzTrait
         $post_data['fail_url'] = route('parlour.booking.ssl.fail');
         $post_data['cancel_url'] = route('parlour.booking.ssl.cancel');
        
-        # $post_data['multi_card_name'] = "mastercard,visacard,amexcard";  # DISABLE TO DISPLAY ALL AVAILABLE
+        
 
         # EMI INFO
         $post_data['emi_option'] = "1";
@@ -385,7 +385,7 @@ trait SslcommerzTrait
         $post_data['success_url'] =  route('api.parlour.booking.ssl.success',"?r-source=".PaymentGatewayConst::APP);
         $post_data['fail_url'] = route('api.parlour.booking.ssl.fail',"?r-source=".PaymentGatewayConst::APP);
         $post_data['cancel_url'] = route('api.parlour.booking.ssl.cancel',"?r-source=".PaymentGatewayConst::APP);
-        # $post_data['multi_card_name'] = "mastercard,visacard,amexcard";  # DISABLE TO DISPLAY ALL AVAILABLE
+        
         
         # EMI INFO
         $post_data['emi_option'] = "1";

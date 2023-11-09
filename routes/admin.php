@@ -12,7 +12,6 @@ use App\Http\Controllers\Admin\BlogCategoryController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\BroadcastingController;
 use App\Http\Controllers\Admin\ContactMessageController;
-use App\Http\Controllers\Admin\CookieController;
 use App\Http\Controllers\Admin\ExtensionsController;
 use App\Http\Controllers\Admin\LanguageController;
 use App\Http\Controllers\Admin\ParlourBookingLogs;
@@ -22,7 +21,6 @@ use App\Http\Controllers\Admin\PaymentGatewaysController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PushNotificationController;
 use App\Http\Controllers\Admin\ServerInfoController;
-use App\Http\Controllers\Admin\ServiceTypeController;
 use App\Http\Controllers\Admin\SetupEmailController;
 use App\Http\Controllers\Admin\SetupKycController;
 use App\Http\Controllers\Admin\SetupPagesController;
@@ -209,7 +207,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // Setup Email Section
     Route::controller(SetupEmailController::class)->prefix('setup-email')->name('setup.email.')->group(function () {
         Route::get('config', 'configuration')->name('config');
-        // Route::get('template/default', 'defaultTemplate')->name('template.default');
         Route::put('config/update', 'update')->name('config.update');
         Route::post('test-mail/send','sendTestMail')->name('test.mail.send')->middleware('mail');
     });
@@ -312,11 +309,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 
 
-    //  GDPR Cookie Section
-    Route::controller(CookieController::class)->prefix('cookie')->name('cookie.')->group(function () {
-        Route::get('index', 'index')->name('index');
-        Route::put('update', 'update')->name('update');
-    });
+   
 
     // Server Info Section
     Route::controller(ServerInfoController::class)->prefix('server-info')->name('server.info.')->group(function () {

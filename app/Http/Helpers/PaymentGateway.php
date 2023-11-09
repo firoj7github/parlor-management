@@ -3,15 +3,12 @@ namespace App\Http\Helpers;
 
 use Exception;
 use Illuminate\Support\Str;
-use App\Models\TemporaryData;
 use App\Models\Admin\Currency;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\PaymentGateway\Paypal;
 use App\Traits\PaymentGateway\Stripe;
-use App\Traits\PaymentGateway\Manual;
 use App\Constants\PaymentGatewayConst;
-use Illuminate\Support\Facades\Validator;
 use App\Traits\PaymentGateway\RazorTrait;
 use App\Models\Admin\PaymentGatewayCurrency;
 use App\Models\ParlourBooking;

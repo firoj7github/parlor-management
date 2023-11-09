@@ -99,7 +99,7 @@
             selectedValue.parents("form").find("input[name=name],input[name=currency_name]").prop("readonly",readOnly);
             selectedValue.parents("form").find("input[name=code],input[name=currency_code]").prop("readonly",readOnly);
             selectedValue.parents("form").find("input[name=symbol],input[name=currency_symbol]").prop("readonly",readOnly);
-            // selectedValue.parents("form").find(".selcted-currency").text(currencyCode);
+            
         }
 
     </script>

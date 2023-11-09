@@ -131,7 +131,7 @@
             var oldData     = JSON.parse($(this).parents("tr").attr("data-item"));
             var actionRoute = "{{ setRoute('admin.setup.sections.category.delete') }}";
             var target      = oldData.id;
-            // console.log(target);
+            
             var message     = `Are you sure to <span>delete</span> this category?`;
             openDeleteModal(actionRoute,target,message);
         });

@@ -154,7 +154,7 @@
     // icon picker
     $('.icp-auto').iconpicker();
     $(".input-field-generator .add-row-btn").click(function(){
-            // alert();
+            
             setTimeout(() => {
                 $('.icp-auto').iconpicker();
             }, 500);

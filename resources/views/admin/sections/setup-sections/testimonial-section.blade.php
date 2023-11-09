@@ -153,8 +153,7 @@
             var oldData   = JSON.parse($(this).parents("tr").attr("data-item"));
             var editModal = $("#testimonial-edit");
 
-            // console.log(oldData);
-
+         
             editModal.find("form").first().find("input[name=target]").val(oldData.id);
             editModal.find("textarea[name="+default_language+"_comment_edit]").val(oldData.language[default_language].comment);
             editModal.find("input[name=name_edit]").val(oldData.name);

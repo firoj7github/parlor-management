@@ -4,7 +4,6 @@ namespace Database\Seeders\Admin;
 
 use App\Models\Admin\Admin;
 use App\Models\Admin\AdminRole;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class RoleSeeder extends Seeder

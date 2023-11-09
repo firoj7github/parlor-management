@@ -273,8 +273,8 @@ class SiteController extends Controller
      * Method for show parlour package page
      */
     public function parlourPackage(){
-        $page_title     = "| Parlour Package";
-        $usefull_links               = UsefullLink::where('status',true)->get();
+        $page_title                 = "| Parlour Package";
+        $usefull_links              = UsefullLink::where('status',true)->get();
         $section_slug               = Str::slug(SiteSectionConst::CONTACT_SECTION);
         $contact                    = SiteSections::getData($section_slug)->first();
         $footer_section_slug        = Str::slug(SiteSectionConst::FOOTER_SECTION);
@@ -292,7 +292,7 @@ class SiteController extends Controller
      */
     public function link($slug){
         $link                       = UsefullLink::where('slug',$slug)->first();
-        $usefull_links               = UsefullLink::where('status',true)->get();
+        $usefull_links              = UsefullLink::where('status',true)->get();
         $section_slug               = Str::slug(SiteSectionConst::CONTACT_SECTION);
         $contact                    = SiteSections::getData($section_slug)->first();
         $footer_section_slug        = Str::slug(SiteSectionConst::FOOTER_SECTION);

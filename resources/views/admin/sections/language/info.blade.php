@@ -44,10 +44,6 @@
                                     <td>{{ $innerKey }}</td>
                                     <td>{{ $innerValue }}</td>
                                     <td></td>
-                                    {{-- <td>
-                                        <button class="btn btn--base" data-bs-toggle="modal" data-bs-target="#editModal"><i class="las la-pencil-alt"></i></button>
-                                        <button class="btn btn--base btn--danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="las la-trash-alt"></i></button>
-                                    </td> --}}
                                 </tr>
                             @endforeach
                         @empty

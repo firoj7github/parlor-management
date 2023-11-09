@@ -181,7 +181,7 @@
 
 @push('script')
     <script>
-        //getScheduleDays
+        
         $(document).ready(function(){
             var getDayURL = "{{ setRoute('admin.parlour.list.get.days') }}";
             $('.add-schedule-btn').click(function(){

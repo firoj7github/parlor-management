@@ -5,6 +5,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use App\Constants\GlobalConst;
 use App\Constants\LanguageConst;
+use App\Models\UserNotification;
 use App\Constants\AdminRoleConst;
 use App\Constants\ExtensionConst;
 use App\Models\UserAuthorization;
@@ -21,7 +22,6 @@ use Intervention\Image\Facades\Image;
 use App\Constants\PaymentGatewayConst;
 use Buglinjo\LaravelWebp\Facades\Webp;
 use App\Models\Admin\AdminNotification;
-use App\Models\UserNotification;
 use App\Providers\Admin\CurrencyProvider;
 use App\Providers\Admin\BasicSettingsProvider;
 

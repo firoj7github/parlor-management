@@ -2,11 +2,9 @@
 
 namespace Database\Seeders\Admin;
 
-use App\Models\Admin\Area;
 use App\Models\Admin\ParlourHasService;
 use App\Models\Admin\ParlourList;
 use App\Models\Admin\ParlourListHasSchedule;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ParlourListSeeder extends Seeder

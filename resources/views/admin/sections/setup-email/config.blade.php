@@ -37,9 +37,6 @@
                                         @selected(true)
                                     @endif>SMTP</option>
 
-                                    {{-- <option value="php" @if (isset($email_config->method) && $email_config->method == "php")
-                                        @selected(true)
-                                    @endif>PHP Mail</option> --}}
                                 </select>
                                 @error("method")
                                     <span class="invalid-feedback d-block" role="alert">

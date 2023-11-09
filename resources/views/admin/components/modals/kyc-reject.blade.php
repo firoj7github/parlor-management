@@ -1,7 +1,7 @@
 @if (admin_permission_by_name("admin.users.kyc.reject"))
     @isset($user)
         @if ($user->kyc_verified != global_const()::REJECTED)
-            {{-- KYC Reject Modal --}}
+            
             <div id="reject-modal" class="mfp-hide large">
                 <div class="modal-data">
                     <div class="modal-header px-0">

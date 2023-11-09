@@ -93,7 +93,7 @@
             }
         }
         $(".otp").parents("form").find("input[type=submit],button[type=submit]").click(function(e){
-            // e.preventDefault();
+            
             var otps = $(this).parents("form").find(".otp");
             var result = true;
             $.each(otps,function(index,item){
@@ -119,9 +119,9 @@
                 var seconds = Math.floor((distance % (1000 * coundDownSec)) / 1000);  // Output the result in an element with id="time"
                 document.getElementById("time").innerHTML =second + "s ";  // If the count down is over, write some text
                 if (distance < 0 || second < 2 ) {
-                    // alert();
+                    
                     clearInterval(x);
-                    // document.getElementById("time").innerHTML = "RESEND";
+                  
                     document.querySelector(".time-area").innerHTML = `Didn't get the code? <a class='text--danger' href='${resendCodeLink}'>Resend</a>`;
                 }
                 second--

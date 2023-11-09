@@ -414,12 +414,7 @@
                     <li class="sidebar-menu-header">Bonus</li>
                 @endif
 
-                @include('admin.components.side-nav.link',[
-                    'route'     => 'admin.cookie.index',
-                    'title'     => "GDPR Cookie",
-                    'icon'      => "menu-icon las la-cookie-bite",
-                ])
-
+                
                 @include('admin.components.side-nav.link',[
                     'route'     => 'admin.server.info.index',
                     'title'     => "Server Info",

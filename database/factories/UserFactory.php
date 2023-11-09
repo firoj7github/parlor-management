@@ -29,11 +29,11 @@ class UserFactory extends Factory
             'email_verified' =>fake()->numberBetween(0, 1),
             'sms_verified' =>fake()->numberBetween(0, 1),
             'kyc_verified' =>fake()->numberBetween(0, 1),
-            // 'two_factor_status' =>fake()->numberBetween(0, 1),
+            
             'two_factor_verified' =>fake()->numberBetween(0, 1),
-            // 'accept' =>fake()->numberBetween(0, 1),
+            
             'email_verified_at' => now(),
-            'password' => Hash::make("rokondev"), // password
+            'password' => Hash::make("rokondev"), 
             'remember_token' => Str::random(10),
         ];
     }

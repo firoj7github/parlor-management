@@ -246,7 +246,7 @@
                     $(errorElement).removeClass("is-invalid");
                     $(targetElement).siblings(".invalid-feedback").remove();
                 }).done(function(response){
-                    // console.log(response);
+                   
                     // Place States to States Field
                     var options = "<option selected disabled>Select City</option>";
                     $.each(response,function(index,item) {
@@ -280,7 +280,7 @@
                     }
                 });
             }else {
-                // Push Error
+                
             }
         });
     }

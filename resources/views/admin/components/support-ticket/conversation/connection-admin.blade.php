@@ -15,16 +15,14 @@
                     var URL = "{{ $route ?? "" }}";
                     var channel = pusher.subscribe('support.conversation.'+token);
 
-                    // console.log(token);
-                    // console.log(URL);
-                    // console.log(channel);
+                    
 
                     channel.bind('support-conversation', function(data) {
                         data = JSON.stringify(data);
                         data = JSON.parse(data);
-                        // console.log(data);
+                        
                         var addClass = "";
-                        // console.log(data.conversation);
+                        
                         if(data.conversation.sender_type == "ADMIN") {
                             addClass = "media-chat-reverse";
                         }
@@ -63,7 +61,7 @@
                         };
 
                         $.post(URL,data,function(response) {
-                            // Executed
+                            
                         }).done(function(response){
                             $(".message-input").val("");
                             $(e).addClass(removeClass);

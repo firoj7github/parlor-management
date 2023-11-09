@@ -3,7 +3,6 @@
 namespace Database\Seeders\Admin;
 
 use App\Models\Admin\BasicSettings;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class BasicSettingsSeeder extends Seeder
@@ -17,7 +16,7 @@ class BasicSettingsSeeder extends Seeder
     {
         $data = [
             'site_name'         => "eSalon",
-            'site_title'        => "BarberShop Platform",
+            'site_title'        => "Parlour and Salon Booking Full Solution ",
             'base_color'        => "#cca876",
             'secondary_color'   => "rgba(204, 168, 118, 0.4)",
             'otp_exp_seconds'   => "3600",

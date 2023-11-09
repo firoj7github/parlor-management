@@ -34,13 +34,9 @@
                 });
 
                 $(document).on("keyup",".message-input-event",function(event){
-                    // if(e.which == 13) {
-                    //     $(this).removeClass("message-input-event");
-                    //     eventInit($(this),'message-input-event');
-                    // }
-
+                   
                     if(event.keyCode == 13 && !event.shiftKey) {
-                        // messageTrigger(message,$(this));
+                        
 
                         $(this).removeClass("message-input-event");
                         eventInit($(this),'message-input-event');
@@ -54,9 +50,9 @@
                 });
 
                 function eventInit(e,removeClass) {
-                    // console.log(e,removeClass);
+                    
                     var inputValue = $(".message-input").val();
-                    // console.log(inputValue);
+                    
                     if(inputValue.length == 0) return false;
                     var CSRF = "{{ csrf_token() }}";
                     var data = {
@@ -65,9 +61,9 @@
                         support_token: token,
                     };
 
-                    // console.log(data);
+                    
                     $.post(URL,data,function(response) {
-                        // Executed
+                       
                     }).done(function(response){
                         $(".message-input").val("");
                         $(e).addClass(removeClass);

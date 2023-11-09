@@ -4,7 +4,6 @@ namespace App\Notifications\Admin\Auth;
 
 use App\Providers\Admin\BasicSettingsProvider;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 

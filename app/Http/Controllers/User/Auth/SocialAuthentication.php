@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\User\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Providers\Admin\BasicSettingsProvider;
-use App\Traits\User\LoggedInUsers;
-use App\Traits\User\RegisteredUsers;
 use Exception;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Traits\User\LoggedInUsers;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Traits\User\RegisteredUsers;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use App\Providers\Admin\BasicSettingsProvider;
 
 class SocialAuthentication extends Controller
 {

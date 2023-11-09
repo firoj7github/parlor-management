@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers\User\Auth;
 
-use App\Constants\GlobalConst;
-use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Models\UserPasswordReset;
-use App\Notifications\User\Auth\PasswordResetEmail;
-use App\Providers\Admin\BasicSettingsProvider;
-use Carbon\Carbon;
 use Exception;
+use Carbon\Carbon;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Password;
+use App\Constants\GlobalConst;
+use App\Models\UserPasswordReset;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Validator;
+use App\Providers\Admin\BasicSettingsProvider;
+use Illuminate\Validation\ValidationException;
+use App\Notifications\User\Auth\PasswordResetEmail;
 
 class ForgotPasswordController extends Controller
 {

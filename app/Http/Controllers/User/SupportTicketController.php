@@ -5,18 +5,14 @@ namespace App\Http\Controllers\User;
 use Exception;
 use App\Models\SupportChat;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\SupportTicket;
 use App\Http\Helpers\Response;
-use App\Models\UserSupportChat;
 use App\Models\UserNotification;
-use App\Models\UserSupportTicket;
 use App\Http\Controllers\Controller;
 use App\Constants\SupportTicketConst;
 use App\Models\SupportTicketAttachment;
 use Illuminate\Support\Facades\Validator;
-use App\Models\UserSupportTicketAttachment;
 use App\Events\Admin\SupportConversationEvent;
 
 class SupportTicketController extends Controller

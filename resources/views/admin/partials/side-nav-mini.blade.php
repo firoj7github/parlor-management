@@ -53,7 +53,7 @@
                     @endforelse
                 </ul>
                 <div class="notification-footer">
-                    {{-- <a href="javascript:void(0)">View All</a> --}}
+                   
                 </div>
             </div>
         </div>

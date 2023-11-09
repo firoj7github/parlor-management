@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\UserProfile;
 use Illuminate\Database\Seeder;
 use Database\Seeders\User\UserSeeder;
 use Database\Seeders\Admin\RoleSeeder;
@@ -51,13 +49,13 @@ class DatabaseSeeder extends Seeder
             ExtensionSeeder::class,
             AdminHasRoleSeeder::class,
             UsefulLinkSeeder::class,
-            UserSeeder::class,
             SetupPageSeeder::class,
-            
             PaymentGatewaySeeder::class,
             BlogSeeder::class,
             SetupArea::class,
-            ParlourListSeeder::class
+            ParlourListSeeder::class,
+            
+            UserSeeder::class,
         ]);
     }
 }

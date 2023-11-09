@@ -14,7 +14,7 @@
             <div class="site-logo">
                 <img src="{{ get_logo($basic_settings) }}" alt="logo">
             </div>
-            {{-- <span class="inner-title">👋</span> --}}
+            
             <h6 class="sub-title">{{ __("Password ") }} <span>{{ __("Reset") }}</span></h6>
             <span>{{ __("Enter your account email address or username") }}</span>
         </div>

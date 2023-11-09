@@ -1,9 +1,8 @@
 <?php
 
-use App\Http\Controllers\Frontend\ParlourBookingController;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\DashboardController;
-use App\Http\Controllers\User\HistoryController;
 use App\Http\Controllers\User\MyBookingController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\SupportTicketController;

@@ -13,7 +13,7 @@
 </head>
 <body>
 
-{{-- @include('frontend.partials.preloader') --}}
+
 
 @yield('content')
 

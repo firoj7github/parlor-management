@@ -10,7 +10,6 @@ use App\Models\Admin\ParlourList;
 use App\Models\Admin\SiteSections;
 use App\Constants\SiteSectionConst;
 use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Models\Admin\ParlourListHasSchedule;
 use App\Models\Admin\PaymentGatewayCurrency;
 use App\Providers\Admin\BasicSettingsProvider;

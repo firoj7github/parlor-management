@@ -3,7 +3,6 @@
 namespace App\Traits\PaymentGateway;
 
 use Illuminate\Support\Facades\DB;
-use App\Models\Admin\PaymentGateway;
 use Illuminate\Http\Request;
 
 

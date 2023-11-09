@@ -74,7 +74,7 @@
             </div>
         </div>
         <div class="layout-btn">
-            {{-- <a href="javascript:void(0)" class="btn--base w-100">{{ __("Reset To Default") }}</a> --}}
+            
         </div>
     </div>
 </div>

@@ -35,7 +35,7 @@ class GlobalController extends Controller
         $state_cities = get_state_cities($state_id);
 
         return response()->json($state_cities,200);
-        // return $state_id;
+        
     }
 
 

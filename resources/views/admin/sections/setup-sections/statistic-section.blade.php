@@ -105,7 +105,7 @@
             var oldData   = JSON.parse($(this).parents("tr").attr("data-item"));
             var editModal = $("#statistic-edit");
 
-            // console.log(oldData);
+           
 
             editModal.find("form").first().find("input[name=target]").val(oldData.id);
             editModal.find("input[name="+default_language+"_title_edit]").val(oldData.language[default_language].title);
