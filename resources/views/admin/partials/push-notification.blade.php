@@ -24,7 +24,7 @@
 
 @if ($basic_settings->broadcast_config != null && $basic_settings->broadcast_config->method == "pusher")
 
-    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+    <script src="https://js.pusher.com/7.2/pusher.js"></script>
     <script>
     
     var primaryKey = "{{ $basic_settings->broadcast_config->primary_key ?? '' }}";

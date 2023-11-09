@@ -1,30 +1,24 @@
-<script src="{{ asset('public/frontend/js/jquery-3.6.0.min.js') }}"></script>
+<script src="{{ asset('public/frontend/js/jquery-3.6.0.js') }}"></script>
 <!-- bootstrap js -->
-<script src="{{ asset('public/frontend/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('public/frontend/js/bootstrap.bundle.js') }}"></script>
 <!-- swipper js -->
-<script src="{{ asset('public/frontend/js/swiper.min.js') }}"></script>
+<script src="{{ asset('public/frontend/js/swiper.js') }}"></script>
 <!-- viewport js -->
 <script src="{{ asset('public/frontend/js/viewport.jquery.js') }}"></script>
 <!-- odometer js -->
-<script src="{{ asset('public/frontend/js/odometer.min.js') }}"></script>
+<script src="{{ asset('public/frontend/js/odometer.js') }}"></script>
 <!-- lightcase js-->
 <script src="{{ asset('public/frontend/js/lightcase.js') }}"></script>
 <!-- nice select js -->
 <script src="{{ asset('public/frontend/js/jquery.nice-select.js') }}"></script>
 <!-- select2 -->
-<script src="{{ asset('public/backend/js/select2.min.js') }}"></script>
+<script src="{{ asset('public/backend/js/select2.js') }}"></script>
 <!-- smooth scroll js -->
-<script src="{{ asset('public/frontend/js/smoothscroll.min.js') }}"></script>
+<script src="{{ asset('public/frontend/js/smoothscroll.js') }}"></script>
 <!--  Popup -->
 <script src="{{ asset('public/backend/library/popup/jquery.magnific-popup.js') }}"></script>
 <!-- AOS js -->
 <script src="{{ asset('public/frontend/js/aos.js') }}"></script>
-<!-- pace js-->
-<script src="{{ asset('public/frontend/js/pace.js') }}"></script>
-<!-- apexcharts js -->
-<script src="{{ asset('public/frontend/js/apexcharts.min.js') }}"></script>
-<!-- dayjs js -->
-<script src="{{ asset('public/frontend/js/dayjs.min.js') }}"></script>
 
 <script>
     var fileHolderAfterLoad = {};

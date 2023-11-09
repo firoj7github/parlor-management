@@ -85,7 +85,7 @@ class DashboardController extends Controller
                             ->whereNot('status',global_const()::PARLOUR_BOOKING_STATUS_REVIEW_PAYMENT)
                             ->whereBetween('created_at', [$this_month_start, $this_month_end])
                             ->sum('price');
-
+        
         $last_month_money = ParlourBooking::toBase()
                             ->whereNot('status',global_const()::PARLOUR_BOOKING_STATUS_REVIEW_PAYMENT)
                             ->whereBetween('created_at', [$last_month_start, $last_month_end])

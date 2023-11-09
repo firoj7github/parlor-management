@@ -1,5 +1,5 @@
 <!-- notify js -->
-<script src='{{ asset('public/backend/js/bootstrap-notify.min.js') }}'></script>
+<script src='{{ asset('public/backend/js/bootstrap-notify.js') }}'></script>
 
 <script>
     // Show Laravel Error Messages----------------------------------------------

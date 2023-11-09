@@ -202,7 +202,7 @@ class ParlourBookingController extends Controller
                         'from_time' => $from_time,
                         'to_time'   => $to_time,
                         'serial_number' => $data->serial_number,
-                        'success'       => "Successfully Booked"
+                        'success'       => "Successfully Booked."
                     ], 
                 ]);
                 if($basic_setting->email_notification == true){

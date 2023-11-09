@@ -55,7 +55,11 @@ class DatabaseSeeder extends Seeder
             SetupArea::class,
             ParlourListSeeder::class,
             
+            /**
+             * demo
+             */
             UserSeeder::class,
+            
         ]);
     }
 }

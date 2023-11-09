@@ -260,5 +260,111 @@
 @endsection
 
 @push('script')
-        
+    <script>
+        // apex-chart
+        var chart1 = $('#chart1');
+        var chart_one_data = chart1.data('chart_one_data');
+        var month_day = chart1.data('month_day');
+        var options = {
+        series: [{
+        name: 'Pending',
+        color: "#5A5278",
+        data: chart_one_data.pending_data
+        }, {
+        name: 'Completed',
+        color: "#6F6593",
+        data: chart_one_data.complete_data
+        },],
+        chart: {
+        type: 'bar',
+        height: 350,
+        stacked: true,
+        toolbar: {
+            show: false
+        },
+        zoom: {
+            enabled: true
+        }
+        },
+        responsive: [{
+        breakpoint: 480,
+        options: {
+            legend: {
+            position: 'bottom',
+            offsetX: -10,
+            offsetY: 0
+            }
+        }
+        }],
+        plotOptions: {
+        bar: {
+            horizontal: false,
+            borderRadius: 10
+        },
+        },
+        xaxis: {
+        type: 'datetime',
+        categories: month_day,
+
+        },
+        legend: {
+        position: 'bottom',
+        offsetX: 40
+        },
+        fill: {
+        opacity: 1
+        }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart1"), options);
+        chart.render();
+
+        var chart4 = $('#chart4');
+        var user_chart_data = chart4.data('user_chart_data');
+        var options = {
+        series: user_chart_data,
+        chart: {
+        width: 350,
+        type: 'pie'
+        },
+        colors: ['#5A5278', '#6F6593', '#8075AA', '#A192D9'],
+        labels: ['Active', 'Banned', 'Unverified', 'All'],
+        responsive: [{
+        breakpoint: 1480,
+        options: {
+            chart: {
+            width: 280
+            },
+            legend: {
+            position: 'bottom'
+            }
+        },
+        breakpoint: 1199,
+        options: {
+            chart: {
+            width: 380
+            },
+            legend: {
+            position: 'bottom'
+            }
+        },
+        breakpoint: 575,
+        options: {
+            chart: {
+            width: 280
+            },
+            legend: {
+            position: 'bottom'
+            }
+        }
+        }],
+        legend: {
+        position: 'bottom'
+        },
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart4"), options);
+        chart.render();
+
+    </script>
 @endpush

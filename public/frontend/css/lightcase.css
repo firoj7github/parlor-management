@@ -55,35 +55,6 @@
   content: '\e805';
 }
 
-/**
- * Mixin providing icon defaults to be used on top of font-lightcase.
- *
- * Example usage:
- * @include icon(#e9e9e9)
- */
-/**
- * Mixin providing icon defaults including a hover status to be used
- * on top of font-lightcase.
- *
- * Example usage:
- * @include icon-hover(#e9e9e9, #fff)
- */
-/**
- * Provides natural content overflow behavior and scrolling support
- * even so for touch devices.
- *
- * Example usage:
- * @include overflow()
- */
-/**
- * Neutralizes/resets dimensions including width, height, position as well as margins,
- * paddings and styles. Used to enforce a neutral and unstyled look and behavoir!
- *
- * Example usage:
- * @include clear(true)
- *
- * @param boolean $important
- */
 @-webkit-keyframes lightcase-spin {
   0% {
     -webkit-transform: rotate(0deg);
