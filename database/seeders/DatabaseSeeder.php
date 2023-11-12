@@ -34,6 +34,32 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
+        // //demo
+        // $this->call([
+        //     AdminSeeder::class,
+        //     RoleSeeder::class,
+        //     TransactionSettingSeeder::class,
+        //     CurrencySeeder::class,
+        //     BasicSettingsSeeder::class,
+        //     SetupSeoSeeder::class,
+        //     AppSettingsSeeder::class,
+        //     AppOnboardScreenSeeder::class,
+        //     SiteSectionsSeeder::class,
+        //     LanguageSeeder::class,
+        //     SetupKycSeeder::class,
+        //     ExtensionSeeder::class,
+        //     AdminHasRoleSeeder::class,
+        //     UsefulLinkSeeder::class,
+        //     SetupPageSeeder::class,
+        //     PaymentGatewaySeeder::class,
+        //     BlogSeeder::class,
+        //     SetupArea::class,
+        //     ParlourListSeeder::class,
+        //     UserSeeder::class,
+            
+        // ]);
+
+        //fresh
         $this->call([
             AdminSeeder::class,
             RoleSeeder::class,
@@ -52,14 +78,6 @@ class DatabaseSeeder extends Seeder
             SetupPageSeeder::class,
             PaymentGatewaySeeder::class,
             BlogSeeder::class,
-            SetupArea::class,
-            ParlourListSeeder::class,
-            
-            /**
-             * demo
-             */
-            UserSeeder::class,
-            
         ]);
     }
 }
