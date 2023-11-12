@@ -106,6 +106,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('failed','failed')->name('failed');
         Route::get('refunded','refunded')->name('refunded');
         Route::get('delayed','delayed')->name('delayed');
+        Route::post('search','search')->name("search");
     });
 
     // User Care Section

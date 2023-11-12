@@ -49,4 +49,9 @@ class ParlourBooking extends Model
     public function payment_gateway(){
         return $this->belongsTo(PaymentGatewayCurrency::class,'payment_gateway_currency_id');
     }
+    public function scopeSearch($query,$text) {
+        $query->where(function($q) use ($text) {
+            $q->where("trx_id","like","%".$text."%");
+        });
+    }
 }

@@ -119,7 +119,7 @@
                         <select name="country" class="form--control select2-auto-tokenize country-select" data-placeholder="Select Country" data-old="{{ old('country',$user->address->country ?? "") }}"></select>
                     </div>
                     <div class="col-xl-6 col-lg-6 form-group">
-                        <label>{{ __("Phone Number") }}<span>*</span></label>
+                        <label>{{ __("Phone Number") }}</label>
                         <div class="input-group">
                             <div class="input-group-text phone-code">+{{ $user->mobile_code }}</div>
                             <input class="phone-code" type="hidden" name="mobile_code" value="{{ $user->mobile_code }}" />
@@ -187,25 +187,7 @@
                             'permission'    => "admin.users.details.update",
                         ])
                     </div>
-                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 form-group">
-                        @include('admin.components.form.switcher', [
-                            'label'     => '2FA Verification',
-                            'value'     => old('two_factor_verified',$user->two_factor_verified),
-                            'name'      => "two_factor_verified",
-                            'options'   => ['Verified' => 1, 'Unverified' => 0],
-                            'permission'    => "admin.users.details.update",
-                        ])
-                    </div>
-
-                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 form-group">
-                        @include('admin.components.form.switcher', [
-                            'label'     => 'KYC Verification',
-                            'value'     => old('kyc_verified',$user->kyc_verified),
-                            'name'      => "kyc_verified",
-                            'options'   => ['Verified' => 1, 'Unverified' => 0],
-                            'permission'    => "admin.users.details.update",
-                        ])
-                    </div>
+                    
                     
                     <div class="col-xl-12 col-lg-12 form-group mt-4">
                         @include('admin.components.button.form-btn',[

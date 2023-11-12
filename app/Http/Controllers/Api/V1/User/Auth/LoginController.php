@@ -82,8 +82,7 @@ class LoginController extends Controller
                 ]);
                 $data = $user_authorize->toArray();
                 $user->notify(new SendAuthorizationCode((object) $data));
-                $message = ['success' => ['Please check email and verify your account']];
-                return Response::success($message, $user_data);
+                return Response::success(['Please check email and verify your account'], $user_data);
             }
 
             $this->createLoginLog($user);

@@ -202,4 +202,24 @@ class ParlourBookingLogs extends Controller
             'data',
         ));
     }
+    /**
+     * Method for search currency item
+     * @param $string
+     */
+    public function search(Request $request) {
+        $validator = Validator::make($request->all(),[
+            'text'  => 'required|string',
+        ]);
+
+        if($validator->fails()) {
+            $error = ['error' => $validator->errors()];
+            return Response::error($error,null,400);
+        }
+
+        $validated = $validator->validate();
+        $data = ParlourBooking::search($validated['text'])->select()->limit(10)->get();
+        return view('admin.components.search.parlour-booking-search',compact(
+            'data',
+        ));
+    }
 }

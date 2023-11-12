@@ -96,7 +96,8 @@ class SiteController extends Controller
         $usefull_links          = UsefullLink::where('status',true)->get();
         $contact_slug           = Str::slug(SiteSectionConst::CONTACT_SECTION);
         $contact                = SiteSections::getData($contact_slug)->first();
-
+        $message                = Session::get('message');
+        
         $validator = Validator::make($request->all(),[
             'area'          => 'nullable',
             'name'          => 'nullable',
@@ -125,7 +126,8 @@ class SiteController extends Controller
             'parlour_lists',
             'footer',
             'usefull_links',
-            'contact'
+            'contact',
+            'message'
         ));     
     }
     /**
@@ -205,7 +207,7 @@ class SiteController extends Controller
         $page_title             = "| Blog Details";
         $blog                   = Blog::where('slug',$slug)->first();
         if(!$blog) abort(404);
-        $category               = BlogCategory::withCount('blog')->get();
+        $category               = BlogCategory::withCount('blog')->where('status',true)->get();
         $recent_posts           = Blog::where('status',true)->where('slug','!=',$slug)->get();
         $footer_slug            = Str::slug(SiteSectionConst::FOOTER_SECTION);
         $footer                 = SiteSections::getData($footer_slug)->first();
