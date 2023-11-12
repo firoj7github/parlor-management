@@ -25,6 +25,7 @@ Route::controller(SiteController::class)->group(function(){
     Route::get('parlour-package','parlourPackage')->name('parlour.package');
     Route::post("contact-request",'contactRequest')->name("contact.request");
     Route::get('blog-details/{slug}','blogDetails')->name('blog.details');
+    Route::get('blog-category/{slug}','blogCategory')->name('blog.category');
     Route::get('link/{slug}','link')->name('link');
 });
 

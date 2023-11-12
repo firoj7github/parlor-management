@@ -189,6 +189,7 @@ class SiteController extends Controller
         $usefull_links          = UsefullLink::where('status',true)->get();
         $contact_slug           = Str::slug(SiteSectionConst::CONTACT_SECTION);
         $contact                = SiteSections::getData($contact_slug)->first();
+
         return view('frontend.pages.blog',compact(
             'page_title',
             'blog',
@@ -225,6 +226,32 @@ class SiteController extends Controller
             'contact'
         ));
 
+    }
+    /**
+     * Method for get the blogs using category
+     * @param string $slug
+     * @param \Illuminate\Http\Request $request
+     */
+    public function blogCategory($slug){
+        $page_title         = "| Blog Category";
+        $blog_category      = BlogCategory::where('slug',$slug)->first();
+        
+        if(!$blog_category) abort(404);
+        $blogs              = Blog::where('category_id',$blog_category->id)->get();
+        $footer_slug        = Str::slug(SiteSectionConst::FOOTER_SECTION);
+        $footer             = SiteSections::getData($footer_slug)->first();
+        $usefull_links      = UsefullLink::where('status',true)->get();
+        $contact_slug       = Str::slug(SiteSectionConst::CONTACT_SECTION);
+        $contact            = SiteSections::getData($contact_slug)->first();
+
+        return view('frontend.pages.blog-category',compact(
+            'page_title',
+            'blog_category',
+            'blogs',
+            'footer',
+            'usefull_links',
+            'contact'
+        ));
     }
     /**
      * Method for view the about page
