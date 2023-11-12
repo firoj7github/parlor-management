@@ -15,7 +15,7 @@
                             <p>{{ $footer->value->footer->language->$app_local->description ?? '' }}</p>
                         </div>
                         <div class="footer-social-icon">
-                            <span>{{ __("Follow us") }}</span>
+                            <span>{{ __("Follow us :") }}</span>
                             @foreach ($footer->value->social_links ?? [] as $item)
                                 <a href="{{ $item->link ?? '' }}"><i class="{{ $item->icon ?? '' }}"></i></a>
                             @endforeach

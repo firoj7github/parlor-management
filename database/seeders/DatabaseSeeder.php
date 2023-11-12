@@ -58,7 +58,7 @@ class DatabaseSeeder extends Seeder
             /**
              * demo
              */
-            // UserSeeder::class,
+            UserSeeder::class,
             
         ]);
     }

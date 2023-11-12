@@ -21,7 +21,7 @@
                         <h4 class="title">{{ __("Profile Settings") }}</h4>
                     </div>
                     <div class="account-delate">
-                        <a href="javascript:void(0)" class="btn--base btn delete-btn">{{ __("Delete Account") }}</a>
+                        <a href="javascript:void(0)" class="btn--danger delete-btn">{{ __("Delete Account") }}</a>
                     </div>
                 </div>
                 <div class="card-body profile-body-wrapper">

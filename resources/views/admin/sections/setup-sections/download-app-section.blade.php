@@ -167,9 +167,11 @@
             editModal.find("input[name="+default_language+"_item_title_edit]").val(oldData.language[default_language].item_title);
             editModal.find("input[name="+default_language+"_item_heading_edit]").val(oldData.language[default_language].item_heading);
             editModal.find("input[name=icon_edit]").val(oldData.icon);
+            editModal.find("input[name=link]").val(oldData.link);
             
             $.each(languages,function(index,item){
                 editModal.find("input[name="+item.code+"_item_title_edit]").val((oldData.language[item.code] == undefined ) ? '' : oldData.language[item.code].item_title);
+                editModal.find("input[name="+item.code+"_item_heading_edit]").val((oldData.language[item.code] == undefined ) ? '' : oldData.language[item.code].item_heading);
             });
             editModal.find("input[name=image]").attr("data-preview-name",oldData.image);
             fileHolderPreviewReInit("#download-app-edit input[name=image]");

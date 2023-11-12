@@ -98,6 +98,14 @@
                     <div class="list-wrapper">
                         <div class="preview-area">
                             <div class="preview-item">
+                               <p>{{ __("MTCN Number") }} :</p>
+                            </div>
+                            <div class="preview-details">
+                                <p>{{ $data->trx_id ?? '' }}</p>
+                            </div>
+                        </div>
+                        <div class="preview-area">
+                            <div class="preview-item">
                                <p>{{ __("Payment Method") }} :</p>
                             </div>
                             <div class="preview-details">

@@ -1108,7 +1108,7 @@ class SetupSectionsController extends Controller
         if($validator->fails()) return back()->withErrors($validator->errors())->withInput();
 
         $validated = $validator->validate();
-
+       
         $data['image']    = $section->value->image ?? "";
 
         if($request->hasFile("image")){
@@ -1150,6 +1150,7 @@ class SetupSectionsController extends Controller
         $unique_id = uniqid();
 
         $validator  = Validator::make($request->all(),[
+            'link'              => "required|url",
             'image'           => "nullable|image|mimes:jpg,png,svg,webp|max:10240",
         ]);
 
@@ -1159,6 +1160,7 @@ class SetupSectionsController extends Controller
         $section_data['items'][$unique_id]['language']     = $language_wise_data;
         $section_data['items'][$unique_id]['id']           = $unique_id;
         $section_data['items'][$unique_id]['image']        = "";
+        $section_data['items'][$unique_id]['link']        = $validated['link'];
         $section_data['items'][$unique_id]['created_at']   = now();
         if($request->hasFile("image")) {
             $section_data['items'][$unique_id]['image']    = $this->imageValidate($request,"image",$section->value->items->image ?? null);
@@ -1206,11 +1208,16 @@ class SetupSectionsController extends Controller
         $language_wise_data = array_map(function($language) {
             return replace_array_key($language,"_edit");
         },$language_wise_data);
+        $validator      = Validator::make($request->all(),[
+            'link'      => "required|url",
+            'image'     => "nullable|image|mimes:jpg,png,svg,webp|max:10240",
+        ]);
 
-
+        if($validator->fails()) return back()->withErrors($validator->errors())->withInput()->with('modal','download-app-edit');
+        $validated = $validator->validate();
 
         $section_values['items'][$request->target]['language']      = $language_wise_data;
-
+        $section_values['items'][$request->target]['link']          = $validated['link'];
 
         if($request->hasFile("image")) {
             $section_values['items'][$request->target]['image']    = $this->imageValidate($request,"image",$section_values['items'][$request->target]['image'] ?? null);

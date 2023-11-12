@@ -17,7 +17,7 @@
                     <p>{{ $download_app->value->language->$app_local->sub_heading ?? '' }}</p>
                     <div class="app-btn-wrapper">
                         @foreach ($download_app?->value?->items ?? [] as $item)
-                        <a href="#0" class="app-btn">
+                        <a href="{{ $item->link }}" class="app-btn">
                             <div class="content">
                                 <span>{{ $item->language->$app_local->item_title ?? '' }}</span>
                                 <h5 class="title">{{ $item->language->$app_local->item_heading ?? '' }}</h5>

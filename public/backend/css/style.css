@@ -5991,3 +5991,7 @@ textPath {
   padding-bottom: 10px;
   flex: 0 0 25%;
 }
+
+.select2-container--default .select2-search--inline .select2-search__field{
+  min-height: 24px !important;
+  }

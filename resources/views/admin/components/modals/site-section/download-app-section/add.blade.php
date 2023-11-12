@@ -44,6 +44,13 @@
                             @endforeach
                         </div>
                     </div>
+                    <div class="form-group">
+                        @include('admin.components.form.input',[
+                            'label'     => "Link*",
+                            'name'      => "link",
+                            'value'     => old("link")
+                        ])
+                    </div> 
                     <div class="col-xl-12 col-lg-12 form-group">
                         @include('admin.components.form.input-file',[
                             'label'             => "Image:",

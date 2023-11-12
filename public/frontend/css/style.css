@@ -1285,7 +1285,11 @@ input::-moz-focus-inner {
 }
 
 .btn--danger {
-  background-color: #d63384;
+  background-color: #dc3545 ;
+  color: #ffffff;
+  border-radius: 6px;
+  transition: all 0.6s;
+  padding: 10px 30px;
 }
 
 .btn--warning {
@@ -2462,7 +2466,7 @@ input[type=number] {
 .scrollToTop {
   position: fixed;
   bottom: 0;
-  right: 30px;
+  left: 30px;
   width: 35px;
   height: 35px;
   padding: 7px;
@@ -3117,7 +3121,8 @@ input[type=number] {
 }
 @media only screen and (max-width: 375px) {
   .account-area {
-    width: 300px;
+    width: 100%;
+    padding: 12px;
   }
 }
 .account-area.change-form {
@@ -3148,8 +3153,8 @@ input[type=number] {
   width: inherit;
   text-align: center;
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 2px;
+  right: 8px;
   z-index: 9;
   width: 40px;
   height: 40px;
@@ -3346,6 +3351,11 @@ input[type=number] {
 
 .register-form-input {
   padding-top: 20px;
+}
+@media only screen and (max-width: 991px) {
+  .register-form-input {
+    padding-top: 30px;
+  }
 }
 
 /*--------------------------------------------------------------
@@ -3591,7 +3601,8 @@ input[type=number] {
   font-size: 20px;
   font-weight: 700;
   font-family: "Poppins", sans-serif;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .footer-section .footer-social-icon a {
@@ -3984,6 +3995,7 @@ input[type=number] {
   text-align: center;
   border: 1px solid var(--primary-color);
   border-radius: 10px;
+  height: 180px;
 }
 .how-its-work-section .work-steps .icon i {
   font-size: 30px;
@@ -4592,6 +4604,12 @@ input[type=number] {
 .blog-details-section .blog-item .blog-thumb {
   height: 500px;
   width: 100%;
+}
+@media only screen and (max-width: 520px) {
+  .blog-details-section .blog-item .blog-thumb {
+    height: 300px;
+    width: 100%;
+  }
 }
 .blog-details-section .blog-item .blog-thumb img {
   width: 100%;
@@ -5209,7 +5227,7 @@ input[type=number] {
   transition: all 0.5s;
 }
 .navbar-wrapper.active {
-  margin-left: 85px;
+  margin-left: 52px;
 }
 @media only screen and (max-width: 1199px) {
   .navbar-wrapper.active {
@@ -5217,11 +5235,11 @@ input[type=number] {
   }
 }
 .navbar-wrapper.active .dashboard-title-part {
-  padding: 0 10px 0 25px;
+  padding: 0 10px 0 0px;
 }
 @media only screen and (max-width: 1199px) {
   .navbar-wrapper.active .dashboard-title-part {
-    padding: 0 20px 0 20px;
+    padding: 0 20px 0 0px;
   }
 }
 .navbar-wrapper.active .dashboard-title-part .left .icon {
@@ -5405,10 +5423,20 @@ input[type=number] {
 .dashboard-header-wrapper .title {
   margin-bottom: 0;
 }
+@media only screen and (max-width: 375px) {
+  .dashboard-header-wrapper .title {
+    font-size: 14px;
+  }
+}
 .dashboard-header-wrapper .dashboard-btn-wrapper .dashboard-btn a, .dashboard-header-wrapper .dashboard-btn-wrapper .dashboard-btn button, .dashboard-header-wrapper .dashboard-btn-wrapper .dashboard-btn input[type=button], .dashboard-header-wrapper .dashboard-btn-wrapper .dashboard-btn input[type=reset], .dashboard-header-wrapper .dashboard-btn-wrapper .dashboard-btn input[type=submit] {
   padding: 8px 25px;
   font-size: 14px;
   border-radius: 8px;
+}
+@media only screen and (max-width: 375px) {
+  .dashboard-header-wrapper .dashboard-btn-wrapper .dashboard-btn a, .dashboard-header-wrapper .dashboard-btn-wrapper .dashboard-btn button, .dashboard-header-wrapper .dashboard-btn-wrapper .dashboard-btn input[type=button], .dashboard-header-wrapper .dashboard-btn-wrapper .dashboard-btn input[type=reset], .dashboard-header-wrapper .dashboard-btn-wrapper .dashboard-btn input[type=submit] {
+    padding: 8px 15px;
+  }
 }
 
 .dashbord-item {
@@ -5739,20 +5767,20 @@ input[type=number] {
   -ms-touch-action: auto;
       touch-action: auto;
   overflow-y: auto;
-  max-height: 73vh;
-  min-height: 73vh;
+  max-height: 70vh;
+  min-height: 70vh;
   padding: 30px 15px;
 }
 @media only screen and (max-width: 1600px) {
   .chat-container {
-    max-height: 68vh;
-    min-height: 68vh;
+    max-height: 65vh;
+    min-height: 65vh;
   }
 }
 @media only screen and (max-width: 767px) {
   .chat-container {
-    max-height: 63vh;
-    min-height: 63vh;
+    max-height: 61vh;
+    min-height: 61vh;
   }
 }
 .chat-container .media > * {
@@ -6727,6 +6755,11 @@ input[type=number] {
 }
 
 .mfp-content .head {
-  color: #000000;
+  color: #ffffff;
 }
-
+.white-popup{
+   background-color: #0f1c2a;
+}
+.white-popup .card{
+  background-color: #0f1c2a;
+}

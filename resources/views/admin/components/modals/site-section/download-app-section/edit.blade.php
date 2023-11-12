@@ -41,6 +41,13 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        @include('admin.components.form.input',[
+                            'label'     => "Link*",
+                            'name'      => "link",
+                            'value'     => old("link")
+                        ])
+                    </div> 
+                    <div class="form-group">
                         @include('admin.components.form.input-file',[
                             'label'             => "Image",
                             'name'              => "image",
