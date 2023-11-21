@@ -5093,6 +5093,18 @@ body.dark-min-sidebar .header-link {
   border-radius: 50%;
   overflow: hidden;
 }
+@media only screen and (max-width: 1500px) {
+  .user-profile-thumb {
+    width: 300px;
+    height: 300px;
+  }
+  .user-profile-list li{
+    margin-bottom: 10px;
+  }
+  .user-profile-list li.five{
+    right: 10%;
+  }
+}
 @media only screen and (max-width: 575px) {
   .user-profile-thumb {
     width: 250px;

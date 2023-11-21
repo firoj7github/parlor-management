@@ -106,6 +106,14 @@ class SetupSectionsController extends Controller
                 'view'       => "blogView",
                 'update'     => "blogUpdate",
             ],
+            'login'        => [
+                'view'       => "loginView",
+                'update'     => "loginUpdate",
+            ],
+            'register'        => [
+                'view'       => "registerView",
+                'update'     => "registerUpdate",
+            ],
         ];
 
         if(!array_key_exists($slug,$sections)) abort(404);
@@ -1427,7 +1435,7 @@ class SetupSectionsController extends Controller
      * @param \Illuminate\\Http\Request $request
      */
     
-     public function aboutUpdate(Request $request,$slug){
+    public function aboutUpdate(Request $request,$slug){
         $basic_field_name = [
             'title'       => 'required|string|max:100',
             'heading'     => 'required|string|max:100',
@@ -2046,6 +2054,130 @@ class SetupSectionsController extends Controller
 
         return back()->with(['success' => ['Section Updated Successfully!']]);
      
+    }
+    /**
+     * Method for show login section page
+     * @param string $slug
+     * @return view
+     */
+    public function loginView($slug){
+        $page_title      = "Login Section";
+        $section_slug    = Str::slug(SiteSectionConst::LOGIN_SECTION);
+        $data            = SiteSections::getData($section_slug)->first();
+        $languages       = $this->languages;
+
+        return view('admin.sections.setup-sections.login-section',compact(
+            'page_title',
+            'data',
+            'languages',
+            'slug',
+        ));
+    }
+    /**
+     * Method for update login section
+     * @param string
+     * @param \Illuminate\\Http\Request $request
+     */
+    
+    public function loginUpdate(Request $request,$slug){
+        $basic_field_name = [
+            'title'       => 'required|string|max:100',
+            'heading'     => 'required|string',
+        ];
+
+        $slug             = Str::slug(SiteSectionConst::LOGIN_SECTION);
+        $section          = SiteSections::where("key",$slug)->first();
+
+        if($section      != null){
+            $data         = json_decode(json_encode($section->value),true);
+        }else{
+            $data         = [];
+        }
+        $validator  = Validator::make($request->all(),[
+            'image'            => "nullable|image|mimes:jpg,png,svg,webp|max:10240",
+        ]);
+        if($validator->fails()) return back()->withErrors($validator->errors())->withInput();
+
+        $validated = $validator->validate();
+
+        $data['image']    = $section->value->image ?? "";
+
+        if($request->hasFile("image")){
+            $data['image']= $this->imageValidate($request,"image",$section->value->image ?? null);
+        }
+
+        $data['language']     = $this->contentValidate($request,$basic_field_name);
+        $update_data['key']   = $slug;
+        $update_data['value'] = $data;
+        try{
+            SiteSections::updateOrCreate(['key' => $slug],$update_data);
+        }catch(Exception $e){
+            return back()->with(['error' => ['Something went wrong! Please try again.']]);
+        }
+        return back()->with( ['success' => ['Section Updated Successfully!']]);
+
+    }
+    /**
+     * Method for show register section page
+     * @param string $slug
+     * @return view
+     */
+    public function registerView($slug){
+        $page_title      = "Register Section";
+        $section_slug    = Str::slug(SiteSectionConst::REGISTER_SECTION);
+        $data            = SiteSections::getData($section_slug)->first();
+        $languages       = $this->languages;
+
+        return view('admin.sections.setup-sections.register-section',compact(
+            'page_title',
+            'data',
+            'languages',
+            'slug',
+        ));
+    }
+    /**
+     * Method for update register section
+     * @param string
+     * @param \Illuminate\\Http\Request $request
+     */
+    
+    public function registerUpdate(Request $request,$slug){
+        $basic_field_name = [
+            'title'       => 'required|string|max:100',
+            'heading'     => 'required|string',
+        ];
+
+        $slug             = Str::slug(SiteSectionConst::REGISTER_SECTION);
+        $section          = SiteSections::where("key",$slug)->first();
+
+        if($section      != null){
+            $data         = json_decode(json_encode($section->value),true);
+        }else{
+            $data         = [];
+        }
+        $validator  = Validator::make($request->all(),[
+            'image'            => "nullable|image|mimes:jpg,png,svg,webp|max:10240",
+        ]);
+        if($validator->fails()) return back()->withErrors($validator->errors())->withInput();
+
+        $validated = $validator->validate();
+
+        $data['image']    = $section->value->image ?? "";
+
+        if($request->hasFile("image")){
+            $data['image']= $this->imageValidate($request,"image",$section->value->image ?? null);
+        }
+
+        $data['language']     = $this->contentValidate($request,$basic_field_name);
+        $update_data['key']   = $slug;
+        $update_data['value'] = $data;
+        try{
+            SiteSections::updateOrCreate(['key' => $slug],$update_data);
+        }catch(Exception $e){
+            return back()->with(['error' => ['Something went wrong! Please try again.']]);
+        }
+        return back()->with( ['success' => ['Section Updated Successfully!']]);
+
     }
     /**
      * Method for get languages form record with little modification for using only this class

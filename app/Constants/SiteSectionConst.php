@@ -15,5 +15,7 @@ class SiteSectionConst{
     const FAQ_SECTION               = "Faq";
     const SERVICE_SECTION           = "Service";
     const BLOG_SECTION              = "Blog";
+    const LOGIN_SECTION             = "Login";
+    const REGISTER_SECTION          = "Register";
 
 }

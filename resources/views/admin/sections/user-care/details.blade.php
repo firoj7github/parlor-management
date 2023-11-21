@@ -30,7 +30,6 @@
                     <div class="col-xl-4 col-lg-4 form-group">
                         <div class="user-action-btn-area">
                             <div class="user-action-btn">
-                                <button type="button" class="bg--danger one" data-bs-toggle="modal" data-bs-target="#addModal"><i class="las la-wallet me-1"></i> Add/Subtract Balance</button>
                             </div>
                             <div class="user-action-btn">
                                 @include('admin.components.link.custom',[
@@ -121,7 +120,7 @@
                     <div class="col-xl-6 col-lg-6 form-group">
                         <label>{{ __("Phone Number") }}</label>
                         <div class="input-group">
-                            <div class="input-group-text phone-code">+{{ $user->mobile_code }}</div>
+                            
                             <input class="phone-code" type="hidden" name="mobile_code" value="{{ $user->mobile_code }}" />
                             <input type="text" class="form--control" placeholder="Write Here..." name="mobile" value="{{ old('mobile',$user->mobile) }}">
                         </div>

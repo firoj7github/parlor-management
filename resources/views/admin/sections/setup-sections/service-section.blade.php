@@ -28,7 +28,7 @@
             'name'  => __("Dashboard"),
             'url'   => setRoute("admin.dashboard"),
         ]
-    ], 'active' => __("How Its Work Section")])
+    ], 'active' => __("Service Section")])
 @endsection
 
 @section('content')

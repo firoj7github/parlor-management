@@ -380,7 +380,7 @@ class ParlourBookingController extends Controller
             $message = ['error' => [$e->getMessage()]];
             return Response::error($message);
         }
-        return Response::success(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.'],[],200]);
+        return Response::success(["Congratulations! Parlour Booking Confirmed Successfully."],[],200);
     }
     /**
      * Method for flutterwave success
@@ -410,7 +410,7 @@ class ParlourBookingController extends Controller
                 $message = ['error' => [$e->getMessage()]];
                 Response::error($message);
             }
-            return Response::success(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.'],[],200]);
+            return Response::success(["Congratulations! Parlour Booking Confirmed Successfully."],[],200);
 
         }
         elseif ($status ==  'cancelled'){
@@ -454,7 +454,7 @@ class ParlourBookingController extends Controller
             $message = ['error' => ["Something Is Wrong..."]];
             return Response::error($message);
         }
-        return Response::success(['success' => ['Congratulations! Parlour Booking Confirmed Successfully.'],[],200]);
+        return Response::success(["Congratulations! Parlour Booking Confirmed Successfully."],[],200);
     }
     //sslCommerz fails
     public function sllCommerzFails(Request $request){

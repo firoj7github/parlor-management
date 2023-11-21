@@ -210,7 +210,7 @@
                     <div class="contact-header">
                         <h4 class="title">{{ $contact->value->language->$app_local->description ?? '' }}</h4>
                     </div>
-                    <form class="contact-form"action="{{ setRoute('contact.request') }}" method="POST">
+                    <form class="contact-form" action="{{ setRoute('contact.request') }}" method="POST">
                         @csrf
                         <div class="row justify-content-center mb-10-none">
                             <div class="col-xl-6 col-lg-6 col-md-6 form-group">

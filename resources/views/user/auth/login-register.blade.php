@@ -1,17 +1,24 @@
+@php
+    $app_local  = get_default_language_code();
+    $slug = Illuminate\Support\Str::slug(App\Constants\SiteSectionConst::LOGIN_SECTION);
+    $login = App\Models\Admin\SiteSections::getData($slug)->first();
+    $slug = Illuminate\Support\Str::slug(App\Constants\SiteSectionConst::REGISTER_SECTION);
+    $register = App\Models\Admin\SiteSections::getData($slug)->first();
+@endphp
 <div class="account-section">
     <div class="account-bg"></div>
     <div class="account-area change-form">
         <div class="row">
             <div class="col-lg-6 col-md-6">
                 <div class="account-section-img">
-                    <img src="{{ asset('public/frontend/images/element/about-img.jpg') }}" alt="img">
+                    <img src="{{ get_image(@$login->value->image , 'site-section') }}" alt="img">
                 </div>
             </div>
             <div class="col-lg-6 col-md-6">
             <div class="account-close"></div>
                 <div class="account-form-area">
-                    <h3 class="title">{{ __("Log in and Stay Connected") }}</h3>
-                    <p>{{ __("Our secure login process ensures the confidentiality of your information. Log in today and stay connected to your finances, anytime and anywhere.") }}</p>
+                    <h3 class="title">{{ @$login->value->language->$app_local->title ?? '' }}</h3>
+                    <p>{{ @$login->value->language->$app_local->heading ?? '' }}</p>
                     <form class="account-form" method="POST" action="{{ setRoute('user.login.submit') }}">
                         @csrf
                         <div class="row">
@@ -55,13 +62,13 @@
         <div class="row register-form-input">
             <div class="col-lg-6 col-md-6">
                 <div class="account-section-img">
-                    <img src="{{ asset('public/frontend/images/element/about-img.jpg') }}" alt="img">
+                    <img src="{{ get_image(@$register->value->image , 'site-section') }}" alt="img">
                 </div>
             </div>
             <div class="col-lg-6 col-md-6">
                 <div class="account-form-area">
-                    <h3 class="title">{{ __("Register for an Account Today") }}</h3>
-                    <p>{{ __("Become a part of our community by registering for an account today. Enjoy a range of benefits and features tailored to meet your needs. Our registration page makes it easy to create your account, providing a seamless and user-friendly experience.") }}</p>
+                    <h3 class="title">{{ @$register->value->language->$app_local->title ?? '' }}</h3>
+                    <p>{{ @$register->value->language->$app_local->heading ?? '' }}</p>
                     <form class="account-form" method="POST" action="{{ setRoute('user.register.submit') }}">
                         @csrf
                         <div class="row">

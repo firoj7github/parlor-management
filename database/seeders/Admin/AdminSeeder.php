@@ -34,16 +34,7 @@ class AdminSeeder extends Seeder
                 'password'      => Hash::make("appdevs"),
                 'created_at'    => now(),
                 'status'        => true,
-            ],
-            [
-                'firstname'     => "MD",
-                'lastname'      => "Rokon",
-                'username'      => "rokondev",
-                'email'         => "rokonappdevs@rokon.appdevs.net",
-                'password'      => Hash::make("appdevs"),
-                'created_at'    => now(),
-                'status'        => true,
-            ],
+            ]
 
         ];
 

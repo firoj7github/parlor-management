@@ -12,6 +12,29 @@
 <section class="blog-section blog-details-section pt-150 pb-40">
     <div class="container">
         <div class="row justify-content-center">
+            
+            <div class="col-xl-8 col-lg-8">
+                <div class="blog-item">
+                    <div class="blog-thumb">
+                        <img src="{{ get_image($blog->data->image , 'site-section') }}" alt="blog">
+                    </div>
+                    <div class="blog-content pt-3=4">
+                        <h3 class="title">{{ $blog->data->language->$app_local->title ?? "" }}</h3>
+                        <p>{!! $blog->data->language->$app_local->description ?? "" !!}</p>
+                        <div class="blog-tag-wrapper">
+                            <span>{{ __("Tags") }}:</span>
+                            @php
+                                $tags    = $blog->data->language->$app_local->tags ?? [];
+                            @endphp
+                            <ul class="blog-footer-tag">
+                                @foreach ($tags as $item)
+                                    <li><a href="javascript:void(0)">{{ $item }}</a></li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col-xl-4 col-lg-5 mb-30">
                 <div class="blog-sidebar">
                     <div class="widget-box mb-30">
@@ -42,28 +65,6 @@
                                     </div>
                                 </div>
                             @endforeach 
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-8 col-lg-8">
-                <div class="blog-item">
-                    <div class="blog-thumb">
-                        <img src="{{ get_image($blog->data->image , 'site-section') }}" alt="blog">
-                    </div>
-                    <div class="blog-content pt-3=4">
-                        <h3 class="title">{{ $blog->data->language->$app_local->title ?? "" }}</h3>
-                        <p>{!! $blog->data->language->$app_local->description ?? "" !!}</p>
-                        <div class="blog-tag-wrapper">
-                            <span>{{ __("Tags") }}:</span>
-                            @php
-                                $tags    = $blog->data->language->$app_local->tags ?? [];
-                            @endphp
-                            <ul class="blog-footer-tag">
-                                @foreach ($tags as $item)
-                                    <li><a href="javascript:void(0)">{{ $item }}</a></li>
-                                @endforeach
-                            </ul>
                         </div>
                     </div>
                 </div>

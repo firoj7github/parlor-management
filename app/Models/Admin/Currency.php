@@ -10,7 +10,21 @@ class Currency extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
-
+    protected $casts = [
+        'admin_id' => 'integer',
+        'country'  => 'string',
+        'name'     => 'string',
+        'code'     => 'string',
+        'symbol'   => 'string',
+        'flag'     => 'string',
+        'rate'     => 'decimal:16',
+        'sender'   => 'integer',
+        'receiver' => 'integer',
+        'default'  => 'integer',
+        'status'   => 'integer',
+        'created_at' => 'date:Y-m-d',
+        'updated_at' => 'date:Y-m-d',
+    ];
 
     protected $appends = [
         'both',

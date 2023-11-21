@@ -50,7 +50,7 @@ class BasicSettingsSeeder extends Seeder
             'site_logo'             => 'seeder/logo.webp',
             'site_fav_dark'         => 'seeder/favicon.webp',
             'site_fav'              => 'seeder/favicon.webp',
-            'web_version'           => '1.0.0',
+            'web_version'           => '1.1.0',
         ];
 
         BasicSettings::firstOrCreate($data);

@@ -21,9 +21,4 @@ class BasicSettings extends Model
         'site_fav_dark'            => 'string',
         'site_fav'                 => 'string',
     ];
-
-
-    public function mailConfig() {
-        
-    }
 }

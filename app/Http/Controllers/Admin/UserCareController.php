@@ -197,7 +197,6 @@ class UserCareController extends Controller
             'username'              => "required|exists:users,username",
             'firstname'             => "required|string|max:60",
             'lastname'              => "required|string|max:60",
-            'mobile_code'           => "nullable|string|max:10",
             'mobile'                => "nullable|string|max:20",
             'address'               => "nullable|string|max:250",
             'country'               => "required|string|max:50",
@@ -217,9 +216,8 @@ class UserCareController extends Controller
             'zip'           => $validated['zip_code'] ?? "",
             'address'       => $validated['address'] ?? "",
         ];
-        $validated['mobile_code']       = remove_speacial_char($validated['mobile_code']);
         $validated['mobile']            = remove_speacial_char($validated['mobile']);
-        $validated['full_mobile']       = $validated['mobile_code'] . $validated['mobile'];
+        $validated['full_mobile']       = $validated['mobile'];
 
         $user = User::where('username', $username)->first();
         if(!$user) return back()->with(['error' => ['Opps! User not exists']]);
@@ -269,7 +267,7 @@ class UserCareController extends Controller
         }catch(Exception $e) {
             return back()->with(['error' => [$e->getMessage()]]);
         }
-        return redirect()->intended(route('user.dashboard'));
+        return redirect()->intended(route('user.profile.index'));
     }
 
     public function kycDetails($username) {

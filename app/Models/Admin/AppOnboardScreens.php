@@ -15,6 +15,17 @@ class AppOnboardScreens extends Model
         'editData',
     ];
 
+    protected $casts = [
+        'title'        => 'string',
+        'sub_title'    => 'string',
+        'image'        => 'string',
+        'status'       => 'integer',
+        'last_edit_by' => 'integer',
+        'created_at'   => 'date:Y-m-d',
+        'updated_at'   => 'date:Y-m-d',
+    ];
+
+
 
     public function getEditDataAttribute() {
         $data = [

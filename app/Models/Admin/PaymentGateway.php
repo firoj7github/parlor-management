@@ -13,9 +13,24 @@ class PaymentGateway extends Model
     protected $guarded = ['id'];
 
     protected $casts = [
-        'input_fields'              => 'object',
-        'supported_currencies'      => 'object',
-        'credentials'               => 'object',
+        'id'                   => 'integer',
+        'slug'                 => 'string',
+        'code'                 => 'integer',
+        'type'                 => 'string',
+        'name'                 => 'string',
+        'title'                => 'string',
+        'alias'                => 'string',
+        'image'                => 'string',
+        'credentials'          => 'object',
+        'supported_currencies' => 'object',
+        'crypto'               => 'boolean',
+        'desc'                 => 'string',
+        'input_fields'         => 'object',
+        'env'                  => 'string',
+        'status'               => 'integer',
+        'last_edit_by'         => 'integer',
+        'created_at'           => 'date:Y-m-d',
+        'updated_at'           => 'date:Y-m-d',
     ];
 
     protected $with = [
