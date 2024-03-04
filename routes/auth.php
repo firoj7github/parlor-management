@@ -10,7 +10,7 @@ use App\Http\Controllers\User\Auth\RegisterController as UserRegisterController;
 use App\Http\Controllers\User\Auth\SocialAuthentication;
 use App\Http\Controllers\User\AuthorizationController;
 
-// Admin Authentication Route
+
 Route::middleware(['guest','admin.login.guard'])->prefix('admin')->name('admin.')->group(function(){
     Route::get('/',function(){
         return redirect()->route('admin.login');
