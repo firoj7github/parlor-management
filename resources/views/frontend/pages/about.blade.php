@@ -1,20 +1,21 @@
 @php
     $app_local      = get_default_language_code();
-@endphp     
+@endphp
 @extends('frontend.layouts.master')
 
 @push("css")
-    
+
 @endpush
 
-@section('content') 
+@section('content')
 <!-- about section -->
 <section class="about-section pt-150 pb-60">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6 pb-40">
                 <div class="about-img">
-                    <img src="{{ get_image($about?->value?->image,'site-section') ?? '' }}" alt="img">
+                    {{-- <img src="{{ get_image($about?->value?->image,'site-section') ?? '' }}" alt="img"> --}}
+                    <img src="{{ asset('frontend/images/site-section/' . $about?->value?->image) }}" alt="client">
                 </div>
             </div>
             <div class="col-lg-6">
@@ -59,7 +60,9 @@
             </div>
             <div class="col-xl-6 col-lg-6">
                 <div class="faq-img text-center">
-                    <img src="{{ get_image($faq?->value?->image , 'site-section') ?? '' }}" alt="img">
+                    {{-- <img src="{{ get_image($faq?->value?->image , 'site-section') ?? '' }}" alt="img"> --}}
+                    <img src="{{ asset('frontend/images/site-section/' . $faq?->value?->image) }}" alt="client">
+
                 </div>
             </div>
         </div>
@@ -70,5 +73,5 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 @endsection
 @push("script")
-    
+
 @endpush

@@ -56,12 +56,13 @@ class DatabaseSeeder extends Seeder
         //     SetupArea::class,
         //     ParlourListSeeder::class,
         //     UserSeeder::class,
-            
+
         // ]);
 
         //fresh
         $this->call([
             AdminSeeder::class,
+            UserSeeder::class,
             RoleSeeder::class,
             TransactionSettingSeeder::class,
             CurrencySeeder::class,

@@ -4,10 +4,10 @@
 @extends('frontend.layouts.master')
 
 @push("css")
-    
+
 @endpush
 
-@section('content') 
+@section('content')
 <div class="contact-location pt-150 pb-80">
     <div class="container">
         <div class="row justify-content-center">
@@ -202,7 +202,8 @@
         <div class="row align-items-center">
             <div class="col-lg-6 mb-30">
                 <div class="contact-page-img">
-                    <img src="{{ get_image($contact?->value?->image,'site-section') }}" alt="img">
+                    {{-- <img src="{{ get_image($contact?->value?->image,'site-section') }}" alt="img"> --}}
+                    <img src="{{ asset('frontend/images/site-section/' . $contact?->value?->image) }}" alt="img">
                 </div>
             </div>
              <div class="col-lg-6">
@@ -239,5 +240,5 @@
 
 
 @push("script")
-    
+
 @endpush

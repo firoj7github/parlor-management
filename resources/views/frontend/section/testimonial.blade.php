@@ -21,7 +21,10 @@
                             <div class="swiper-slide">
                                 <div class="testimonial-wrapper">
                                     <div class="testimonial-thumb">
-                                        <img src="{{ get_image($item->image,'site-section') }}" alt="client">
+                                        {{-- @dd($item->image); --}}
+                                        {{-- <img src="{{ get_image($item->image,'site-section') }}" alt="client"> --}}
+                                        <img src="{{ asset('frontend/images/site-section/' . $item->image) }}" alt="client">
+
                                     </div>
                                     <div class="testimonial-content">
                                         <div class="testimonial-ratings">

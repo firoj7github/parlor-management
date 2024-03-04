@@ -1,8 +1,8 @@
 @php
-    $app_local      = get_default_language_code(); 
+    $app_local      = get_default_language_code();
 @endphp
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        Start Footer 
+        Start Footer
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <footer class="footer-section">
     <div class="container mx-auto">
@@ -57,11 +57,12 @@
                         <p>{{ __("Copyright") }} &copy; {{ __("2023,") }} {{ __("All Right Reserved") }} <a href="{{ setRoute('index') }}"><span class="text--base">{{ $basic_settings->site_name }}</span></a>
                         </p>
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
 </footer>
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- End Footer 
+ End Footer
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->

@@ -1,13 +1,13 @@
 @php
     $app_local      = get_default_language_code();
-@endphp 
+@endphp
 @extends('frontend.layouts.master')
 
 @push("css")
-    
+
 @endpush
 
-@section('content') 
+@section('content')
 <!-- blog section -->
 <section class="blog-section ptb-120">
     <div class="container">
@@ -26,7 +26,8 @@
                     <a href="{{ setRoute('blog.details',$item->slug) }}">
                         <div class="blog-area">
                             <div class="blog-img">
-                                <img src="{{ get_image($item->data->image,'site-section') }}" alt="img">
+                                {{-- <img src="{{ get_image($item->data->image,'site-section') }}" alt="img"> --}}
+                                <img src="{{ asset('frontend/images/site-section/' . $item->data->image) }}" alt="client">
                             </div>
                             <div class="blog-content">
                                 <h3 class="content-title">{{ Str::words($item->data->language->$app_local->title ?? "","5","...") }}</h3>
@@ -47,5 +48,5 @@
 
 
 @push("script")
-    
+
 @endpush

@@ -45,7 +45,7 @@
 
 @include('partials.footer-asset')
 @include('admin.partials.notify')
-@include('frontend.partials.extensions.tawk-to')
+{{-- @include('frontend.partials.extensions.tawk-to') --}}
 @stack('script')
 
 @error('credentials')

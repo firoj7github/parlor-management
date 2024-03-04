@@ -254,7 +254,7 @@ function upload_files_from_path_dynamic($files_path, $destination_path, $old_fil
 
             $store_file_name = $file_name . ".webp";
             try {
-                
+
                 if ($file_extension != "webp") {
                     $webp = Webp::make($file_instance)->save($save_path . "/" . $store_file_name);
                     array_push($output_files_name, $store_file_name);
@@ -654,7 +654,7 @@ function upload_files_from_path_static($files_path, $destination_path, $old_file
             $store_file_name = $file_name . ".webp";
             try {
                 if ($file_extension != "webp") {
-                    
+
                     $webp = Webp::make($file_instance)->save($save_path . "/" . $store_file_name);
                     array_push($output_files_name, $store_file_name);
                 } else {
@@ -662,7 +662,7 @@ function upload_files_from_path_static($files_path, $destination_path, $old_file
                     array_push($output_files_name, $file_base_name);
                 }
             } catch (Exception $e) {
-               
+
                 return back()->with(['error' => ['Something went wrong! Failed to upload file.']]);
             }
         } else { // IF Other Files
@@ -890,7 +890,7 @@ function modifyEnv($replace_array = [])
     file_put_contents($env_file, $string_content);
 }
 
-// Role Permission START 
+// Role Permission START
 
 function permission_skip()
 {
@@ -996,7 +996,7 @@ function auth_admin_incomming_permission()
 {
     $incomming_access = Route::currentRouteName();
     $auth_admin_permissions = auth_admin_permissions();
-    
+
     if (auth_is_super_admin() == true) return true;
     if (!in_array($incomming_access, permission_protected())) return true;
     if (in_array($incomming_access, $auth_admin_permissions)) return true;
@@ -1154,7 +1154,7 @@ function make_username($first_name,$last_name,$table = "users") {
         }else {
             $generate_name = $generate_name_with_count;
         }
-        
+
         // Find User is already exists or not
         $chekUser = DB::table($table)->where('username',$generate_name)->first();
 
@@ -1278,7 +1278,7 @@ function upload_file($file,$destination_path,$old_file = null) {
         }catch(Exception $e) {
             return false;
         }
-        
+
         return $file_info;
     }
 
@@ -1286,7 +1286,7 @@ function upload_file($file,$destination_path,$old_file = null) {
 }
 
 function delete_files($files_link)
-{   
+{
     if(is_array($files_link)) {
         foreach($files_link as $item) {
             if (File::exists($item)) {

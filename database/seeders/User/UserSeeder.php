@@ -19,11 +19,11 @@ class UserSeeder extends Seeder
             [
                 'firstname'         => "Test",
                 'lastname'          => "User",
-                'email'             => "user@appdevs.net",
+                'email'             => "user@gmail.com",
                 'username'          => "testuser",
                 'status'            => true,
                 'address'           => '{"country":"Bangladesh"}',
-                'password'          => Hash::make("appdevs"),
+                'password'          => Hash::make("123456"),
                 'email_verified'    => true,
                 'sms_verified'      => true,
                 'created_at'        => now(),

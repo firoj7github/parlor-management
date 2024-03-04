@@ -7,7 +7,9 @@
         <div class="row justify-content-center">
             <div class="col-lg-5 pb-40">
                 <div class="app-img">
-                    <img src="{{ get_image($download_app?->value?->image , 'site-section') }}" alt="img">
+                    {{-- <img src="{{ get_image($download_app?->value?->image , 'site-section') }}" alt="img"> --}}
+                    <img src="{{ asset('frontend/images/site-section/' . $download_app?->value?->image) }}" alt="img">
+
                 </div>
             </div>
             <div class="col-xl-7 col-lg-6 mb-30">
@@ -22,12 +24,12 @@
                                 <span>{{ $item->language->$app_local->item_title ?? '' }}</span>
                                 <h5 class="title">{{ $item->language->$app_local->item_heading ?? '' }}</h5>
                             </div>
-                            <div class="icon">
+                            {{-- <div class="icon">
                                 <img src="{{ get_image($item->image , 'site-section') }}" alt="element">
                             </div>
                             <div class="app-qr">
                                 <img src="{{ get_image($item->image , 'site-section') }}" alt="element">
-                            </div>
+                            </div> --}}
                         </a>
                         @endforeach
                     </div>

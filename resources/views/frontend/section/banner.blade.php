@@ -7,9 +7,12 @@
 <div class="banner-slider">
     <div class="swiper-wrapper">
         @foreach ($sliders?->value?->items ?? [] as $item)
+        {{-- @dd($item->image) --}}
             @if ($item->status == 1)
                 <div class="swiper-slide">
-                    <div class="banner-section bg_img" data-background="{{ get_image($item->image, 'site-section') ?? '' }}">
+                    {{-- <div class="banner-section bg_img" data-background="{{ get_image($item->image, 'site-section') ?? '' }}"> --}}
+                    <div class="banner-section bg_img" data-background="{{ asset($item->image) ?? '' }}">
+
                         <div class="container">
                             <div class="row align-items-center">
                                 <div class="col-lg-6">

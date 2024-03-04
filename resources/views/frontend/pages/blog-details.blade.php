@@ -1,22 +1,23 @@
 @php
     $app_local      = get_default_language_code();
-@endphp 
+@endphp
 @extends('frontend.layouts.master')
 
 @push("css")
-    
+
 @endpush
 
-@section('content') 
+@section('content')
 
 <section class="blog-section blog-details-section pt-150 pb-40">
     <div class="container">
         <div class="row justify-content-center">
-            
+
             <div class="col-xl-8 col-lg-8">
                 <div class="blog-item">
                     <div class="blog-thumb">
-                        <img src="{{ get_image($blog->data->image , 'site-section') }}" alt="blog">
+                        {{-- <img src="{{ get_image($blog->data->image , 'site-section') }}" alt="blog"> --}}
+                        <img src="{{ asset('frontend/images/site-section/' . $blog->data->image) }}" alt="client">
                     </div>
                     <div class="blog-content pt-3=4">
                         <h3 class="title">{{ $blog->data->language->$app_local->title ?? "" }}</h3>
@@ -53,7 +54,10 @@
                             @foreach ($recent_posts as $item)
                                 <div class="single-popular-item d-flex flex-wrap align-items-center">
                                     <div class="popular-item-thumb">
-                                        <a href="{{ setRoute('blog.details',$item->slug) }}"><img src="{{ get_image($item->data->image , 'site-section') }}" alt="blog"></a>
+                                        <a href="{{ setRoute('blog.details',$item->slug) }}">
+                                            {{-- <img src="{{ get_image($item->data->image , 'site-section') }}" alt="blog"> --}}
+                                            <img src="{{ asset('frontend/images/site-section/' . $item->data->image) }}" alt="client">
+                                        </a>
                                     </div>
                                     @php
                                         $date = $item->created_at ?? "";
@@ -64,7 +68,7 @@
                                         <h6 class="title"><a href="{{ setRoute('blog.details',$item->slug) }}">{{ Str::words($item->data->language->$app_local->title ?? "","5","...") }}</a></h6>
                                     </div>
                                 </div>
-                            @endforeach 
+                            @endforeach
                         </div>
                     </div>
                 </div>

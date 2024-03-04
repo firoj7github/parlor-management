@@ -21,7 +21,8 @@
                         @foreach (array_slice((array)$photo_gallery?->value?->items,0,2) as $item)
                             <div class="col-lg-12 pb-20">
                                 <div class="photo-item">
-                                    <img src="{{ get_image($item->image,'site-section') }}" alt="img">
+                                    {{-- <img src="{{ get_image($item->image,'site-section') }}" alt="img"> --}}
+                                    <img src="{{ asset('frontend/images/site-section/' . $item->image) }}" alt="client">
                                 </div>
                             </div>
                         @endforeach
@@ -32,7 +33,8 @@
                 @foreach (array_slice((array)$photo_gallery?->value?->items,2,1) as $item)
                     <div class="galary-area-2">
                         <div class="photo-item">
-                            <img src="{{ get_image($item->image,'site-section') }}" alt="img">
+                            {{-- <img src="{{ get_image($item->image,'site-section') }}" alt="img"> --}}
+                            <img src="{{ asset('frontend/images/site-section/' . $item->image) }}" alt="client">
                         </div>
                     </div>
                 @endforeach
@@ -43,7 +45,8 @@
                         @foreach (array_slice((array)$photo_gallery?->value?->items,3,2) as $item)
                             <div class="col-lg-12 pb-20">
                                 <div class="photo-item">
-                                    <img src="{{ get_image($item->image,'site-section') }}" alt="img">
+                                    {{-- <img src="{{ get_image($item->image,'site-section') }}" alt="img"> --}}
+                                    <img src="{{ asset('frontend/images/site-section/' . $item->image) }}" alt="client">
                                 </div>
                             </div>
                         @endforeach
@@ -54,7 +57,8 @@
                 <div class="col-lg-6 col-md-6 col-sm-6 pb-20">
                     <div class="galary-area-3">
                         <div class="photo-item">
-                            <img src="{{ get_image($item->image,'site-section') }}" alt="img">
+                            {{-- <img src="{{ get_image($item->image,'site-section') }}" alt="img"> --}}
+                            <img src="{{ asset('frontend/images/site-section/' . $item->image) }}" alt="client">
                         </div>
                     </div>
                 </div>
