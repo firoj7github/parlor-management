@@ -11,7 +11,8 @@
         <div class="row">
             <div class="col-lg-6 col-md-6">
                 <div class="account-section-img">
-                    <img src="{{ get_image(@$login->value->image , 'site-section') }}" alt="img">
+                    <!-- <img src="{{ get_image(@$login->value->image , 'site-section') }}" alt="img"> -->
+                    <img src="{{ asset('/frontend/images/icon/login.webp') }}" alt="img">
                 </div>
             </div>
             <div class="col-lg-6 col-md-6">

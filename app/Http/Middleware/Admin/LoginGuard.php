@@ -21,7 +21,7 @@ class LoginGuard
         $guards = config('auth.guards');
 
         foreach($guards as $guard => $values) {
-            if(Auth::guard($guard)->check() == true) {
+            if(Auth::guard('admin')->check() == true) {
                 if($request->routeIs('admin.*')) {
                     return redirect(route('admin.dashboard'));
                 }elseif($request->routeIs('user.*')) {
