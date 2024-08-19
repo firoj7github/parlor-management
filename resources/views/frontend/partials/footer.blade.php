@@ -11,7 +11,8 @@
                 <div class="col-xl-4 col-lg-5 mb-50">
                     <div class="footer-widget responcive-area">
                         <div class="footer-text">
-                            <img src="{{ @$footer->value->footer->image ? get_image($footer->value->footer->image,'site-section') : get_logo($basic_settings) }}" alt="image">
+                            <!-- <img src="{{ @$footer->value->footer->image ? get_image($footer->value->footer->image,'site-section') : get_logo($basic_settings) }}" alt="image"> -->
+                            <img src="{{ asset('/frontend/images/icon/logo.webp') }}" alt="site-logo">
                             <p>{{ $footer->value->footer->language->$app_local->description ?? '' }}</p>
                         </div>
                         <div class="footer-social-icon">
@@ -40,8 +41,8 @@
                     <div class="footer-widget responcive-area-2">
                         <ul class="footer-list">
                             <h3 class="title">{{ __("Quick Contact") }}</h3>
-                            <li><a href="javascript:void(0)">{{ $contact->value->address ?? '' }}</a></li>
-                            <li><a href="tel:{{ $contact?->value?->phone }}">{{ $contact?->value?->phone ?? '' }}</a></li>
+                            <li><a href="javascript:void(0)">Dhaka, Bangladesh</a></li>
+                            <li><a href="tel:{{ $contact?->value?->phone }}">+04601 885399</a></li>
                             <li><a href="mailto:{{ $contact?->value?->email }}">{{ $contact?->value?->email ?? '' }}</a></li>
                         </ul>
                     </div>

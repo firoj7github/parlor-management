@@ -4,7 +4,8 @@
     <div class="account-wrapper">
         <div class="account-header">
             <div class="site-logo">
-                <img src="{{ get_logo($basic_settings) }}" alt="logo">
+                <!-- <img src="{{ get_logo($basic_settings) }}" alt="logo"> -->
+                <img src="{{ asset('/frontend/images/icon/logo.webp') }}" alt="logo">
             </div>
             <span class="inner-title">👋</span>
             <h6 class="sub-title">{{ __("Welcome To") }} <span>{{ __("Admin Panel") }}</span></h6>
